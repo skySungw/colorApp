@@ -1,0 +1,74 @@
+{
+  "pages": [
+    "pages/ground/ground",
+    "pages/ground/goodsGround",
+    "pages/index/index",
+    "pages/quanzi/quanzi"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/sub",
+      "pages": [
+        "my/my",
+        "my/integral",
+        "my/focus",
+        "my/follow",
+        "my/suggestion",
+        "my/settings",
+        "my/settings/nickname",
+        "my/settings/sign",
+        "my/settings/phone",
+        "my/settings/wechart",
+        "my/settings/photo",
+        "my/settings/addressList",
+        "my/settings/address",
+        "my/record",
+        "my/goods",
+        "my/goodsCollection",
+        "my/card",
+        "my/draft",
+        "my/cardCollection",
+        "my/signUp",
+        "my/home",
+        "order/sel",
+        "order/my",
+        "order/orderDetail",
+        "setting/contact",
+        "search/search",
+        "search/goodsSearch",
+        "goods/detail",
+        "article/article",
+        "activity/detail",
+        "publish/index",
+        "publish/publishActive",
+        "publish/publishGoods",
+        "publish/publishSuccess",
+        "goods/placeOrder",
+        "login/index"
+      ]
+    }
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "black"
+  },
+  "plugins": {
+    "chooseLocation": {
+      "version": "1.0.6",
+      "provider": "wx76a9a06e5b4e693e"
+    },
+    "routePlan": {
+      "version": "1.0.13",
+      "provider": "wx50b5593e81dd937a"
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序定位"
+    }
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "sitemapLocation": "sitemap.json"
+}

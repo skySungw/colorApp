@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "圈子",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "nav-bar": "/components/navBar",
+    "card-list": "/components/cardList"
+  }
+}

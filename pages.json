@@ -1,0 +1,301 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/ground/ground",
+			"style": {
+				"navigationBarTitleText": "广场 ",
+				"enablePullDownRefresh": true//禁止下拉刷新
+			}
+		},
+		{
+			"path": "pages/ground/goodsGround",
+			"style": {
+				"navigationBarTitleText": "宝贝 ",
+				"enablePullDownRefresh": false//禁止下拉刷新
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+        "enablePullDownRefresh":true//开启下拉刷新
+			}
+		},
+		{
+			"path": "pages/quanzi/quanzi",
+			"style": {
+				"navigationBarTitleText": "圈子",
+        "enablePullDownRefresh":true,//开启下拉刷新
+				"onReachBottomDistance": 100 // 上拉刷新
+			}
+		}
+	],
+	"subPackages": [{
+		"root": "pages/subpackages",
+		"pages": [{
+				"path": "address/selectAddress",
+				"style": {
+					"navigationBarTitleText": "选择定位",
+					"enablePullDownRefresh": false
+				}
+		}, {
+				"path": "address/selectCity",
+				"style": {
+					"navigationBarTitleText": "选择城市",
+					"enablePullDownRefresh": false
+				}
+		}, {
+				"path": "subject/index",
+				"style": {
+					"navigationBarTitleText": "话题页",
+					"enablePullDownRefresh": false
+				}
+		}]
+	}, {
+		"root": "pages/sub",
+		"pages": [{
+				"path": "my/my",
+				"style": {
+					"navigationBarTitleText": "我的",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/integral",
+				"style": {
+					"navigationBarTitleText": "我的积分",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/focus",
+				"style": {
+					"navigationBarTitleText": "我的关注",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/follow",
+				"style": {
+					"navigationBarTitleText": "我的粉丝",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/suggestion",
+				"style": {
+					"navigationBarTitleText": "意见反馈",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings",
+				"style": {
+					"navigationBarTitleText": "基础设置",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/nickname",
+				"style": {
+					"navigationBarTitleText": "更改昵称",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/sign",
+				"style": {
+					"navigationBarTitleText": "更改签名",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/phone",
+				"style": {
+					"navigationBarTitleText": "更改手机号",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/wechart",
+				"style": {
+					"navigationBarTitleText": "更改二维码",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/photo",
+				"style": {
+					"navigationBarTitleText": "更换头像",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/addressList",
+				"style": {
+					"navigationBarTitleText": "地址列表",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/address",
+				"style": {
+					"navigationBarTitleText": "地址",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/record",
+				"style": {
+					"navigationBarTitleText": "浏览纪录",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/goods",
+				"style": {
+					"navigationBarTitleText": "我的商品",
+					"enablePullDownRefresh": true//开启下拉刷新
+				}
+			},
+			{
+				"path": "my/goodsCollection",
+				"style": {
+					"navigationBarTitleText": "商品收藏",
+					"enablePullDownRefresh": true//开启下拉刷新
+				}
+			},
+			{
+				"path": "my/card",
+				"style": {
+					"navigationBarTitleText": "我的帖子",
+					"enablePullDownRefresh":true//开启下拉刷新
+				}
+			},
+			{
+				"path": "my/draft",
+				"style": {
+					"navigationBarTitleText": "草稿箱",
+					"enablePullDownRefresh":true//开启下拉刷新
+				}
+			},
+			{
+				"path": "my/cardCollection",
+				"style": {
+					"navigationBarTitleText": "帖子收藏",
+					"enablePullDownRefresh":true//开启下拉刷新
+				}
+			},
+			{
+				"path": "my/signUp",
+				"style": {
+					"navigationBarTitleText": "活动报名",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/home",
+				"style": {
+					"navigationBarTitleText": "个人主页",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			}]
+		}, {
+			"root": "pages/sub",
+			"pages": [{
+					"path": "order/sel",
+					"style": {
+						"navigationBarTitleText": "我卖出的",
+						"enablePullDownRefresh": true
+					}
+			}, {
+					"path": "order/my",
+					"style": {
+						"navigationBarTitleText": "我买到的",
+						"enablePullDownRefresh": true
+					}
+			}, {
+					"path": "order/orderDetail",
+					"style": {
+						"navigationBarTitleText": "订单详情",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+					"path": "setting/contact",
+					"style": {
+						"navigationBarTitleText": "设置联系方式",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+					"path": "search/search",
+					"style": {
+						"navigationBarTitleText": "搜索",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+					"path": "search/goodsSearch",
+					"style": {
+						"navigationBarTitleText": "商品搜索搜索",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+					"path": "goods/detail",
+					"style": {
+						"navigationBarTitleText": "商品详情",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+					"path": "article/article",
+					"style": {
+						"navigationBarTitleText": "文章详情",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+					"path": "activity/detail",
+					"style": {
+						"navigationBarTitleText": "活动详情",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+					"path": "publish/index",
+					"style": {
+						"navigationBarTitleText": "发布帖子",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			}, {
+				"path": "publish/publishActive",
+				"style": {
+					"navigationBarTitleText": "发布活动",
+					"enablePullDownRefresh": false//禁止下拉刷新
+				}
+		}, {
+				"path": "publish/publishGoods",
+				"style": {
+					"navigationBarTitleText": "发布商品",
+					"enablePullDownRefresh": false//禁止下拉刷新
+				}
+		}, {
+				"path": "publish/publishSuccess",
+				"style": {
+					"navigationBarTitleText": "发布商品成功",
+					"enablePullDownRefresh": false//禁止下拉刷新
+				}
+		}, {
+				"path": "goods/placeOrder",
+				"style": {
+					"navigationBarTitleText": "去下单",
+					"enablePullDownRefresh": false//禁止下拉刷新
+				}
+		}, {
+				"path": "login/index",
+				"style": {
+					"navigationBarTitleText": "登录",
+					"enablePullDownRefresh": false//禁止下拉刷新
+				}
+		}]
+	}],
+	"globalStyle": {
+    "navigationStyle": "custom",
+		"navigationBarTextStyle": "black"
+	}
+}

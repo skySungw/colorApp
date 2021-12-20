@@ -1,6 +1,6 @@
 <template>
 	<!-- <view :style="[{'padding-top':customBar + 'px', 'height': '100vh'}, {background: '#fff'}]"> -->
-	<view class="absolute flex flex-direction" :style="[{height: '100vh', background: '#fff'}]">
+	<view class="full-height absolute flex flex-direction bg-white">
 		<cu-custom bgColor="bg-gradual-green" :isBack="false">
 			<view slot="serach">
 				<view class="location flex" @tap="onSelectAddress">
@@ -27,17 +27,18 @@
 				<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
 				@scroll="scroll">
 					<Card v-for="(item, index) in list" :key="index" :item="item" :source="1"></Card>
+					<view v-if="noMoreFlag" class="text-center padding-sm">我是有底线的~</view>
 				</scroll-view>
 				<!-- <Card v-for="(item, index) in list" :key="index" :item="item" :source="1"></Card> -->
 			</view>
-			<view class="card-list_container flex-1" v-if="activeIndex == 1">
-				<Card v-for="(item, index) in list" :key="index" :item="item" :source="1"></Card>
-			</view>
-			<view class="card-list_container flex-1" v-if="activeIndex == 2">
-				<ActiveCard v-for="(item, index) in list" :key="index" :item="item"></ActiveCard>
-			</view>
 		</block>
 		<Empty v-if="!initPage && list.length == 0" msg="暂无数据~" />
+		<!-- <view class="card-list_container flex-1" v-if="activeIndex == 1">
+			<Card v-for="(item, index) in list" :key="index" :item="item" :source="1"></Card>
+		</view>
+		<view class="card-list_container flex-1" v-if="activeIndex == 2">
+			<ActiveCard v-for="(item, index) in list" :key="index" :item="item"></ActiveCard>
+		</view> -->
 		<!-- 发布按钮 -->
 		<!-- <view class="publish bg-gradual-green" v-if="publishShow"  @click="onPublish">发布</view> -->
 		<!-- <view class="publish" @click="onPublish">发布</view> -->
@@ -87,6 +88,7 @@
 				list: [], // 帖子列表
 				activeIndex: 0,
 				dictList: [], // 小区列表
+				noMoreFlag: false, // 是否有更多数据
 			}
 		},
 		onLoad() {
@@ -184,8 +186,11 @@
 			// 滚动到底部
 			lower(e) {
 				if (this.hasNext()) {
+					this.noMoreFlag = false;
 					this.params.current++;
 					this.getArticleList();
+				} else {
+					this.noMoreFlag = true;
 				}
 			},
 			// 滚动事件
@@ -320,7 +325,7 @@
 		height: 100upx;
 	}
 	.card-list_container {
-		padding-bottom: 100upx;
+		padding-bottom: 150upx;
 		overflow: hidden;
 	}
 	.location {
@@ -340,14 +345,5 @@
 	  height: 14upx;
 	  flex-shrink: 0;
 	  margin-left: 10upx;
-	}
-	.scroll-Y {
-		height: 100%;
-	}
-	.absolute {
-		position: absolute;
-		width: 100%;
-		left: 0;
-		top: 0;
 	}
 </style>

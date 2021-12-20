@@ -1,13 +1,16 @@
 <template>
-	<view class="my-goods_container">
+	<view class="my-goods_container full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
 			<view slot="backText">返回</view>
 			<view slot="content">商品收藏</view>
 		</cu-custom>
-		<view>
-			<Goods v-for="(item, index) in list" :key="index" :item="item" :source="0"></Goods>
+		<view v-if="list.length > 0" class="flex-1 overflow-hidden">
+			<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
+				<Goods v-for="(item, index) in list" :key="index" :item="item" :source="0"></Goods>
+				<view v-if="noMoreFlag" class="text-center padding-sm">我是有底线的~</view>
+			</scroll-view>
 		</view>
-		<Empty v-if="list.length == 0" msg="暂无数据~" />
+		<Empty v-else msg="暂无数据~" />
 	</view>
 </template>
 
@@ -28,6 +31,7 @@
 					total: 0, // 总数量
 				},
 				list: [], // 宝贝列表
+				noMoreFlag: false // 是否有更多数据
 			}
 		},
 		onLoad() {
@@ -39,12 +43,12 @@
 				uni.stopPullDownRefresh();
 			}, 2000);
 		},
-		onReachBottom() {
-			if (this.hasNext()) {
-				this.params.current++;
-				this.getGoodsList();
-			}
-		},
+		// onReachBottom() {
+		// 	if (this.hasNext()) {
+		// 		this.params.current++;
+		// 		this.getGoodsList();
+		// 	}
+		// },
 		methods: {
 			// 是否有下一页
 			hasNext() {
@@ -67,12 +71,20 @@
 					console.log('err', err);
 				}
 			},
+			// 触底刷新
+			onRefresh() {
+				console.log('bottom');
+				if (this.hasNext()) {
+					this.noMoreFlag = false;
+					this.params.current++;
+					this.getGoodsList();
+				} else {
+					this.noMoreFlag = true;
+				}
+			}
 		}
 	}
 </script>
 
 <style lang="scss" lang="scss">
-	.my-goods_container {
-		
-	}
 </style>

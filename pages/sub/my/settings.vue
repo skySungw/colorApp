@@ -102,8 +102,12 @@
 				}
 			},
 			goPage(url, param) {
+				let nextUrl = url;
+				if (param) {
+					nextUrl = `${url}?param=${param}`;
+				}
 				uni.navigateTo({
-					url: `${url}?param=${param}`
+					url: nextUrl
 				})
 			},
 			// 获取信息

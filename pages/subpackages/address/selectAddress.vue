@@ -217,9 +217,6 @@
 				wx.navigateTo({
 				  url: `plugin://citySelector/index?key=${key}&referer=${referer}&hotCitys=${hotCitys}`,
 				})
-				// uni.navigateTo({
-				// 	url: '/pages/subpackages/address/selectCity'
-				// })
 			},
 			// 重新获取定位
 			reLocation() {
@@ -246,9 +243,6 @@
 				try {
 					const res = await selectAddressByLat(this.params);
 					if (res.code === 200) {
-						if (this.list.length > 0) {
-							this.address_data = this.list[0];
-						}
 						this.params.total = res.data.total;
 						if (this.params.current === 1) {
 							this.list = res.data.records;
@@ -285,9 +279,6 @@
 						areaName: areaName
 					});
 					if (res.code === 200) {
-						if (this.list.length > 0) {
-							this.address_data = this.list[0];
-						}
 						this.params.total = res.data.total;
 						if (this.params.current === 1) {
 							this.list = res.data.records;

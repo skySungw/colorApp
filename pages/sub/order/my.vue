@@ -1,22 +1,26 @@
 <template>
-	<view>
+	<view class="full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
 			<view slot="backText">返回</view>
 			<view slot="content">我买到的</view>
 		</cu-custom>
 		<!-- 页面滚动 -->
-		<scroll-view scroll-y @scrolltolower="onRefresh" style="height: 100vh">
-			<view class="fixed fixed-shadow" :style="{top: customBar + 'px'}">
+		<view class="flex-1 flex flex-direction overflow-hidden">
+			<view class="fixed-shadow">
 				<scroll-view scroll-x class="bg-white nav text-center">
 					<view :class="['cu-item', {'text-green cur': item.id == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-item="item" :data-index="item.index">{{ item.label }}</view>
 				</scroll-view>
 			</view>
-			<view class="padding-fixed">
-				<Order v-for="(item, index) in list" :key="index" :item="item"></Order>
+			<view class="flex-1 overflow-hidden">
+				<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
+					<view v-if="list.length > 0">
+						<Order v-for="(item, index) in list" :key="index" :item="item"></Order>
+					</view>
+					<Empty v-else msg="暂无搜索结果~" />
+					<view v-if="noMoreFlag" class="text-center padding-sm">我是有底线的~</view>
+				</scroll-view>
 			</view>
-			<Empty v-if="list.length == 0" msg="暂无搜索结果~" />
-		</scroll-view>
-		
+		</view>
 	</view>
 </template>
 
@@ -61,6 +65,7 @@
 				curTab: -1, // 全部
 				scrollLeft:0,
 				list: [], // 订单列表
+				noMoreFlag: false // 是否有更多数据
 			}
 		},
 		onLoad(options) {
@@ -80,6 +85,7 @@
 			},
 			// 初始化列表页面参数
 			initParams(type) {
+				this.noMoreFlag = false;
 				this.curTab = type;
 				this.params.current = 1;
 				this.params.orderState = this.curTab != -1 ? this.curTab : '';
@@ -118,20 +124,17 @@
 			onRefresh() {
 				console.log('bottom');
 				if (this.hasNext()) {
+					this.noMoreFlag = false;
 					this.params.current++;
 					this.getOrderList();
+				} else {
+					this.noMoreFlag = true;
 				}
 			}
 		}
 	}
 </script>
 <style lang="scss" scoped>
-	.padding-fixed {
-		padding-top: 100upx;
-	}
-	.fixed-shadow {
-		box-shadow: 0 0 10upx rgba(0, 0, 0, 0.5);
-	}
 	.flex-1 {
 		flex: 1;
 	}

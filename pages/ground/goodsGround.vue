@@ -1,5 +1,5 @@
 <template>
-	<view class="absolute flex flex-direction" :style="[{'height': '100vh'}, {background: '#fff'}]">
+	<view class="full-height absolute flex flex-direction bg-white">
 		<cu-custom bgColor="bg-gradual-green" :isBack="false">
 			<view slot="serach">
 				<view class="search-form round">
@@ -16,6 +16,7 @@
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
 				@scroll="scroll">
 				<Goods v-for="(item, index) in list" :key="index" :item="item" :source="0" :status="0"></Goods>
+				<view v-if="noMoreFlag" class="text-center padding-sm">我是有底线的~</view>
 			</scroll-view>
 			<!-- <GoodsList :list="list" :lower="lower" :scroll="scroll" :upper="upper" :scrollTop="scrollTop"></GoodsList> -->
 		</view>
@@ -58,6 +59,7 @@
 					lng: ''
 				},
 				list: [], // 宝贝列表
+				noMoreFlag: false, // 是否有更多数据
 			}
 		},
 		onLoad(options) {
@@ -105,8 +107,11 @@
 			// 滚动到底部
 			lower(e) {
 				if (this.hasNext()) {
+					this.noMoreFlag = false;
 					this.params.current++;
 					this.getGoodsList();
+				} else {
+					this.noMoreFlag = true;
 				}
 			},
 			// 滚动事件
@@ -185,16 +190,7 @@
 		height: 100rpx;
 	}
 	.card-list_container {
-		padding-bottom: 100upx;
+		padding-bottom: 150upx;
 		overflow: hidden;
-	}
-	.scroll-Y {
-		height: 100%;
-	}
-	.absolute {
-		position: absolute;
-		width: 100%;
-		left: 0;
-		top: 0;
 	}
 </style>

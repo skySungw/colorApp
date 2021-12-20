@@ -1,22 +1,27 @@
 <template>
-	<view class="my-record_container">
+	<view class="my-record_container full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
 			<view slot="backText">返回</view>
 			<view slot="content">浏览纪录</view>
 		</cu-custom>
-		<scroll-view scroll-x class="bg-white nav fixed" :style="[{top:customBar + 'px'}]">
+		<scroll-view scroll-x class="bg-white nav">
 			<view class="flex text-center">
 				<view :class="['cu-item', 'flex-1', {'text-green cur': index == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-id="index">{{ item.label }}</view>
 			</view>
 		</scroll-view>
-		<view v-if="curTab == 0">
-			<Goods v-for="(item, index) in list" :key="index" :item="item" :source="0" :status="curTab"></Goods>
+		<view class="flex-1 overflow-hidden" v-if="list.length > 0">
+			<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
+				<view v-if="curTab == 0">
+					<Goods v-for="(item, index) in list" :key="index" :item="item" :source="0" :status="curTab"></Goods>
+				</view>
+				<view v-if="curTab == 1">
+					<Card v-for="(item, index) in list" :key="index" :item="item" :source="1" :status="curTab"></Card>
+				</view>
+				<view v-if="noMoreFlag" class="text-center padding-sm">我是有底线的~</view>
+			</scroll-view>
 		</view>
-		<view v-if="curTab == 1">
-			<Card v-for="(item, index) in list" :key="index" :item="item" :source="1" :status="curTab"></Card>
-		</view>
-		<Empty v-if="list.length == 0" :msg="emptyMsg" />
-		<view v-if="params.current != 1 && !hasNext()" class="text-center padding-top-sm text-grey text-sm">我已经到底了~</view>
+		<Empty v-else :msg="emptyMsg" />
+		<!-- <view v-if="params.current != 1 && !hasNext()" class="text-center padding-top-sm text-grey text-sm">我已经到底了~</view> -->
 	</view>
 </template>
 
@@ -48,17 +53,18 @@
 				}],
 				curTab: 0,
 				scrollLeft:0,
+				noMoreFlag: false // 是否有更多数据
 			}
 		},
 		onLoad() {
 			this.initParams();
 		},
-		onReachBottom() {
-			if (this.hasNext()) {
-				this.params.current++;
-				this.getData();
-			}
-		},
+		// onReachBottom() {
+		// 	if (this.hasNext()) {
+		// 		this.params.current++;
+		// 		this.getData();
+		// 	}
+		// },
 		methods: {
 			// 获取当前分类下数据
 			getData() {
@@ -123,6 +129,17 @@
 				this.curTab = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
 				this.initParams();
+			},
+			// 触底刷新
+			onRefresh() {
+				console.log('bottom');
+				if (this.hasNext()) {
+					this.noMoreFlag = false;
+					this.params.current++;
+					this.getData();
+				} else {
+					this.noMoreFlag = true;
+				}
 			}
 		}
 	}
@@ -130,6 +147,5 @@
 
 <style lang="scss" lang="scss">
 	.my-record_container {
-		padding-top: 90upx;
 	}
 </style>

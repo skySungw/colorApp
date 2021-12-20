@@ -1,17 +1,24 @@
 <template>
-	<view class="my-goods_container">
+	<view class="my-goods_container full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="isBack" :isCustom="true">
 			<view slot="content">我的商品</view>
 		</cu-custom>
-		<scroll-view scroll-x class="bg-white nav fixed" :style="[{top:customBar + 'px'}]">
-			<view class="flex text-center">
-				<view :class="['cu-item', 'flex-1', {'text-green cur': index == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-index="index" :data-id="item.id">{{ item.label }}</view>
-			</view>
-		</scroll-view>
-		<view>
-			<Goods v-for="(item, index) in list" @refreshList="initParams" :key="index" :item="item" :source="1" :status="params.goodsState"></Goods>
+		<view class="fixed-shadow">
+			<scroll-view scroll-x class="bg-white nav">
+				<view class="flex text-center">
+					<view :class="['cu-item', 'flex-1', {'text-green cur': index == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-index="index" :data-id="item.id">{{ item.label }}</view>
+				</view>
+			</scroll-view>
 		</view>
-		<Empty v-if="list.length == 0" msg="暂无数据~" />
+		<view class="flex-1 overflow-hidden flex">
+			<view v-if="list.length > 0" class="flex-1 overflow-hidden">
+				<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
+					<Goods v-for="(item, index) in list" @refreshList="initParams" :key="index" :item="item" :source="1" :status="params.goodsState"></Goods>
+					<view v-if="noMoreFlag" class="text-center padding-sm">我是有底线的~</view>
+				</scroll-view>
+			</view>
+			<Empty v-else msg="暂无数据~" />
+		</view>
 	</view>
 </template>
 
@@ -47,7 +54,8 @@
 				}],
 				curTab: 0,
 				scrollLeft:0,
-				isBack: true
+				isBack: true,
+				noMoreFlag: false // 是否有更多数据
 			}
 		},
 		onLoad(options) {
@@ -55,12 +63,12 @@
 			this.isBack = options.isBack == 1 ? false : true;
 			this.initParams();
 		},
-		onReachBottom() {
-			if (this.hasNext()) {
-				this.params.current++;
-				this.getGoodsList();
-			}
-		},
+		// onReachBottom() {
+		// 	if (this.hasNext()) {
+		// 		this.params.current++;
+		// 		this.getGoodsList();
+		// 	}
+		// },
 		methods: {
 			// 是否有下一页
 			hasNext() {
@@ -68,6 +76,7 @@
 			},
 			// 初始化列表页面参数
 			initParams() {
+				this.noMoreFlag = false;
 				this.params.current = 1;
 				this.params.total = 0;
 				this.list = [];
@@ -95,6 +104,17 @@
 				this.params.goodsState = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.index - 1) * 60;
 				this.initParams();
+			},
+			// 触底刷新
+			onRefresh() {
+				console.log('bottom');
+				if (this.hasNext()) {
+					this.noMoreFlag = false;
+					this.params.current++;
+					this.getGoodsList();
+				} else {
+					this.noMoreFlag = true;
+				}
 			}
 		}
 	}
@@ -102,6 +122,5 @@
 
 <style lang="scss" lang="scss">
 	.my-goods_container {
-		padding-top: 90upx;
 	}
 </style>

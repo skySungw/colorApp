@@ -15,7 +15,7 @@
 						</view>
 					</view>
 					<view class="solids" @click="onChooseImage" v-if="imgList.length < 1">
-						<text class="cuIcon-cameraadd"></text>
+						<text class="cuIcon-cameraadd lg text-gray">请上传二维码</text>
 					</view>
 				</view>
 			</view>
@@ -34,6 +34,7 @@
 			}
 		},
 		onLoad(options) {
+			console.log('options', options.param)
 			if (options.param) {
 				this.imgList = [options.param];
 				this.img = [options.param];

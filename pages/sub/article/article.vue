@@ -68,7 +68,7 @@
 							</view>
 						</view>
 					</view>
-					<view v-if="commentParams.current != 1 && !hasNext()" class="text-center padding-top-sm text-grey text-sm">我已经到底了~</view>
+					<view v-if="commentParams.current != 1 && !hasNext()" class="text-center padding-sm text-grey text-sm">我已经到底了~</view>
 				</view>
 			</view>
 		</view>

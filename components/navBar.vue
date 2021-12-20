@@ -10,11 +10,23 @@
 		<!-- Modal 发布蒙层 -->
 		<view class="cu-modal bottom-modal" :class="[{'show': showModal}]" @tap="onHideModal">
 		  <view class="cu-dialog padding" catchtap>
-		    <view class="grid col-2 padding-sm">
-					<view class="padding-sm" v-for="(item, index) in publishArr" :index="index">
-						<button class="cu-btn orange lg block line-olive" @tap="onPublish(item)"> {{ item.label }}</button>
+				<view class="padding">
+					<view v-for="(item, index) in publishArr" :index="index">
+						<!-- <button class="cu-btn orange lg block line-olive" @tap="onPublish(item)"> {{ item.label }}</button> -->
+						<view class="flex align-center justify-center padding" @tap="onPublish(item)">
+							<view :class="item.bgColor">
+								<text :class="item.icon"></text>
+							</view>
+							<view class="flex flex-direction text-left">
+								<view class="flex-1 text-black text-bold">{{ item.title }}</view>
+								<view class="flex-1 text-sm text-grey">{{ item.label }}</view>
+							</view>
+						</view>
 					</view>
-		    </view>
+					<view class="close-button">
+						<text class="bg-grey img-tag padding-sm cuIcon-close lg" @tap="onHideModal"></text>
+					</view>
+				</view>
 		  </view>
 		</view>
 	</view>
@@ -57,13 +69,19 @@
 					url: '/pages/sub/my/my'
 				}],
 				publishArr: [{
-					id: 1,
-					label: '发布帖子',
-					url: '/pages/sub/publish/index'
-				}, {
 					id: 2,
-					label: '发布商品',
-					url: '/pages/sub/publish/publishGoods'
+					title: '发个闲置品',
+					label: '给附近的人看',
+					url: '/pages/sub/publish/publishGoods',
+					icon: 'cuIcon-camera lg',
+					bgColor: 'padding img-tag margin-right-sm bg-cyan'
+				}, {
+					id: 1,
+					title: '发生活帖子',
+					label: '分享我的日常',
+					url: '/pages/sub/publish/index',
+					icon: 'cuIcon-edit lg',
+					bgColor: 'padding img-tag margin-right-sm bg-gradual-green',
 				}]
 			}
 		},
@@ -119,5 +137,11 @@
 <style scoped>
 	.box {
 		box-shadow: 0 0 10upx rgba(0, 0, 0, .5);
+	}
+	.img-tag {
+		border-radius: 50%;
+	}
+	.close-button {
+		margin: 90upx 0 30upx;
 	}
 </style>

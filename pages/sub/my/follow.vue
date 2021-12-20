@@ -1,12 +1,18 @@
 <template>
-	<view>
+	<view class="full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
 			<view slot="backText">返回</view>
 			<view slot="content">我的粉丝</view>
 		</cu-custom>
-		<PersonCard :list="list" :source="1" :isFocus="isFocus"></PersonCard>
-		<view v-if="pageParam.current != 1 && !hasNext()" class="text-center padding-top-sm text-grey text-sm">我已经到底了~</view>
-		<Empty v-if="list.length == 0" msg="您还没有关注别人哦~"></Empty>
+		<view class="flex-1 flex overflow-hidden">
+			<view v-if="list.length > 0" class="flex-1 overflow-hidden">
+				<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
+					<PersonCard :list="list" :source="1" :isFocus="isFocus"></PersonCard>
+					<view v-if="noMoreFlag" class="text-center padding-sm text-grey text-sm">我是有底线的~</view>
+				</scroll-view>
+			</view>
+			<Empty v-else msg="您还没有关注别人哦~"></Empty>
+		</view>
 	</view>
 </template>
 
@@ -30,7 +36,8 @@
 					size: 10,
 					total: 0
 				},
-				list: []
+				list: [],
+				noMoreFlag: false // 是否有更多数据
 			}
 		},
 		onLoad(options) {
@@ -39,12 +46,12 @@
 			this.pageParam.userId = options.id || '';
 			this.getFans();
 		},
-		onReachBottom() {
-			if (this.hasNext()) {
-				this.pageParam.current++;
-				this.getFans();
-			}
-		},
+		// onReachBottom() {
+		// 	if (this.hasNext()) {
+		// 		this.pageParam.current++;
+		// 		this.getFans();
+		// 	}
+		// },
 		methods: {
 			// 是否有下一页
 			hasNext() {
@@ -64,6 +71,17 @@
 					}
 				} catch(err) {
 					console.log('err', err);
+				}
+			},
+			// 触底刷新
+			onRefresh() {
+				console.log('bottom');
+				if (this.hasNext()) {
+					this.noMoreFlag = false;
+					this.params.current++;
+					this.getFans();
+				} else {
+					this.noMoreFlag = true;
 				}
 			}
 		}

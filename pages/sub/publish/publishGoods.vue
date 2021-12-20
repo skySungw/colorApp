@@ -79,8 +79,8 @@
 		</view>
 		<!-- <Contact></Contact> -->
 		<!-- 发布按钮 -->
-		<view class="fixed bottom text-right padding z999">
-			<button type="primary" size="mini" class="padding-sm" @click="onCheck">发布</button>
+		<view class="fixed bottom text-right padding z999 flex flex-direction">
+			<button class="cu-btn lg bg-gradual-green" @click="onCheck">发布</button>
 		</view>
 	</view>
 </template>

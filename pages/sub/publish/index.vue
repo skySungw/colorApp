@@ -29,9 +29,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="fixed bottom text-right padding">
-			<button type="default" size="mini" class="padding-sm margin-right" @click="onSaveDraft">保存草稿</button>
-			<button type="primary" size="mini" class="padding-sm" @click="publish('save')">发布</button>
+		<view class="fixed bottom text-right padding flex">
+			<button class="flex-1 padding-sm cu-btn lg bg-gradual-green margin-right-sm" @click="publish('save')">发布</button>
+			<button class="flex-1 padding-sm cu-btn lg line-grey" @click="onSaveDraft">保存草稿</button>
 		</view>
 	</view>
 </template>

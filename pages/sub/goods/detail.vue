@@ -15,7 +15,7 @@
 			<view class="flex-1 padding-right-sm">
 				<view class="text-bold"><text v-if="goodsDetail.goodsState == 2" class="text-red">【已售出】</text>{{ goodsDetail.goodsName }}</view>
 				<view class="margin-top-sm flex flex-bettwen-space">
-					<view class="text-red margin-right">￥{{ goodsDetail.goodsPrice }}</view>
+					<view class="text-red margin-right" v-if="goodsDetail.goodsPrice">￥{{ goodsDetail.goodsPrice }}</view>
 					<view class="text-sm" v-if="goodsDetail.distance">
 						<text class="cuIcon-location text-gray"></text>
 						<text class="text-black">距您</text><text class="text-black">{{ goodsDetail.distance }} km</text>

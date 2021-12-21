@@ -1,7 +1,7 @@
 <template>
 	<view class="publish-content bg-white" :style="[{'padding-bottom': '50px', 'height': '100vh'}, {background: '#fff'}]">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">发布商品</view>
 		</cu-custom>
 		<!-- <rich-text :nodes="strings"></rich-text> -->

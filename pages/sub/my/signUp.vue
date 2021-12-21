@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">活动报名</view>
 		</cu-custom>
 			<ActiveCard v-for="(item, index) in list" :key="index" :item="item"></ActiveCard>

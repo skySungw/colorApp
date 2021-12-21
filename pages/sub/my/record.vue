@@ -1,7 +1,7 @@
 <template>
 	<view class="my-record_container full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">浏览纪录</view>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav">

@@ -1,7 +1,7 @@
 <template>
 	<view class="activity-container">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">活动详情</view>
 		</cu-custom>
 		<view class="padding-sm" v-if="detail">

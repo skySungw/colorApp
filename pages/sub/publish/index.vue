@@ -1,22 +1,14 @@
 <template>
-	<view class="publish-content bg-white">
+	<view class="publish-content bg-white full-height">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">发布帖子</view>
 		</cu-custom>
 		
 		<!-- <rich-text :nodes="strings"></rich-text> -->
 		<view class="padding-lr padding">
-			<view class="padding-bottom title">
-				<input placeholder="请输入标题" class="publish-title" v-model="detail.articleTitle"></input>
-			</view>
-			<!-- <bgyxedit @bgyxchange="getbgyxinfo" :showdone="true" uploadurl="https://qsd.haoleen.com/getdata/getdata/appupimg" filename="img"></bgyxedit> -->
-			<view class="padding-bottom content-border">
-				<textarea v-model="detail.articleContent" placeholder="请输入内容"></textarea>
-			</view>
-			<view class="padding-bottom-sm">文章图片</view>
 			<view class="bg-white padding-bottom-none">
-				<view class="grid col-3 grid-square flex-sub">
+				<view class="grid col-4 grid-square flex-sub">
 					<view class="bg-img" v-for="(item, index) in imgList" :key="index" :data-url="imgList[index]">
 						<image :src='imgList[index]' mode='aspectFill' @click="onViewImage"></image>
 						<view class="cu-tag bg-red" @click="onDelImg" :data-index="index">
@@ -28,10 +20,34 @@
 					</view>
 				</view>
 			</view>
+			<view class="title border-bottom">
+				<input placeholder="填写标题会有更多的人关注哦~" class="publish-title" v-model="detail.articleTitle"></input>
+			</view>
+			<!-- <bgyxedit @bgyxchange="getbgyxinfo" :showdone="true" uploadurl="https://qsd.haoleen.com/getdata/getdata/appupimg" filename="img"></bgyxedit> -->
+			<view class="padding-bottom content-border">
+				<textarea :focus="focus" v-model="detail.articleContent" placeholder="添加正文"></textarea>
+			</view>
+			<!-- 话题 -->
+			<view class="padding-top" @tap="onHandleSearchTopic">
+				<view class="flex flex-bettwen-space padding-sm text-grey">
+					<view class="text-black text-bold">
+						<text v-if="topicDetail">#{{ topicDetail.title }}</text>
+						<text v-else>#参与话题</text>
+					</view>
+					<view class="text-sm">
+						<text v-if="!topicDetail">合适的话题能增加曝光哦~ </text>
+						<text class="cuIcon-right lg text-gray padding-left-sm"></text>
+					</view>
+				</view>
+			</view>
 		</view>
 		<view class="fixed bottom text-right padding flex">
-			<button class="flex-1 padding-sm cu-btn lg bg-gradual-green margin-right-sm" @click="publish('save')">发布</button>
-			<button class="flex-1 padding-sm cu-btn lg line-grey" @click="onSaveDraft">保存草稿</button>
+			<view class="flex flex-direction margin-right-sm text-center" @click="onSaveDraft">
+				<view><text class="cuIcon-text lg text-gray"></text></view>
+				<view class="text-sm text-gray">存草稿</view>
+			</view>
+			<button class="flex-1 padding-sm cu-btn round lg bg-gradual-green" @click="publish('save')">发布</button>
+			<!-- <button class="flex-1 padding-sm cu-btn lg line-grey" @click="onSaveDraft">保存草稿</button> -->
 		</view>
 	</view>
 </template>
@@ -41,6 +57,7 @@
 	export default {
 		data() {
 		 return {
+			focus: false, // 是否聚焦
 			imgList: [],
 			img: [], // 二维码
 			detail: {
@@ -52,7 +69,7 @@
 			},
 			draftId: '',
 			articleCode: '',
-			
+			topicDetail: null
 		 }
 		},
 		onLoad(options) {
@@ -67,6 +84,18 @@
 			}
 		},
 		methods: {
+			onHandleSearchTopic() {
+				uni.navigateTo({
+					url: '/pages/sub/search/topicSearch',
+					events: {
+						// 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+						onSelectTopic: ({data}) => {
+							console.log('data', data);
+							this.topicDetail = data;
+						}
+					}
+				})
+			},
 			onChooseImage() {
 				uni.chooseImage({
 					count: 1, //默认9
@@ -208,21 +237,28 @@
 				} catch (err) {
 					console.log('err', err);
 				}
-			}
+			},
 		}
 	}
 </script>
 
 <style scoped lang="scss">
 	.publish-content {
+		overflow-y: auto;
 		padding-bottom: 100upx;
 		.publish-title {
-			font-size: 40upx;
+			font-size: 32upx;
+			margin: 10upx 0;
 		}
 		.content-border {
 			textarea {
-				font-size: 40upx;
+				width: 100%;
+				margin: 16upx 0;
+				font-size: 24upx;
 			}
 		}
+	}
+	.border-bottom {
+		border-bottom: 1upx solid #eee;
 	}
 </style>

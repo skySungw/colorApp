@@ -10,7 +10,7 @@
 		<view class="contion">
 		  <view class='city_title'>选择已开通服务的城市</view>
 		  <view class='city_list'>
-		    <block v-for="(item, index) in citylist" :index="index">
+		    <block v-for="(item, index) in citylist" :key="index">
 		      <view :class="['city', {'activi theme-text': city == item.cityName}]" @tap='city_btn(item)' :data-city='item.cityName' :data-location="item.location" :data-cityCode='item.cityCode'>{{item.cityName}}</view>
 		    </block>
 		  </view>

@@ -1,7 +1,7 @@
 <template>
 	<view class="full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">我的粉丝</view>
 		</cu-custom>
 		<view class="flex-1 flex overflow-hidden">

@@ -235,10 +235,16 @@
 			}, {
 					"path": "search/goodsSearch",
 					"style": {
-						"navigationBarTitleText": "商品搜索搜索",
+						"navigationBarTitleText": "商品搜索",
 						"enablePullDownRefresh": false//禁止下拉刷新
 					}
 			}, {
+					"path": "search/topicSearch",
+					"style": {
+						"navigationBarTitleText": "话题搜索",
+						"enablePullDownRefresh": false//禁止下拉刷新
+					}
+			},{
 					"path": "goods/detail",
 					"style": {
 						"navigationBarTitleText": "商品详情",

@@ -1,7 +1,7 @@
 <template>
 	<view class="contact-setting">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">发布商品</view>
 		</cu-custom>
 		<!-- 设置二维码 -->

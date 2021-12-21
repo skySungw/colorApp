@@ -1,7 +1,7 @@
 <template>
 	<view class="my-integral_container">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">我的积分</view>
 		</cu-custom>
 		<view class="content padding-xs">

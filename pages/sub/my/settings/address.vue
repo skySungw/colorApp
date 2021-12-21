@@ -1,7 +1,7 @@
 <template>
 	<view class="my-setting_modifyaddress">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">{{ id ? '编辑' : '新增'}}地址</view>
 		</cu-custom>
 		<form>

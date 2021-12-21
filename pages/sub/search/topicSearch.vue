@@ -1,41 +1,28 @@
 <template>
-	<view>
+	<view class="full-height absolute flex flex-direction bg-white">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
 			<view slot="backText"></view>
-			<view slot="content">商品搜索</view>
+			<view slot="content">话题列表</view>
 		</cu-custom>
 		<view class="cu-bar search bg-white">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input type="text" placeholder="请输入商品名" confirm-type="search" :value="params.goodsName" @input="onInput" @focus="onFocus"></input>
+				<input type="text" placeholder="搜索你想参与的话题" confirm-type="search" :value="params.goodsName" @input="onInput" @focus="onFocus"></input>
 			</view>
 			<view class="action">
-				<button class="cu-btn bg-green shadow-blur round" @click="onHandleSearch">搜索</button>
+				<text class="text-black text-sm" @click="onCancel">取消</text>
 			</view>
 		</view>
-		<view class="result">
-			<view class="bg-white padding-lr">
-				<!-- 搜索条件 -->
-				<view v-if="flag">
-					<view v-if="historyList.length" class="flex flex-bettwen-space flex-align-center padding-tb-sm">
-						<text>历史搜索</text>
-						<text class="cuIcon-delete lg text-gray" @click="onClear"></text>
+		<view class="result flex-1 flex overflow-hidden">
+			<!-- 搜索结果 -->
+			<view v-if="list.length > 0" class="flex-1 overflow-hidden list padding-left padding-right">
+				<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
+					<view v-for="(item, index) in list" :key="index" @tap="onHandleSelectTopic(item)">
+						<view class="title text-bold text text-black padding-top-sm">#第{{ index }}条话题名</view>
+						<view class="text-sm text-grey">590篇帖子 | 3人在看</view>
 					</view>
-					<view class="padding-tb-sm" v-if="historyList.length">
-						<text
-							class="cu-tag radius padding-sm margin-bottom-sm"
-							v-for="(item, index) in historyList"
-							:key="index"
-							:data-item="item"
-							:data-index="index"
-							@click="selectTag"
-						>{{ item }}</text>
-					</view>
-				</view>
-				<!-- 搜索结果 -->
-				<view class="list" v-else>
-					<Goods v-for="(item, index) in list" :key="index" :item="item" :source="0" :status="0"></Goods>
-				</view>
+					<view v-if="noMoreFlag" class="text-center padding-sm text-grey text-sm">我是有底线的~</view>
+				</scroll-view>
 			</view>
 		</view>
 	</view>
@@ -63,10 +50,10 @@
 					lng: ''
 				},
 				list: [], // 宝贝列表
+				noMoreFlag: false
 			}
 		},
 		onLoad() {
-			this.historyList = uni.getStorageSync('searchGoodsHistory') || [];
 			uni.getLocation({
 			    type: 'wgs84',
 			    success: (res) =>{
@@ -74,14 +61,36 @@
 						this.params.lng = res.longitude
 			    }
 			});
+			// #ifdef APP-NVUE
+			const eventChannel = this.$scope.eventChannel; // 兼容APP-NVUE
+			// #endif
+			// #ifndef APP-NVUE
+			const eventChannel = this.getOpenerEventChannel();
+			// #endif
+			this.eventChannel = eventChannel;
 		},
-		onReachBottom() {
-			if (this.hasNext()) {
-				this.params.current++;
-				this.getGoodsList();
-			}
-		},
+		// onReachBottom() {
+		// 	if (this.hasNext()) {
+		// 		this.params.current++;
+		// 		this.getGoodsList();
+		// 	}
+		// },
 		methods: {
+			onCancel() {
+				uni.navigateBack({
+					delta: 1
+				})
+			},
+			// 选中话题
+			onHandleSelectTopic(item) {
+				this.eventChannel.emit('onSelectTopic', {
+					data: {
+						title: '话题名',
+						id: 333
+					}
+				});
+				this.onCancel();
+			},
 			// 是否有下一页
 			hasNext() {
 				return this.params.current < Math.ceil(this.params.total / this.params.size);
@@ -112,6 +121,7 @@
 			},
 			onInput(e) {
 				this.params.goodsName = e.detail.value;
+				setTimeout(this.onHandleSearch, 500);
 			},
 			onFocus(e) {
 				this.flag = true;
@@ -128,9 +138,16 @@
 				// 隐藏搜索历史
 				this.flag = false;
 			},
-			onClear() {
-				this.historyList = [];
-				uni.setStorageSync('searchGoodsHistory', '');
+			// 触底刷新
+			onRefresh() {
+				console.log('bottom');
+				if (this.hasNext()) {
+					this.noMoreFlag = false;
+					this.params.current++;
+					this.getGoodsList();
+				} else {
+					this.noMoreFlag = true;
+				}
 			}
 		}
 	}

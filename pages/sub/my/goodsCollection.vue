@@ -1,7 +1,7 @@
 <template>
 	<view class="my-goods_container full-height absolute flex flex-direction">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">商品收藏</view>
 		</cu-custom>
 		<view v-if="list.length > 0" class="flex-1 overflow-hidden">

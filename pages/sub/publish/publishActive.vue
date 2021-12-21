@@ -1,7 +1,7 @@
 <template>
 	<view class="publish-content bg-white">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">发布活动</view>
 		</cu-custom>
 		<!-- <rich-text :nodes="strings"></rich-text> -->

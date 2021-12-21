@@ -1,7 +1,7 @@
 <template>
 	<view class="my-setting_address">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText">返回</view>
+			<view slot="backText"></view>
 			<view slot="content">地址列表</view>
 		</cu-custom>
 		<view class="padding-lr bg-white">

@@ -325,7 +325,7 @@
 		height: 100upx;
 	}
 	.card-list_container {
-		padding-bottom: 150upx;
+		padding-bottom: 100upx;
 		overflow: hidden;
 	}
 	.location {

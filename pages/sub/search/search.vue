@@ -34,7 +34,7 @@
 				</view>
 				<!-- 搜索结果 -->
 				<view class="list" v-else>
-					<view>
+					<!-- <view>
 						<scroll-view scroll-x class="nav text-center">
 						  <view class="cu-item" :class="[{'text-bold cur': index == tabCur}]" v-for="(item, index) in menuList" :key="index" @click="tabSelect" :data-id="index" :data-item="item">
 						    {{ item.label }}
@@ -43,8 +43,8 @@
 					</view>
 					<view v-if="tabCur == 2">
 						<ActiveCard v-for="(item, index) in list" :key="index"></ActiveCard>
-					</view>
-					<view v-else>
+					</view> -->
+					<view>
 						<Card v-for="(item, index) in list" :key="index" :item="item" :source="1" :status="1"></Card>
 					</view>
 					<Empty v-if="list.length == 0" msg="暂无搜索结果~" />

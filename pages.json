@@ -50,6 +50,12 @@
 					"navigationBarTitleText": "话题页",
 					"enablePullDownRefresh": false
 				}
+		}, {
+				"path": "site/index",
+				"style": {
+					"navigationBarTitleText": "站长",
+					"enablePullDownRefresh": false
+				}
 		}]
 	}, {
 		"root": "pages/sub",

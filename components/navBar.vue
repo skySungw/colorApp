@@ -56,11 +56,12 @@
 					icon: 'add-action',
 					className: 'add-action',
 					buttonClass: 'cu-btn cuIcon-add bg-green shadow',
-				},{
+				},
+				{
 					index: 4,
-					label: '话题',
-					icon: 'cuIcon-baby',
-					url: '/pages/subpackages/subject/index'
+					label: '站长',
+					icon: 'cuIcon-shop',
+					url: '/pages/subpackages/site/index'
 				},
 				{
 					index: 5,

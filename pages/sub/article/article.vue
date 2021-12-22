@@ -30,6 +30,17 @@
 					</swiper>
 				</view>
 				<rich-text :nodes="articleDetail.articleContent"></rich-text>
+				<view class="padding-top-sm">
+					<view
+						class="cu-tag line-gray round text-bold text-sm text-black"
+						v-for="(item, index) in [1,2,3]"
+						:key="index"
+						:data-item="item"
+						@tap="goTopic"
+					>
+						<text class="text-bold">#</text>我是话题{{ item }}
+					</view>
+				</view>
 			</view>
 			<!-- 此处是评论区 -->
 			<view class="padding-sm">
@@ -177,6 +188,14 @@
 					current: index
 				});
 			},
+			// 进入话题页
+			goTopic(e) {
+				const id = e.currentTarget.dataset['item'];
+				uni.navigateTo({
+					url: `/pages/subpackages/subject/index?id=${id}`
+				})
+			},
+			// 进入个人主页
 			goHomePage() {
 				console.log('this.', this.articleDetail.userId)
 				uni.navigateTo({

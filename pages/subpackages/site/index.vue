@@ -73,7 +73,7 @@
 		<!-- <view class="publish bg-gradual-green" v-if="publishShow"  @click="onPublish">发布</view> -->
 		<!-- <view class="publish" @click="onPublish">发布</view> -->
 		<!-- 其它区域 -->
-		<NavBar :index="1"></NavBar>
+		<NavBar :index="4"></NavBar>
 	</view>
 </template>
 
@@ -109,7 +109,7 @@
 					title: '定位中...',
 				},
 				initPage: true, // 是否获取完数据
-				placeholder: '搜索文章',
+				placeholder: '看看周边的站长',
 				token: null, 
 				publishShow: false, // 显示发布按钮
 				params: {

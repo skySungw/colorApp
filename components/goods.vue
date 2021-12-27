@@ -11,6 +11,34 @@
 				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
 			</view>
 		</view>
+		<!-- 产品库列表 -->
+		<view v-if="source == 2" class="goods-item flex">
+			<image :src="item.goodsImgArray[0]" :lazy-load="true"></image>
+			<view class="goods-item_container flex-1 padding-left-xs">
+				<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
+				<view class="text-bold goods-item_info">{{ item.goodsDesc }}</view>
+				<view class="goods-item_address" v-if="item.goodsAddress">地址：{{ item.goodsAddress }}</view>
+				<view class="goods-item_address" v-if="item.distance">距您 <text class="text-red padding-lr-sm">{{item.distance}}</text> km</view>
+				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
+			</view>
+			<view>
+				<text class="cuIcon-roundadd lg text-gray" @tap="addGoods"></text>
+			</view>
+		</view>
+		<!-- 橱窗列表 -->
+		<view v-if="source == 3" class="goods-item flex">
+			<image :src="item.goodsImgArray[0]" :lazy-load="true"></image>
+			<view class="goods-item_container flex-1 padding-left-xs">
+				<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
+				<view class="text-bold goods-item_info">{{ item.goodsDesc }}</view>
+				<view class="goods-item_address" v-if="item.goodsAddress">地址：{{ item.goodsAddress }}</view>
+				<view class="goods-item_address" v-if="item.distance">距您 <text class="text-red padding-lr-sm">{{item.distance}}</text> km</view>
+				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
+			</view>
+			<view>
+				<text class="cuIcon-move lg text-gray" @tap="deleteGoods"></text>
+			</view>
+		</view>
 		<!-- 我的-我的商品 -->
 		<view v-if="source == 1">
 			<view class="goods-item flex" @click="onGoodsDetail">
@@ -36,7 +64,7 @@
 </template>
 
 <script>
-	import { onUpdateGoodsState } from '@/api';
+	import { onUpdateGoodsState, onAddGoodsToShowCase, onRemoveGoodsToShowCase } from '@/api';
 	export default {
 		props: {
 			item: {
@@ -44,20 +72,65 @@
 				type: Object
 			},
 			source: {
-				default: 0, // 来源 1 - 我的-我的商品列表， 0 - 我的-个人主页-我发布的
+				default: 0, // 来源 1 - 我的-我的商品列表， 0 - 我的-个人主页-我发布的, 2 - 产品库列表，3 - 橱窗列表
 				type: Number
 			},
 			status: {
 				default: 0, // 状态 0 下架 1 上架 2 已售出
 				type: Number 
-			}
-		},
-		data() {
-			return {
-				
+			},
+			showcaseId: {
+				default: '', // 橱窗id ''
+				type: Number
 			}
 		},
 		methods: {
+			// 删除橱窗商品
+			async deleteGoods() {
+				try {
+					const res = await onRemoveGoodsToShowCase({
+						goodsIds: [this.item.goodsCode],
+						showcaseId: this.showcaseId
+					});
+					if (res.code === 200) {
+						uni.showToast({
+							title: '操作成功',
+							icon: 'none',
+							complete: () => {
+								setTimeout(() => {
+									this.$emit('refreshList');
+								}, 2000);
+								// this.$emit('refreshList');
+							}
+						})
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
+			// 添加橱窗商品
+			async addGoods() {
+				try {
+					const res = await onAddGoodsToShowCase({
+						goodsIds: [this.item.goodsCode],
+						showcaseId: this.showcaseId
+					});
+					if (res.code === 200) {
+						uni.showToast({
+							title: '操作成功',
+							icon: 'none',
+							complete: () => {
+								// setTimeout(() => {
+								// 	this.$emit('refreshList');
+								// }, 2000);
+								this.$emit('refreshList');
+							}
+						})
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			async onAdd(type) {
 				try {
 					const res = await onUpdateGoodsState({

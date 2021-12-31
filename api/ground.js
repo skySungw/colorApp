@@ -1,4 +1,31 @@
 import request from './request';
+
+
+// 查询话题列表
+function onFetchTopic(data) {
+	return request({
+		url: 'api/content/topic/selectTopicTop',
+		data,
+		method: 'GET'
+	})
+}
+
+// 根据id查询话题
+function onFetchTopicById(data) {
+	return request({
+		url: 'api/content/topic/selectTopic',
+		data,
+		method: 'GET'
+	})
+}
+
+// 话题发布接口
+function onPublishTopic(data) {
+	return request({
+		url: 'api/content/topic/createTopic',
+		data
+	})
+}
 // 贴子发布接口
 function onPublish(data) {
 	return request({
@@ -98,6 +125,9 @@ function onSignUpActivity(data) {
 	})
 }
 export default {
+	onFetchTopicById,
+	onFetchTopic,
+	onPublishTopic,
 	onPublish,
 	onFetchArticle,
 	onFetchArticleDetail,

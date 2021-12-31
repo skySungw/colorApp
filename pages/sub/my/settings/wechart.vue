@@ -29,6 +29,8 @@
 	export default {
 		data() {
 			return {
+				eventChannel: null,
+				source: '', // 1 - 发布商品
 				imgList: [],
 				img: [], // 二维码
 			}
@@ -39,6 +41,16 @@
 				this.imgList = [options.param];
 				this.img = [options.param];
 			}
+			// #ifdef APP-NVUE
+			const eventChannel = this.$scope.eventChannel; // 兼容APP-NVUE
+			// #endif
+			// #ifndef APP-NVUE
+			const eventChannel = this.getOpenerEventChannel();
+			// #endif
+			this.eventChannel = eventChannel;
+			eventChannel.on('setSource', data => {
+				this.source = data.source;
+			})
 		},
 		methods: {
 			onChooseImage() {
@@ -97,9 +109,17 @@
 						uni.showToast({
 							title: '操作成功',
 							duration: 2000,
-							complete() {
+							complete: () => {
 								setTimeout(() => {
-									uni.navigateBack();
+									if (this.eventChannel) {
+										this.eventChannel.emit('getSetting', {
+											data: this.img[0]
+										});
+									}
+									uni.navigateBack({
+										delta: 1
+									})
+									// uni.navigateBack();
 								}, 2000);
 							}
 						});

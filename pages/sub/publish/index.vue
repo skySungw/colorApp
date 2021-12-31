@@ -29,13 +29,18 @@
 			</view>
 			<!-- 话题 -->
 			<view class="padding-top" @tap="onHandleSearchTopic">
-				<view class="flex flex-bettwen-space padding-sm text-grey">
-					<view class="text-black text-bold">
-						<text v-if="topicDetail">#{{ topicDetail.title }}</text>
-						<text v-else>#参与话题</text>
+				<view class="flex flex-bettwen-space padding-top-sm padding-bottom-sm align-center text-grey">
+					<view class="felx-1 text-black text-bold">
+						<view v-if="topicsList.length !== 0" class="flex align-center topic-tags">
+							<view v-for="(item, index) in topicsList" :key="index" class="cu-tag line-grey round">
+								# {{ item.name }}
+								<text class="cuIcon-close lg text-gray margin-left-sm" @tap.stop="onDelTopic" :data-index="index"></text>
+							</view>
+						</view>
+						<text v-else># 参与话题</text>
 					</view>
 					<view class="text-sm">
-						<text v-if="!topicDetail">合适的话题能增加曝光哦~ </text>
+						<text v-if="topicsList.length === 0">合适的话题能增加曝光哦~ </text>
 						<text class="cuIcon-right lg text-gray padding-left-sm"></text>
 					</view>
 				</view>
@@ -66,10 +71,11 @@
 				articleContentImg: [],
 				articleDesc: '',
 				saveType: 0, // 0 - 发布， 1 - 草稿
+				articleTopic: [], // 话题
 			},
 			draftId: '',
 			articleCode: '',
-			topicDetail: null
+			topicsList: [], // 话题列表
 		 }
 		},
 		onLoad(options) {
@@ -84,6 +90,13 @@
 			}
 		},
 		methods: {
+			// 删除话题
+			onDelTopic(e) {
+				const index = e.currentTarget.dataset['index'];
+				console.log('index', index);
+				this.topicsList.splice(index, 1);
+			},
+			// 添加话题
 			onHandleSearchTopic() {
 				uni.navigateTo({
 					url: '/pages/sub/search/topicSearch',
@@ -91,11 +104,27 @@
 						// 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
 						onSelectTopic: ({data}) => {
 							console.log('data', data);
-							this.topicDetail = data;
+							const topicDetail = data;
+							let flag = false; 
+							this.topicsList.forEach((v, i) => {
+								if (v.id === topicDetail.id) {
+									flag = true;
+								}
+							});
+							if (!flag) {
+								this.topicsList.push(data);
+							}
 						}
+					},
+					success: (res) => {
+						res.eventChannel.emit('topicsList', {
+							topicsList: this.topicsList,
+						})
 					}
 				})
 			},
+			
+			// 上传图片
 			onChooseImage() {
 				uni.chooseImage({
 					count: 1, //默认9
@@ -210,6 +239,13 @@
 			async onFinalPublish() {
 				try {
 					this.detail.articleDesc = this.detail.articleContent;
+					// 添加话题
+					if (this.topicsList.length > 0) {
+						this.topicsList.forEach(v => {
+							this.detail.articleTopic.push(v.id);
+						});
+					}
+					
 					let params = this.detail;
 					console.log("this.draftId", this.draftId)
 					if (this.draftId) {
@@ -217,6 +253,7 @@
 							draftId: this.draftId
 						})
 					}
+					
 					console.log("params", params);
 					const res = await onPublish(params);
 					if (res.code === 200) {
@@ -260,5 +297,11 @@
 	}
 	.border-bottom {
 		border-bottom: 1upx solid #eee;
+	}
+	.topic-tags {
+		flex-wrap: wrap;
+		.cu-tag {
+			margin: 10upx 5upx 10upx 0;
+		}
 	}
 </style>

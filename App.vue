@@ -2,6 +2,7 @@
 	import Vue from 'vue'
 	export default {
 		onLaunch: function() {
+			// userType - 用户类型， 0 官方人员  1 C端  2 站长端
 			Vue.prototype.getSystemLocation = function(successFn, failFn) {
 				uni.getLocation({
 				    type: 'wgs84',

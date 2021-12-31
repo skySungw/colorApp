@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="my-container">
 		<cu-custom bgColor="bg-white" :isBack="false">
 		</cu-custom>
 		<!-- 头部 -->
@@ -10,7 +10,9 @@
 				<image src="/static/logo.png" class="user-photo" mode="aspectFit"></image>
 				<view class="flex flex-align-center margin-left-sm text-bold text-xl">点击登录</view>
 			</view>
-			<view class="my-header_container flex" v-else>
+			<view class="my-header_container flex" v-else @tap="onGoPage({
+				link: '/pages/sub/my/home'
+			})">
 				<image :src="info.wxHeadImg" class="user-photo" mode="aspectFit"></image>
 				<view class="my-header-right padding-lr">
 					<view class="nickname text-black text-bold">{{info.userName}}</view>
@@ -58,6 +60,18 @@
 				<text>{{ item.label }}</text>
 			</view>
 		</view>
+		<!-- 工具 -->
+		<view v-if="info && userType == 2" class="margin-top-sm padding-sm bg-white">
+			<view class="text-bold text-sm padding-left-sm">我的工具</view>
+			<view class="cu-list grid col-5 no-border">
+				<view class="cu-item" v-for="(item, index) in myTools" :key="index" @click="onGoPage(item)">
+					<view :class="item.icon"></view>
+					<text>{{ item.label }}</text>
+				</view>
+			</view>
+		</view>
+		
+		<!-- 退出登录 -->
 		<view v-if="info" class="margin-top-sm padding-sm bg-white flex">
 			<view class="flex-1 text-center text-bold" @tap="onLogout">退出登录</view>
 		</view>
@@ -68,7 +82,7 @@
 
 <script>
 	import NavBar from '@/components/navBar';
-	import { myPageMenu } from '@/config/config.js';
+	import { myPageMenu, myTools } from '@/config/config.js';
 	import { selectMemberInfoByToken } from '@/api/index';
 	
 	export default {
@@ -79,6 +93,7 @@
 			return {
 				info: null, // 个人信息
 				myPageMenu,
+				myTools,
 				memberDetail: { // 粉丝数量
 					fansCount: 0,
 					followCount: 0,
@@ -87,11 +102,13 @@
 				memberWorks: { // 发布数量
 					goodsCount: 0,
 					articleCount: 0
-				}
+				},
+				userType: null
 			}
 		},
 		onShow() {
 			const token = uni.getStorageSync('token');
+			this.userType = uni.getStorageSync('userType')
 			if (!token) {
 				return false;
 			}
@@ -161,6 +178,11 @@
 					font-size: 42upx;
 				}
 			}
+		}
+	}
+	.my-container {
+		.cu-list.grid.no-border>.cu-item {
+				padding: 0;
 		}
 	}
 </style>

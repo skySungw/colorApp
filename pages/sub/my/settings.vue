@@ -23,13 +23,21 @@
 					<text class="text-grey text-sm">{{ info.userName }}</text>
 				</view>
 			</view>
+			<view class="cu-item arrow" @click="goPage('/pages/sub/my/settings/wxNumber', info.wxNumber)">
+				<view class="content">
+					<text class="text-grey">微信号</text>
+				</view>
+				<view class="action">
+					<text class="text-grey text-sm">{{ info.wxNumber }}</text>
+				</view>
+			</view>
 			<view class="cu-item arrow">
 				<view class="content">
 					<text class="text-grey">性别</text>
 				</view>
 				<picker @change="onPickerChange" :value="info.userSex" :range="picker">
 					<view class="picker">
-						{{ picker[info.userSex] }}
+						{{ info.userSex === 2 ? '请选择性别' : picker[info.userSex] }}
 					</view>
 				</picker>
 			</view>

@@ -9,7 +9,7 @@
 	      <view class="li_con">获得你的公开信息（昵称、头像等）</view>
 	      <form class="button right">
 					<block>
-						<button v-if="canIUseGetUserProfile" class="button theme-bg" @tap="getUserProfile">获取头像昵称</button>
+						<button v-if="canIUseGetUserProfile" class="button bg-gradual-green" @tap="getUserProfile">获取头像昵称</button>
 						<button v-else class="button theme-bg" open-type="getUserInfo" @getuserinfo="getUserInfo">获取头像昵称</button>
 						<view class="cancel" @tap="loginBack('back')">暂不授权</view>
 					</block>
@@ -56,6 +56,7 @@
 				loginInfo: null, // 登录信息
 				userInfo: {},
 				canIUseGetUserProfile: false,
+				specialCode: '', // 带有特殊字符时，用后端返回的code码
 			}
 		},
 		onLoad() {
@@ -128,15 +129,19 @@
 			async onCheckAuth(data) {
 				try {
 					const res = await checkAuth(data);
-					console.log('res', res);
 					if (res.code === 1004) {
 						this.hasUserInfo = true;
 						this.showPhoneModal = true;
+						this.specialCode = res.msg;
 					} else if (res.code === 200) {
 						uni.setStorageSync('token', res.data.token);
 						uni.setStorageSync('userId', res.data.userId);
 						this.onSelectLocation();
 					}
+					// userType - 用户类型， 0 官方人员  1 C端  2 站长端  
+					uni.setStorageSync('userType', res.data.userType);
+					// 橱窗id
+					uni.setStorageSync('showcaseId', res.data.showcaseId);
 				} catch (err) {
 					console.log('err', err);
 				}
@@ -150,6 +155,11 @@
 						...detail,
 						headImgUrl: this.loginInfo.avatarUrl,
 					})
+					if (this.specialCode) {
+						Object.assign(data, {
+							code: this.specialCode
+						})
+					}
 					this.onHandleLogin(data);
 				}
 			},

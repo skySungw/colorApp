@@ -33,9 +33,9 @@
 					<view class="img_item" v-for="(colItem, colIndex) in cols" :key="colIndex">
 						<view v-for="(item, index) in colItem" :key="item.id" @tap="goPage" :data-item="item">
 							<image class="img-face" :src="item.pic" :style="[{'height':item.height + 'px'}]"></image>
-							<view class="img-topic">
-								<view class="img-topic_tag flex align-center">
-									<text>#</text> 我就是一小话题
+							<view class="img-topic flex">
+								<view class="img-topic_tag flex align-center" v-for="(topicItem, topicIndex) in item.articleTopic" :key="topicIndex">
+									<text>#</text> {{ topicItem.name }}
 								</view>
 							</view>
 							<view class="card-title">{{ item.articleTitle }}</view>
@@ -140,16 +140,6 @@
 					this.init();
 				}
 			});
-			// 注册事件
-			// uni.$on('operateHandle', (item) => {
-			// 	this.activeIndex = item.index;
-			// 	this.onChangeParams(this.activeIndex);
-			// 	if (this.activeIndex == 2) {
-			// 		this.placeholder = '搜索活动';
-			// 	} else {
-			// 		this.placeholder = '搜索文章';
-			// 	}
-			// });
 		},
 		onShow() {
 			this.userId = uni.getStorageSync('userId');
@@ -433,7 +423,10 @@
 			display: inline-block;
 			vertical-align: top;
 			.img-topic {
-				.img-topic_tag {
+				flex-wrap: wrap;
+				&_tag {
+					margin-right: 5upx;
+					padding: 5upx 0;
 					font-size: 18upx;
 					color: #999;
 					font-weight: 200;

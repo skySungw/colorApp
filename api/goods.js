@@ -1,4 +1,44 @@
 import request from './request';
+
+// 查询商品分类接口
+function onFetchGoodsCategory(data) {
+	return request({
+		url: 'api/goods/category/selectGoodsCategoryList',
+		data,
+		method: 'GET'
+	})
+}
+// 查询商品橱窗用户身份接口
+function onFetchOwnerStateShowcase(data) {
+	return request({
+		url: 'api/goods/showcase/selectOwnerStateShowcase',
+		data,
+		method: 'GET'
+	})
+}
+// 批量添加商品至橱窗的接口
+function onAddGoodsToShowCase(data) {
+	return request({
+		url: 'api/goods/showcase/addGoodsToShowCase',
+		data,
+	})
+}
+// 删除橱窗中的商品接口
+function onRemoveGoodsToShowCase(data) {
+	return request({
+		url: 'api/goods/showcase/removeGoodsToShowCase',
+		data,
+	})
+}
+
+// 查询商品橱窗接口
+function onFetchShowcasePage(data) {
+	return request({
+		url: 'api/goods/showcase/selectShowcasePage',
+		data,
+		method: 'GET'
+	})
+}
 // 查询宝贝列表接口
 function onFetchGoodsList(data) {
 	return request({
@@ -83,6 +123,11 @@ function onUpdateGoodsState(data) {
 }
 
 export default {
+	onFetchGoodsCategory,
+	onFetchOwnerStateShowcase,
+	onAddGoodsToShowCase,
+	onRemoveGoodsToShowCase,
+	onFetchShowcasePage,
 	onFetchGoodsList,
 	onCreateGoods,
 	onFetchGoodsDetail,

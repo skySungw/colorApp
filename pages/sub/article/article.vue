@@ -32,13 +32,13 @@
 				<rich-text :nodes="articleDetail.articleContent"></rich-text>
 				<view class="padding-top-sm">
 					<view
-						class="cu-tag line-gray round text-bold text-sm text-black"
-						v-for="(item, index) in [1,2,3]"
-						:key="index"
-						:data-item="item"
+						class="cu-tag line-gray round text-bold text-sm text-black topic-tag"
+						v-for="(topicItem, topicIndex) in articleDetail.articleTopic"
+						:key="topicIndex"
+						:data-item="topicItem"
 						@tap="goTopic"
 					>
-						<text class="text-bold">#</text>我是话题{{ item }}
+						<text class="text-bold">#</text> {{ topicItem.name }}
 					</view>
 				</view>
 			</view>
@@ -132,7 +132,7 @@
 					createtime: '', // 文章创建时间
 					articleTitle: '', // 文章标题
 					articleContent: '', // 文章内容
-					
+					articleTopic: [], // 话题列表
 				},
 				articleCode: 0, // 文章id
 				isFocus: true,
@@ -190,7 +190,7 @@
 			},
 			// 进入话题页
 			goTopic(e) {
-				const id = e.currentTarget.dataset['item'];
+				const id = e.currentTarget.dataset['item'].id;
 				uni.navigateTo({
 					url: `/pages/subpackages/subject/index?id=${id}`
 				})
@@ -338,6 +338,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.topic-tag {
+		margin: 5upx 10upx 5upx 0;
+	}
 	.article-detail {
 		padding-bottom: 100upx;
 		.article-detail_content {
@@ -361,4 +364,5 @@
 			height: 100upx;
 		}
 	}
+	
 </style>

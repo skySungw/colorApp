@@ -1,7 +1,4 @@
 
-// const baseUrl = 'http://123.56.221.238:8866/'
-// const baseUrl = 'http://192.168.165.111:8866/'
-// const baseUrl = 'http://62.234.77.116/';
 import { baseUrl } from '@/api/config';
 async function request ({
 	url,
@@ -10,8 +7,8 @@ async function request ({
 	method = 'POST',
 	dataType
 }) {
-	let newUrl = url;
-	// let newUrl = url.replace('api/', '');
+	// let newUrl = url;
+	let newUrl = url.replace('api/', '');
 	let token = uni.getStorageSync('token');
 	if (token) {
 		header['Authorization'] = 'Bearer ' + token;

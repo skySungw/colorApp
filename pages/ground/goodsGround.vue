@@ -34,12 +34,10 @@
 	import NavBar from '@/components/navBar';
 	import Goods from '@/components/goods';
 	import Empty from '@/components/empty.vue';
-	import GoodsList from '@/components/goodsList.vue';
 	
 	export default {
 		components:{
 			NavBar,
-			GoodsList,
 			Goods,
 			Empty
 		},

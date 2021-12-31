@@ -140,11 +140,12 @@
 			selectMap() {
 				const mapConfig = {
 				  key: "YCWBZ-Q2CKG-NK7Q3-IFYBG-LCHA7-TKBQ5", //使用在腾讯位置服务申请的key
-				  referer: "kuaihuo" //调用插件的app的名称
+				  referer: "kuaihuo", //调用插件的app的名称
+					category: '房产小区'
 				}
 				// #ifdef MP-WEIXIN
 				wx.navigateTo({
-					url: 'plugin://chooseLocation/index?key=' + mapConfig.key + '&referer=' + mapConfig.referer
+					url: 'plugin://chooseLocation/index?key=' + mapConfig.key + '&referer=' + mapConfig.referer + '&category=' + mapConfig.category
 				});
 				// #endif        
 			}

@@ -56,6 +56,24 @@
 					"navigationBarTitleText": "站长",
 					"enablePullDownRefresh": false
 				}
+		}, {
+				"path": "site/apply",
+				"style": {
+					"navigationBarTitleText": "站长申请",
+					"enablePullDownRefresh": false
+				}
+		}, {
+				"path": "site/myShop",
+				"style": {
+					"navigationBarTitleText": "我的橱窗",
+					"enablePullDownRefresh": false
+				}
+		}, {
+				"path": "site/goodsList",
+				"style": {
+					"navigationBarTitleText": "橱窗商品",
+					"enablePullDownRefresh": false
+				}
 		}]
 	}, {
 		"root": "pages/sub",
@@ -119,6 +137,13 @@
 				"path": "my/settings/phone",
 				"style": {
 					"navigationBarTitleText": "更改手机号",
+					"enablePullDownRefresh":false//禁止下拉刷新
+				}
+			},
+			{
+				"path": "my/settings/wxNumber",
+				"style": {
+					"navigationBarTitleText": "更改微信号",
 					"enablePullDownRefresh":false//禁止下拉刷新
 				}
 			},

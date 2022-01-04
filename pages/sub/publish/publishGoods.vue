@@ -1,5 +1,5 @@
 <template>
-	<view class="publish-content bg-white" :style="[{'padding-bottom': '50px', 'height': '100vh'}, {background: '#fff'}]">
+	<view class="publish-content bg-white" :style="[{'padding-bottom': '70px'}, {background: '#fff'}]">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true">
 			<view slot="backText"></view>
 			<view slot="content">发布商品</view>
@@ -53,30 +53,12 @@
 				</view>
 			</view>
 		</view>
-		<!-- 联系方式 -->
-		<!-- 选择联系方式 -->
-		<!-- <view>
-			<view v-if="picker.length" class="cu-form-group margin-top">
-				<view class="title">联系方式</view>
-				<picker @change="onPickerChange" :value="sellerContactType" :range="picker">
-					<view class="picker">
-						{{picker[sellerContactType]}}
-					</view>
-				</picker>
-			</view>
-			<view v-else class="cu-list menu card-menu margin-top">
-				<view class="cu-item arrow padding-left-none">
-					<view class="content">
-						<text class="text-grey">联系方式</text>
-					</view>
-					<view class="action" @click="goPage({
-						link: '/pages/sub/setting/contact'
-					})">
-						<text class="text-grey text-sm">添加联系方式</text>
-					</view>
-				</view>
-			</view>
-		</view> -->
+		<!-- 选择地址 -->
+		<view class="cu-form-group">
+			<view class="title">地区信息</view>
+			<input v-model="address" :disabled="true" placeholder="请填写地址"></input>
+			<text class="cuIcon-location" @click="selectMap" ></text>
+		</view>
 		<!-- 联系方式 -->
 		<view class="padding-lr">
 			<view class="cu-form-group padding-lr-none">
@@ -110,14 +92,14 @@
 </template>
 
 <script>
-	import { onFetchGoodsCategory, onCreateGoods, onFetchContactType } from '@/api';
+	import { onFetchGoodsCategory, onCreateGoods, onFetchContactType, selectUserLocation, saveUserLocation } from '@/api';
 	import bgyxedit from '@/components/bgyxedit/bgyxedit';
 	import Contact from '@/components/contact';
 	import ajaxUpload from '@/api/ajaxUpload';
 	
-	// // #ifdef MP-WEIXIN
-	// const chooseLocation = requirePlugin('chooseLocation');
-	// // #endif     
+	// #ifdef MP-WEIXIN
+	const chooseLocation = requirePlugin('chooseLocation');
+	// #endif     
 	export default {
 		components: {
 			bgyxedit,
@@ -125,14 +107,15 @@
 		},
 		data() {
 			return {
+				initFlag: true, // 是否重新加载
 				goodsName: '', // 商品名称
 				maxImg: 8,
 				goodsImg: [], // 商品图片
 				imgList: [], // 页面临时图片
 				goodsPrice: '', // 商品价格
 				goodsStock: 1, // 商品数量
-				// goodsLat: '', // 纬度
-				// goodsLng: '', // 经度
+				goodsLat: '', // 纬度
+				goodsLng: '', // 经度
 				goodsContent: '', // 商品介绍，带格式
 				goodsDesc: '', // 商品介绍，纯文本
 				sellerContactType: 0, // 联系方式： 0 手机号1 微信二维码 2 微信号
@@ -140,7 +123,7 @@
 				selectContactObj: null,
 				concatList: ['手机号', '二维码', '微信号'], // 联系方式列表
 				goodsAddress: '',  // 商品地址
-				address: '请选择地址',
+				address: '',
 				contact: false, // 没有填写联系方式
 				pickerList: [],
 				contactList: [], // 联系方式列表
@@ -164,31 +147,55 @@
 			this.getContactList();
 			this.getCatogryList();
 		},
+		onUnload() {
+			chooseLocation.setLocation(null);
+		},
 		/**
 		 * 生命周期函数--监听页面显示
 		 */
 		onShow: function () {
-			// const location = chooseLocation.getLocation();
-			// if (location) {
-			// 	this.address = location.province + location.city + location.district;
-			// 	const type = Object.prototype.toString.call(location.address);
-			// 	if (type == '[object Array]') {
-			// 		this.goodsAddress = location.address[0];
-			// 	} else if (type == '[object String]') {
-			// 		this.goodsAddress = location.address;
-			// 	}
+			if (this.initFlag) {
+					this.onSelectLocation();
+			}
+			const location = chooseLocation.getLocation();
+			if (location) {
+				console.log('location', location)
+				// this.address = location.province + location.city + location.district;
+				// const type = Object.prototype.toString.call(location.address);
+				// if (type == '[object Array]') {
+				// 	this.goodsAddress = location.address[0];
+				// } else if (type == '[object String]') {
+				// 	this.goodsAddress = location.address;
+				// }
+				this.address = location.name;
+				this.goodsLat = location.latitude;
+				this.goodsLng = location.longitude;
 				
-			// 	this.goodsLat = location.latitude;
-			// 	this.goodsLng = location.longitude;
-			// }
+				this.onSaveAddress();
+			}
 		},
 		/**
 		 * 生命周期函数--监听页面卸载
 		 */
 		onUnload: function () {
-			// chooseLocation.setLocation(null);
+			chooseLocation.setLocation(null);
 		},
 		methods: {
+			// 获取用户地址
+			async onSelectLocation() {
+				try {
+					const res = await selectUserLocation();
+					if (res.code === 200) {
+						if (res?.data?.locationAddress) {
+							this.address = res.data.locationAddress;
+							this.goodsLat = res.data.locationLat;
+							this.goodsLng = res.data.locationLng;
+						}
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			// 跳转到微信号、微信图片
 			onAddContact() {
 				let url = '';
@@ -203,8 +210,10 @@
 					url,
 					events: {
 						getSetting: (data) => {
+							console.error('data', data.data)
 							this.sellerContact = data.data;
 							this.selectContactObj.ifNull = false;
+							this.selectContactObj.contactContent = data.data;
 						}
 					},
 					success: (res) => {
@@ -218,12 +227,14 @@
 			async getCatogryList() {
 				try {
 					const res = await onFetchGoodsCategory();
-					console.log('res', res);
 					if (res.code === 200) {
 						this.goodsPickerArr = res.data;
 						this.goodsPickerArr.forEach(v => {
 							this.goodsPicker.push(v.categoryName);
 						});
+						if (this.goodsPickerArr.length) {
+							this.goodsCategoryId = this.goodsPickerArr[0]['categoryId'];
+						}
 					}
 				} catch(err) {
 					console.log('err', err);
@@ -339,19 +350,43 @@
 				// }
 				this.publish();
 			},
+			// 保存地址
+			async onSaveAddress() {
+				try {
+					const res = await saveUserLocation({
+						"locationLat": this.goodsLat,
+						"locationLng": this.goodsLng,
+						"locationAddress": this.address
+					})
+					if (res.code === 200) {
+						const addressInfo = uni.getStorageInfoSync('addressInfo') || {};
+						Object.assign(addressInfo, {
+							title: this.address,
+							lat: this.goodsLat,
+							lng: this.goodsLng,
+						})
+						uni.setStorageSync('addressInfo', addressInfo);
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			// 地图选点
-			// selectMap() {
-			// 	const mapConfig = {
-			// 	  key: "YCWBZ-Q2CKG-NK7Q3-IFYBG-LCHA7-TKBQ5", //使用在腾讯位置服务申请的key
-			// 	  referer: "kuaihuo",//调用插件的app的名称
-			// 		category: '房产小区:住宅区:住宅小区'
-			// 	}
-			// 	// #ifdef MP-WEIXIN
-			// 	wx.navigateTo({
-			// 		url: 'plugin://chooseLocation/index?key=' + mapConfig.key + '&referer=' + mapConfig.referer + '&category=' + mapConfig.category
-			// 	});
-			// 	// #endif        
-			// },
+			selectMap() {
+				// 重新触发onshow
+				this.initFlag = false;
+				
+				const mapConfig = {
+				  key: "YCWBZ-Q2CKG-NK7Q3-IFYBG-LCHA7-TKBQ5", //使用在腾讯位置服务申请的key
+				  referer: "kuaihuo",//调用插件的app的名称
+					category: '房产小区:住宅区:住宅小区'
+				}
+				// #ifdef MP-WEIXIN
+				wx.navigateTo({
+					url: 'plugin://chooseLocation/index?key=' + mapConfig.key + '&referer=' + mapConfig.referer + '&category=' + mapConfig.category
+				});
+				// #endif        
+			},
 			goPage(item) {
 				uni.navigateTo({
 					url: item.link
@@ -364,13 +399,15 @@
 			// 选择联系方式
 			onSelectConcat(e) {
 				// this.sellerContactType = e.detail.value
-				console.log('e', e);
 				const selectContactObj = this.pickerList[e.detail.value];
 				this.sellerContactType = selectContactObj.sellerContactType;
 				this.sellerContact = selectContactObj.contactContent;
 				this.selectContactObj = selectContactObj;
 			},
 			onChooseImage() {
+				// 重新触发onshow
+				this.initFlag = false;
+				
 				uni.chooseImage({
 					count: this.maxImg, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有

@@ -7,7 +7,7 @@
 		<view class="banner">
 			<image src="@/static/test/7.jpg" mode="aspectFill"></image>
 		</view>
-		<view v-if="isSearchFocus" class="cu-bar search bg-white">
+		<view v-if="isSearchFocus" class="cu-bar search bg-white strick-top" :style="[{top: menuTop + 'px'}]">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
 				<input type="text" placeholder="商品名称" confirm-type="search" :value="searchValue" :focus="isSearchFocus" @input="onInput"></input>
@@ -16,7 +16,7 @@
 				<text @click="onSearchCancel">取消</text>
 			</view>
 		</view>
-		<view v-else class="flex text-center padding-sm bg-white align-center">
+		<view v-else class="flex text-center padding-sm bg-white align-center strick-top" :style="[{top: menuTop + 'px'}]">
 			<view class="flex-1" v-for="(item, index) in menu" :key="item.id" @tap="onMenuChange" :data-index="index" :data-item="item">
 				<text class="text-bold menu-text" :class="[{active: menuIndex === index}]">{{ item.name }}</text>
 			</view>
@@ -29,18 +29,16 @@
 		</view>
 		<!-- 页面滚动 -->
 		<view class="flex-1">
-			<scroll-view class="scroll-Y" scroll-y @scrolltolower="onRefresh">
-				<Goods
-					v-for="(item, index) in list"
-					:key="index"
-					:item="item"
-					:source="3"
-					:status="1"
-					:showcaseId="params.showcaseId"
-					@refreshList="initParams"
-				></Goods>
-				<Empty v-if="list.length == 0" msg="暂无数据~" />
-			</scroll-view>
+			<Goods
+				v-for="(item, index) in list"
+				:key="index"
+				:item="item"
+				:source="3"
+				:status="1"
+				:showcaseId="params.showcaseId"
+				@refreshList="initParams"
+			></Goods>
+			<Empty v-if="list.length == 0" msg="暂无数据~" />
 		</view>
 	</view>
 </template>
@@ -59,6 +57,7 @@
 		data() {
 			return {
 				menuIndex: 0,
+				menuTop: this.CustomBar,
 				menu: [{
 					id: 0,
 					name: '全部'
@@ -103,12 +102,10 @@
 				})
 				return false;
 			}
-			console.log('options', options)
 			this.getVisitOwner(showcaseId);
 			this.initParams();
 		},
 		onShow() {
-			console.log('show')
 			// this.initParams();
 		},
 		onShareAppMessage() {
@@ -126,16 +123,25 @@
 				promise 
 			}
 		},
+		onReachBottom() {
+			console.log('bottom');
+			if (this.hasNext()) {
+				this.params.current++;
+				this.getShowCaseList();
+			}
+		},
 		methods: {
 			onSearchCancel() {
 				this.isSearchFocus = false;
 				this.searchValue = '';
+				this.list = [];
+				this.getShowCaseList();
 			},
 			onInput(e) {
 				this.searchValue = e.detail.value;
 				clearTimeout(this.timer);
-				console.log('this.searchValue', this.searchValue)
 				this.timer = setTimeout(() => {
+					this.list = [];
 					clearTimeout(this.timer);
 					this.getShowCaseList();
 				}, this.time)
@@ -146,6 +152,7 @@
 			},
 			// 切换菜单
 			onMenuChange(e) {
+				this.list = [];
 				this.menuIndex = e.currentTarget.dataset['index'];
 				this.initParams();
 			},
@@ -190,27 +197,26 @@
 				}
 				this.params.current = 1;
 				this.list = [];
-				console.log('initparams')
 				this.getShowCaseList();
 			},
 			// 获取商品列表
 			async getShowCaseList() {
 				uni.showLoading();
-				console.log('kkkk')
 				try {
 					Object.assign(this.params, {
 						goodsName: this.searchValue
 					})
-					console.log('ccc')
 					const res = await onFetchShowcasePage(this.params);
 					if (res.code === 200) {
 						this.params.total = res.data.total;
-						this.list = this.list.concat(res.data.records);
+						if (this.params.current === 1) {
+							this.list = res.data.records;
+						} else {
+							this.list = this.list.concat(res.data.records);
+						}
 						// 是否有下一页数据
 						// this.hasNext = res.hasNext;
-						console.log("this.list", this.list);
 					}
-					console.log('eee', res)
 					uni.hideLoading();
 				} catch(err) {
 					uni.hideLoading();
@@ -225,22 +231,26 @@
 				}
 			},
 			// 触底刷新
-			onRefresh() {
-				console.log('bottom');
-				if (this.hasNext()) {
-					this.params.current++;
-					this.getShowCaseList();
-				}
-			}
+			// onRefresh() {
+			// 	console.log('bottom');
+			// 	if (this.hasNext()) {
+			// 		this.params.current++;
+			// 		this.getShowCaseList();
+			// 	}
+			// },
 		}
 	}
 </script>
 <style lang="scss" scoped>
+	.strick-top {
+		position: sticky;
+		z-index: 9;
+	}
 	.padding-fixed {
 		padding-top: 100upx;
 	}
 	.fixed-shadow {
-		box-shadow: 0 0 10upx rgba(0, 0, 0, 0.5);
+		box-shadow: 0 0 10upx rgba(0, 0, 0, .5);
 	}
 	.flex-1 {
 		flex: 1;

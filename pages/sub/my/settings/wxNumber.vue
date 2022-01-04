@@ -31,7 +31,7 @@
 			// #endif
 			this.eventChannel = eventChannel;
 			eventChannel.on('setSource', data => {
-				this.sourc = data;
+				this.source = data;
 			})
 		},
 		methods: {

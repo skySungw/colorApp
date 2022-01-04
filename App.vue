@@ -125,6 +125,9 @@
 	.padding-left-none {
 		padding-left: 0 !important;
 	}
+	.padding-right-none {
+		padding-right: 0 !important;
+	}
 	.border-radius {
 		border-radius: 10upx;
 	}

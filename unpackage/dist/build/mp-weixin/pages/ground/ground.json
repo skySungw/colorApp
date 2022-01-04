@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "广场 ",
-  "enablePullDownRefresh": false,
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "tab-bar": "/components/tab",
     "nav-bar": "/components/navBar",

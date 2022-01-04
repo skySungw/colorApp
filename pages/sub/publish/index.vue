@@ -45,6 +45,12 @@
 					</view>
 				</view>
 			</view>
+			<!-- 选择地址 -->
+			<view class="cu-form-group padding-left-none padding-right-none">
+				<view class="title">地区信息</view>
+				<input v-model="address" :disabled="true" placeholder="请填写地址"></input>
+				<text class="cuIcon-location" @click="selectMap" ></text>
+			</view>
 		</view>
 		<view class="fixed bottom text-right padding flex">
 			<view class="flex flex-direction margin-right-sm text-center" @click="onSaveDraft">
@@ -57,11 +63,15 @@
 	</view>
 </template>
 <script>
-	import { onPublish, onFetchArticleDetail } from '@/api';
+	import { onPublish, onFetchArticleDetail, selectUserLocation, saveUserLocation  } from '@/api';
 	import ajaxUpload from '@/api/ajaxUpload';
+	// #ifdef MP-WEIXIN
+	const chooseLocation = requirePlugin('chooseLocation');
+	// #endif     
 	export default {
 		data() {
 		 return {
+			initFlag: true, // 
 			focus: false, // 是否聚焦
 			imgList: [],
 			img: [], // 二维码
@@ -76,6 +86,9 @@
 			draftId: '',
 			articleCode: '',
 			topicsList: [], // 话题列表
+			address: '',
+			goodsLat: '',
+			goodsLng: '',
 		 }
 		},
 		onLoad(options) {
@@ -89,7 +102,79 @@
 				this.getArticleInfo(options.draftId || options.articleCode);
 			}
 		},
+		onShow() {
+			if (this.initFlag) {
+				this.onSelectLocation();
+			}
+			const location = chooseLocation.getLocation();
+			if (location) {
+				console.log('location', location)
+				this.address = location.name;
+				this.goodsLat = location.latitude;
+				this.goodsLng = location.longitude;
+				
+				this.onSaveAddress();
+			}
+		},
+		/**
+		 * 生命周期函数--监听页面卸载
+		 */
+		onUnload: function () {
+			chooseLocation.setLocation(null);
+		},
 		methods: {
+			// 获取用户地址
+			async onSelectLocation() {
+				try {
+					const res = await selectUserLocation();
+					if (res.code === 200) {
+						if (res?.data?.locationAddress) {
+							this.address = res.data.locationAddress;
+							this.goodsLat = res.data.locationLat;
+							this.goodsLng = res.data.locationLng;
+						}
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
+			// 保存地址
+			async onSaveAddress() {
+				try {
+					const res = await saveUserLocation({
+						"locationLat": this.goodsLat,
+						"locationLng": this.goodsLng,
+						"locationAddress": this.address
+					})
+					if (res.code === 200) {
+						const addressInfo = uni.getStorageInfoSync('addressInfo') || {};
+						Object.assign(addressInfo, {
+							title: this.address,
+							lat: this.goodsLat,
+							lng: this.goodsLng,
+						})
+						uni.setStorageSync('addressInfo', addressInfo);
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
+			// 地图选点
+			selectMap() {
+				// 重新触发onshow
+				this.initFlag = false;
+				
+				const mapConfig = {
+				  key: "YCWBZ-Q2CKG-NK7Q3-IFYBG-LCHA7-TKBQ5", //使用在腾讯位置服务申请的key
+				  referer: "kuaihuo",//调用插件的app的名称
+					category: '房产小区:住宅区:住宅小区'
+				}
+				// #ifdef MP-WEIXIN
+				wx.navigateTo({
+					url: 'plugin://chooseLocation/index?key=' + mapConfig.key + '&referer=' + mapConfig.referer + '&category=' + mapConfig.category
+				});
+				// #endif        
+			},
 			// 删除话题
 			onDelTopic(e) {
 				const index = e.currentTarget.dataset['index'];

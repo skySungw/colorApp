@@ -9,7 +9,7 @@
 			<image src="@/static/test/7.jpg" mode="aspectFill"></image>
 		</view>
 		<!-- 搜索框 -->
-		<view v-if="isSearchFocus" class="cu-bar search bg-white">
+		<view v-if="isSearchFocus" class="cu-bar search bg-white strick-top" :style="[{top: menuTop + 'px'}]">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
 				<input type="text" placeholder="商品名称" confirm-type="search" :value="searchValue" :focus="isSearchFocus" @input="onInput"></input>
@@ -18,7 +18,7 @@
 				<text @click="onSearchCancel">取消</text>
 			</view>
 		</view>
-		<view v-else class="flex text-center padding-sm bg-white align-center">
+		<view v-else class="flex text-center padding-sm bg-white align-center strick-top" :style="[{top: menuTop + 'px'}]">
 			<view class="flex-1" v-for="(item, index) in menu" :key="item.id" @tap="onMenuChange" :data-index="index" :data-item="item">
 				<text class="text-bold menu-text" :class="[{active: menuIndex === index}]">{{ item.name }}</text>
 			</view>
@@ -26,7 +26,7 @@
 				<text class="cuIcon-search" @tap="showSearchBar"></text>
 			</view>
 		</view>
-		<view>
+		<view class="flex-1">
 			<Goods
 				v-for="(item, index) in list"
 				:key="index"
@@ -36,6 +36,7 @@
 				:showcaseId="params.showcaseId"
 				@refreshList="init"
 			></Goods>
+			<Empty v-if="list.length == 0" msg="暂无数据~" />
 		</view>
 	</view>
 </template>
@@ -43,13 +44,16 @@
 <script>
 	import { onFetchGoodsList } from '@/api';
 	import Goods from '@/components/goods';
+	import Empty from '@/components/empty.vue';
 	export default {
 		components: {
-			Goods
+			Goods,
+			Empty
 		},
 		data() {
 			return {
 				menuIndex: 0,
+				menuTop: this.CustomBar,
 				menu: [{
 					id: 1,
 					name: '圈友商品'
@@ -83,10 +87,19 @@
 		onShow() {
 			
 		},
+		onReachBottom() {
+			console.log('bottom');
+			if (this.hasNext()) {
+				this.params.current++;
+				this.getGoodsList();
+			}
+		},
 		methods: {
 			onSearchCancel() {
 				this.isSearchFocus = false;
 				this.searchValue = '';
+				this.list = [];
+				this.getGoodsList();
 			},
 			onInput(e) {
 				this.searchValue = e.detail.value;
@@ -94,7 +107,7 @@
 				console.log('this.searchValue', this.searchValue)
 				this.timer = setTimeout(() => {
 					clearTimeout(this.timer);
-					this.getShowCaseList();
+					this.getGoodsList();
 				}, this.time)
 			},
 			// 显示搜索栏
@@ -103,8 +116,14 @@
 			},
 			// 切换菜单
 			onMenuChange(e) {
+				this.list = [];
 				this.menuIndex = e.currentTarget.dataset['index'];
+				this.params.goodsType = this.menuIndex;
 				this.init();
+			},
+			// 是否有下一页
+			hasNext() {
+				return this.params.current < Math.ceil(this.params.total / this.params.size);
 			},
 			init() {
 				this.params.current = 1;
@@ -114,6 +133,9 @@
 			},
 			async getGoodsList() {
 				try {
+					Object.assign(this.params, {
+						goodsName: this.searchValue
+					})
 					const res = await onFetchGoodsList(this.params);
 					if (res.code === 200) {
 						this.params.total = res.data.total;
@@ -135,6 +157,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.strick-top {
+		position: sticky;
+		z-index: 9;
+	}
 	.my-goods_list {
 		.banner {
 			image {

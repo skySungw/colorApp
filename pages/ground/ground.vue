@@ -45,13 +45,13 @@
 									<text>{{ item.memberName }}</text>
 								</view>
 								<view>
-									<view class="cu-tag line-grey sm round" @tap.stop="onZan" :data-item="item" :data-colindex="colIndex" :data-index="index">
+									<!-- <view class="cu-tag line-grey sm round" @tap.stop="onZan" :data-item="item" :data-colindex="colIndex" :data-index="index">
 										<text
 											class="margin-right-sm"
 											:class="[{'cuIcon-appreciatefill text-red': item.articleDetail.isLikes}, {'cuIcon-appreciate text-gray': !item.articleDetail.isLikes}]"
 										></text>
 										{{ item.articleDetail.likesCount }}
-									</view>
+									</view> -->
 								</view>
 							</view>
 						</view>

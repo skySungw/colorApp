@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "商品搜索搜索",
+  "navigationBarTitleText": "商品搜索",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "goods": "/components/goods",

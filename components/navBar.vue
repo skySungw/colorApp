@@ -50,19 +50,25 @@
 					label: '宝贝',
 					icon: 'cuIcon-baby',
 					url: '/pages/ground/goodsGround'
-				}, {
+				},
+				// {
+				// 	index: 3,
+				// 	label: '发布',
+				// 	icon: 'add-action',
+				// 	className: 'add-action',
+				// 	buttonClass: 'cu-btn cuIcon-add bg-green shadow',
+				// },
+				{
 					index: 3,
 					label: '发布',
-					icon: 'add-action',
-					className: 'add-action',
-					buttonClass: 'cu-btn cuIcon-add bg-green shadow',
+					icon: 'cuIcon-roundadd',
 				},
-				{
-					index: 4,
-					label: '站长',
-					icon: 'cuIcon-shop',
-					url: '/pages/subpackages/site/index'
-				},
+				// {
+				// 	index: 4,
+				// 	label: '站长',
+				// 	icon: 'cuIcon-shop',
+				// 	url: '/pages/subpackages/site/index'
+				// },
 				{
 					index: 5,
 					label: '我的',

@@ -12,7 +12,21 @@
 			</view>
 		</view>
 		<!-- 产品库列表 -->
-		<view v-if="source == 2" class="goods-item flex">
+		<view v-if="source == 2" class="relative">
+			<view class="products-content">
+				<image :src="item.goodsImgArray[0]" mode="aspectFit" :lazy-load="true"></image>
+				<view>
+					<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
+				</view>
+				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
+				<view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view>
+			</view>
+			<view class="delete-absolute delete">
+				<text v-if="!operate" class="cuIcon-roundadd lg text-gray add-goods-icon" @tap="addGoods"></text>
+				<text v-else class="cuIcon-delete lg text-gray add-goods-icon" @tap="deleteGoods(true)"></text>
+			</view>
+		</view>
+		<!-- <view v-if="source == 2" class="goods-item flex">
 			<image :src="item.goodsImgArray[0]" :lazy-load="true"></image>
 			<view class="goods-item_container flex-1 padding-left-xs">
 				<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
@@ -25,9 +39,22 @@
 				<text v-if="!operate" class="cuIcon-roundadd lg text-gray add-goods-icon" @tap="addGoods"></text>
 				<text v-else class="cuIcon-delete lg text-gray add-goods-icon" @tap="deleteGoods(true)"></text>
 			</view>
-		</view>
+		</view> -->
 		<!-- 橱窗列表 -->
-		<view v-if="source == 3" class="goods-item flex">
+		<view v-if="source == 3" class="relative">
+			<view class="products-content">
+				<image :src="item.goodsImgArray[0]" mode="aspectFit" :lazy-load="true"></image>
+				<view>
+					<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
+				</view>
+				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
+				<view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view>
+			</view>
+			<view v-if="operate" class="delete-absolute delete">
+				<text class="cuIcon-roundclosefill lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
+			</view>
+		</view>
+		<!-- <view v-if="source == 3" class="goods-item flex">
 			<image :src="item.goodsImgArray[0]" :lazy-load="true"></image>
 			<view class="goods-item_container flex-1 padding-left-xs">
 				<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
@@ -37,10 +64,9 @@
 				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
 			</view>
 			<view class="flex align-center">
-				<text v-if="!operate" class="cuIcon-roundadd lg text-gray add-goods-icon" @tap="addGoods"></text>
-				<text v-else class="cuIcon-delete lg text-gray add-goods-icon" @tap="deleteGoods"></text>
+				<text v-if="operate" class="cuIcon-delete lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
 			</view>
-		</view>
+		</view> -->
 		<!-- 个人发布到站长橱窗，选择商品列表 -->
 		<view v-if="source == 4" class="goods-item flex">
 			<!-- <view class="flex align-center padding-right-sm" @tap="onGoodsChecked">
@@ -109,6 +135,17 @@
 				operate: false ,// 操作
 			}
 		},
+		created() {
+			switch(this.source) {
+				case 2: // 产品库来源
+					this.operate = this.item.isAdd;
+					break;
+				case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
+					this.operate = this.item.showDelete;
+					console.log('this.op')
+					break;
+			}
+		},
 		methods: {
 			// 删除橱窗商品
 			async deleteGoods(flag) {
@@ -125,9 +162,7 @@
 								if (flag) {
 									this.operate = false;	
 								} else {
-									setTimeout(() => {
-										this.$emit('refreshList');
-									}, 2000);
+									this.$emit('refreshList', this.item);
 								}
 								// this.$emit('refreshList');
 							}
@@ -234,11 +269,24 @@
 				font-size: 32upx;
 			}
 		}
+		.products-content {
+			image {
+				border-radius: 10upx;
+			}
+		}
 	}
 	.flex-1 {
 		flex: 1;
 	}
 	.add-goods-icon {
 		font-size: 40upx;
+	}
+	.delete-absolute {
+		position: absolute;
+	}
+	.delete {
+		right: 40upx;
+		top: 40upx;
+		border-radius: 50%;
 	}
 </style>

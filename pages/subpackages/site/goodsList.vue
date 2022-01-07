@@ -26,8 +26,9 @@
 				<text class="cuIcon-search" @tap="showSearchBar"></text>
 			</view>
 		</view>
-		<view class="flex-1">
+		<view class="flex-1 bg-white">
 			<Goods
+				class="goods-item_content"
 				v-for="(item, index) in list"
 				:key="index"
 				:item="item"
@@ -197,6 +198,10 @@
 				background-color: #F5F5F5;
 				border-radius: 50upx;
 			}
+		}
+		.goods-item_content {
+			display: inline-block;
+			width: 50%;
 		}
 	}
 </style>

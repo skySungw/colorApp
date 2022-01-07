@@ -1,7 +1,7 @@
 <template>
 	<view class="my-shop full-height absolute flex flex-direction bg-white">
 		<cu-custom bgColor="bg-gradual-green" :isBack="true" :isCustom="true">
-			<view slot="content">我的橱窗</view>
+			<view slot="content">{{ title }}</view>
 		</cu-custom>
 		<!-- banner -->
 		<view class="banner">
@@ -17,7 +17,7 @@
 			</view>
 		</view>
 		<view v-else class="flex text-center padding-sm bg-white align-center strick-top" :style="[{top: menuTop + 'px'}]">
-			<view class="flex-1" v-for="(item, index) in menu" :key="item.id" @tap="onMenuChange" :data-index="index" :data-item="item">
+			<view class="flex-1" v-for="(item, index) in menu" :key="item.id" @tap="onMenuChange" :data-index="index" :data-id="item.id" :data-item="item">
 				<text class="text-bold menu-text" :class="[{active: menuIndex === index}]">{{ item.name }}</text>
 			</view>
 			<view class="flex-1 serach flex flex-space-between align-center">
@@ -28,15 +28,16 @@
 			</view>
 		</view>
 		<!-- 页面滚动 -->
-		<view class="flex-1">
+		<view class="flex-1 bg-white">
 			<Goods
+				class="goods-item_content"
 				v-for="(item, index) in list"
 				:key="index"
 				:item="item"
 				:source="3"
 				:status="1"
 				:showcaseId="params.showcaseId"
-				@refreshList="initParams"
+				@refreshList="onDeleteGoods"
 			></Goods>
 			<Empty v-if="list.length == 0" msg="暂无数据~" />
 		</view>
@@ -56,10 +57,12 @@
 		},
 		data() {
 			return {
+				title: '',
 				menuIndex: 0,
+				menuId: 9,
 				menuTop: this.CustomBar,
 				menu: [{
-					id: 0,
+					id: 9,
 					name: '全部'
 				}, {
 					id: 1,
@@ -103,7 +106,6 @@
 				return false;
 			}
 			this.getVisitOwner(showcaseId);
-			this.initParams();
 		},
 		onShow() {
 			// this.initParams();
@@ -131,6 +133,14 @@
 			}
 		},
 		methods: {
+			// 删除商品
+			onDeleteGoods(item) {
+				this.list.forEach((v, i) => {
+					if (v.goodsCode === item.goodsCode) {
+						this.list.splice(i, 1);
+					}
+				})
+			},
 			onSearchCancel() {
 				this.isSearchFocus = false;
 				this.searchValue = '';
@@ -154,6 +164,7 @@
 			onMenuChange(e) {
 				this.list = [];
 				this.menuIndex = e.currentTarget.dataset['index'];
+				this.menuId = e.currentTarget.dataset['id'];
 				this.initParams();
 			},
 			// 橱窗商品列表
@@ -180,10 +191,23 @@
 					// "status": 1身份状态 0 橱窗拥有者 1 游客
 						this.idStatus = res.data.status;
 						this.siteName = res.data.ownerUserName;
+						if (this.idStatus == 1) {
+							this.title = `${this.siteName}的橱窗`;
+							this.menu = [{
+								id: 9,
+								name: '全部'
+							}, {
+								id: 0,
+								name: '我添加的'
+							}];
+						} else {
+							this.title = '我的橱窗'
+						}
 					}
 				} catch(err) {
 					console.log('err', err);
 				}
+				this.initParams();
 			},
 			// 是否有下一页
 			hasNext() {
@@ -191,8 +215,8 @@
 			},
 			// 初始化列表页面参数
 			initParams() {
-				this.params.selType = this.menuIndex;
-				if (this.params.selType == 0) {
+				this.params.selType = this.menuId;
+				if (this.params.selType == 9) {
 					delete this.params.selType;
 				}
 				this.params.current = 1;
@@ -208,12 +232,26 @@
 					})
 					const res = await onFetchShowcasePage(this.params);
 					if (res.code === 200) {
+						
 						this.params.total = res.data.total;
+						const list = res.data.records;
+						list.forEach((v, i) => {
+							let flag = false;
+							if (this.idStatus == 1) {
+								if (v.isDelete) {
+									flag = true;
+								}
+							} else {
+								flag = true;
+							}
+							list[i]['showDelete'] = flag;
+						});
 						if (this.params.current === 1) {
-							this.list = res.data.records;
+							this.list = list;
 						} else {
-							this.list = this.list.concat(res.data.records);
+							this.list = this.list.concat(list);
 						}
+						console.error('this.list', this.list);
 						// 是否有下一页数据
 						// this.hasNext = res.hasNext;
 					}
@@ -251,9 +289,6 @@
 	}
 	.fixed-shadow {
 		box-shadow: 0 0 10upx rgba(0, 0, 0, .5);
-	}
-	.flex-1 {
-		flex: 1;
 	}
 	.flex-align-center {
 		align-items: center;
@@ -307,6 +342,10 @@
 				background-color: #F5F5F5;
 				border-radius: 50upx;
 			}
+		}
+		.goods-item_content {
+			display: inline-block;
+			width: 50%;
 		}
 	}
 </style>

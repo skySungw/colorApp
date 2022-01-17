@@ -197,6 +197,25 @@
 				}
 			},
 			async onAdd(type) {
+				console.log('type', type);
+				const TYPE_TEXT = {
+					0: '确认下架',
+					1: '确认上架'
+				}
+				uni.showModal({
+					title: '操作',
+					content: TYPE_TEXT[type],
+					confirmText: '确认',
+					cancelText: '取消',
+					success: (res) => {
+						console.log('res', res);
+						if (res.confirm) {
+							this.onOperate(type);
+						}
+					}
+				})
+			},
+			async onOperate(type) {
 				try {
 					const res = await onUpdateGoodsState({
 						goodsCode: this.item.goodsCode,

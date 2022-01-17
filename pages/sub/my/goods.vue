@@ -10,7 +10,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view class="flex-1 overflow-hidden flex">
+		<view class="flex-1 overflow-hidden flex justify-center">
 			<view v-if="list.length > 0" class="flex-1 overflow-hidden">
 				<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
 					<view class="flex bg-white padding-left-sm" v-for="(item, index) in list" :key="index">

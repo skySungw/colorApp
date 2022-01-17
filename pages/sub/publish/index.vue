@@ -71,6 +71,7 @@
 	export default {
 		data() {
 		 return {
+			maxImg: 9,
 			initFlag: true, // 
 			focus: false, // 是否聚焦
 			imgList: [],
@@ -212,29 +213,58 @@
 			// 上传图片
 			onChooseImage() {
 				uni.chooseImage({
-					count: 1, //默认9
+					count: this.maxImg, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success: (res) => {
-						const tempFilePaths = res.tempFilePaths;
-						console.log('tempFilePaths[0]', tempFilePaths)
-						ajaxUpload({
-						    filePath: tempFilePaths[0],
-						    name: 'file',
-						    success: (uploadFileRes) => {
-									let upimg = JSON.parse(uploadFileRes.data);
-									if (upimg.code === 200) {
-										if (this.imgList.length != 0) {
-												this.imgList = this.imgList.concat(tempFilePaths);
-												this.detail.articleContentImg = this.detail.articleContentImg.concat([upimg.data.fileUrl])
-										} else {
-											this.imgList = tempFilePaths
-											this.detail.articleContentImg = [upimg.data.fileUrl];
+						let tempFilePaths = res.tempFilePaths;
+						if (this.imgList.length + tempFilePaths.length > this.maxImg) {
+							const len = this.imgList.length + tempFilePaths.length - this.maxImg;
+							tempFilePaths = tempFilePaths.splice(len);
+						}
+						tempFilePaths.forEach(v => {
+							ajaxUpload({
+							    filePath: v,
+							    name: 'file',
+							    success: (uploadFileRes) => {
+										let upimg = JSON.parse(uploadFileRes.data);
+										if (upimg.code === 200) {
+											if (this.imgList.length != 0) {
+													this.imgList = this.imgList.concat([v]);
+													this.detail.articleContentImg = this.detail.articleContentImg.concat([upimg.data.fileUrl])
+											} else {
+												this.imgList.push(v);
+												this.detail.articleContentImg = [upimg.data.fileUrl];
+											}
 										}
-									}
-						    }
-						});
+							    }
+							});
+						})
 					}
 				});
+				// uni.chooseImage({
+				// 	count: 9, //默认9
+				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// 	success: (res) => {
+				// 		const tempFilePaths = res.tempFilePaths;
+				// 		console.log('tempFilePaths[0]', tempFilePaths)
+				// 		ajaxUpload({
+				// 		    filePath: tempFilePaths[0],
+				// 		    name: 'file',
+				// 		    success: (uploadFileRes) => {
+				// 					let upimg = JSON.parse(uploadFileRes.data);
+				// 					if (upimg.code === 200) {
+				// 						if (this.imgList.length != 0) {
+				// 								this.imgList = this.imgList.concat(tempFilePaths);
+				// 								this.detail.articleContentImg = this.detail.articleContentImg.concat([upimg.data.fileUrl])
+				// 						} else {
+				// 							this.imgList = tempFilePaths
+				// 							this.detail.articleContentImg = [upimg.data.fileUrl];
+				// 						}
+				// 					}
+				// 		    }
+				// 		});
+				// 	}
+				// });
 			},
 			onViewImage(e) {
 				uni.previewImage({

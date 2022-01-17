@@ -20,11 +20,11 @@
 			</view>
 			<view class="cu-form-group padding-lr-none">
 				<view class="title">商品价格</view>
-				<input placeholder="请输入价格" v-model="goodsPrice"></input>
+				<input placeholder="请输入价格" v-model="goodsPrice" type="number"></input>
 			</view>
 			<view class="cu-form-group padding-lr-none">
 				<view class="title">商品数量</view>
-				<input placeholder="请输入数量" v-model="goodsStock"></input>
+				<input placeholder="请输入数量" v-model="goodsStock" type="number"></input>
 			</view>
 			<!-- <view class="padding-bottom title">
 				<input placeholder="请输入商品名" v-model="goodsName" class="publish-title"></input>
@@ -56,7 +56,7 @@
 		<!-- 选择地址 -->
 		<view class="cu-form-group">
 			<view class="title">地区信息</view>
-			<input v-model="address" :disabled="true" placeholder="请填写地址"></input>
+			<input v-model="address" :disabled="true" @click="selectMap" placeholder="请填写地址"></input>
 			<text class="cuIcon-location" @click="selectMap" ></text>
 		</view>
 		<!-- 联系方式 -->
@@ -76,9 +76,10 @@
 				<view v-if="selectContactObj.ifNull" class="flex-1">
 					<text class="text-red" @tap="onAddContact">去添加</text>
 				</view>
-				<view v-else class="flex-1">
+				<view v-else class="flex-1 flex flex-bettwen-space">
 					<image v-if="index === 1" class="wechat" :src="selectContactObj.contactContent"></image>
 					<input v-else :disabled="true" :value="selectContactObj.contactContent"></input>
+					<text v-if="index !== 0" class="text-green" @tap="modifyConcat">修改</text>
 				</view>
 				
 			</view>
@@ -181,6 +182,33 @@
 			chooseLocation.setLocation(null);
 		},
 		methods: {
+			modifyConcat() {
+				let url = '';
+				if (this.selectContactObj.contactType === 1) {
+					// 二维码	
+					url = '/pages/sub/my/settings/wechart?param=';
+				} else if (this.selectContactObj.contactType === 2) {
+					// 微信号
+					url = '/pages/sub/my/settings/wxNumber?param=';
+				}
+				url += this.selectContactObj.contactContent;
+				uni.navigateTo({
+					url,
+					events: {
+						getSetting: (data) => {
+							console.error('data', data.data)
+							this.sellerContact = data.data;
+							this.selectContactObj.ifNull = false;
+							this.selectContactObj.contactContent = data.data;
+						}
+					},
+					success: (res) => {
+						res.eventChannel.emit('setSource', {
+							source: 1
+						})
+					}
+				})
+			},
 			// 获取用户地址
 			async onSelectLocation() {
 				try {
@@ -337,6 +365,13 @@
 				if (!this.sellerContact) {
 					uni.showToast({
 						title: '请填写完整的联系方式',
+						icon: 'none'
+					});
+					return false;
+				}
+				if (!this.address) {
+					uni.showToast({
+						title: '请填写地区信息',
 						icon: 'none'
 					});
 					return false;

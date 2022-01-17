@@ -45,6 +45,12 @@
 					"enablePullDownRefresh": false
 				}
 		}, {
+				"path": "files/file",
+				"style": {
+					"navigationBarTitleText": "隐私协议",
+					"enablePullDownRefresh": false
+				}
+		}, {
 				"path": "subject/index",
 				"style": {
 					"navigationBarTitleText": "话题页",

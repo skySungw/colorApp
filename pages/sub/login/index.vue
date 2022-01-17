@@ -19,7 +19,7 @@
 	
 	  <view class="text-tips">
 	    登录代表您已同意物二
-	    <text class="theme-text" @tap="jumpWebview" data-name="protrol">用户服务协议</text>、<text class="theme-text" @tap="jumpWebview" data-name="PrivacyPolicies">隐私政策</text>、<text class="theme-text" @tap="jumpWebview" data-name="LegalNotice">法律声明</text>
+	    <text class="theme-text" @tap="jumpWebview" data-index="1" data-name="PrivacyPolicies">隐私政策</text>
 	  </view>
 		<!-- 绑定手机号 -->
 		<view :class="['cu-modal', {'show': showPhoneModal}]">
@@ -74,6 +74,13 @@
 			})
 		},
 		methods: {
+			jumpWebview(e) {
+				console.log('e', e.currentTarget);
+				const index = e.currentTarget.dataset['index'];
+				wx.navigateTo({
+					url: '/pages/subpackages/files/file?index=' + index
+				})
+			},
 			setNavigateBack(num) {
 				uni.navigateBack({
 					delta: num,

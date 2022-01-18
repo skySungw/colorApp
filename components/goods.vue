@@ -13,7 +13,7 @@
 		</view>
 		<!-- 产品库列表 -->
 		<view v-if="source == 2" class="relative">
-			<view class="products-content">
+			<view class="products-content" @tap="onGoodsDetail">
 				<image :src="item.goodsImgArray[0]" mode="aspectFit" :lazy-load="true"></image>
 				<view>
 					<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
@@ -42,7 +42,7 @@
 		</view> -->
 		<!-- 橱窗列表 -->
 		<view v-if="source == 3" class="relative">
-			<view class="products-content">
+			<view class="products-content" @tap="onGoodsDetail">
 				<image :src="item.goodsImgArray[0]" mode="aspectFit" :lazy-load="true"></image>
 				<view>
 					<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
@@ -68,7 +68,7 @@
 			</view>
 		</view> -->
 		<!-- 个人发布到站长橱窗，选择商品列表 -->
-		<view v-if="source == 4" class="goods-item flex">
+		<view v-if="source == 4" class="goods-item flex" @tap="onGoodsDetail">
 			<!-- <view class="flex align-center padding-right-sm" @tap="onGoodsChecked">
 				<view class="icon padding-right-sm" :class="[{'cuIcon-roundcheckfill text-green': goodsChecked}, {'cuIcon-roundcheck text-gray': !goodsChecked}]"></view>
 			</view> -->
@@ -136,6 +136,7 @@
 			}
 		},
 		created() {
+			console.log('this.item', this.item)
 			switch(this.source) {
 				case 2: // 产品库来源
 					this.operate = this.item.isAdd;
@@ -148,7 +149,22 @@
 		},
 		methods: {
 			// 删除橱窗商品
-			async deleteGoods(flag) {
+			deleteGoods(flag) {
+				console.log('flag', flag);
+				uni.showModal({
+					title: '操作',
+					content: '确认删除商品',
+					confirmText: '确认',
+					cancelText: '取消',
+					success: (res) => {
+						console.log('res', res);
+						if (res.confirm) {
+							this.onDeleteGoodsByShop(flag);
+						}
+					}
+				})
+			},
+			async onDeleteGoodsByShop(flag) {
 				try {
 					const res = await onRemoveGoodsToShowCase({
 						goodsIds: [this.item.goodsCode],

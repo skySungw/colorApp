@@ -35,7 +35,7 @@
 			</view>
 			<!-- 我的发布 -->
 			<view :class="['margin-top-sm', {'fixed': fixed}]" :style="{top: customBar + 'px'}">
-				<view class="cu-bar bg-white">
+				<view class="cu-bar bg-white" v-if="info.followState == 0">
 					<view class="action text-black text-bold">
 						我的发布
 					</view>
@@ -82,7 +82,7 @@
 					integralCount: 0
 				},
 				memberWorks: { // 发布数量
-					goodsCount: 0,
+					ownerGoodsCount: 0,
 					articleCount: 0
 				},
 				menu: [{
@@ -157,7 +157,7 @@
 						this.info = res.data;
 						this.memberDetail = res.data.memberDetail;
 						// this.memberWorks = res.data.memberWorks;
-						this.menu[0].num = res.data.memberWorks.goodsCount;
+						this.menu[0].num = res.data.memberWorks.ownerGoodsCount;
 						this.menu[1].num = res.data.memberWorks.articleCount;
 						// 是否展示取消关注
 						this.followState = res.data.followState;

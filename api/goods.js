@@ -121,6 +121,23 @@ function onUpdateGoodsState(data) {
 		data,
 	})
 }
+// 查询本人名下 上架中，已下架，已售出的商品数量
+function onSelectGoodsCountByMemberId(data) {
+	return request({
+		url: 'api/goods/myGoods/selectGoodsCountByMemberId',
+		data,
+		method: 'GET'
+	})
+}
+// 查询本人名下我买到的，我卖出的订单数量
+function onSelectOrderCountByMemberId(data) {
+	return request({
+		url: 'api/order/myOrder/selectOrderCountByMemberId',
+		data,
+		method: 'GET'
+	})
+}
+
 
 export default {
 	onFetchGoodsCategory,
@@ -138,5 +155,7 @@ export default {
 	onCreateOrder,
 	onFetchWechatPayConfig,
 	onFetchOrderList,
-	onUpdateGoodsState
+	onUpdateGoodsState,
+	onSelectGoodsCountByMemberId,
+	onSelectOrderCountByMemberId
 }

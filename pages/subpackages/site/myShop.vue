@@ -22,9 +22,9 @@
 			</view>
 			<view class="flex-1 serach flex flex-space-between align-center">
 				<text class="cuIcon-search margin-right" @tap="showSearchBar"></text>
-				<view>
+				<!-- <view>
 					<text @tap="onAdd" class="cuIcon-add round text-bold text-green"></text>
-					</view>
+				</view> -->
 			</view>
 		</view>
 		<!-- 页面滚动 -->
@@ -40,6 +40,9 @@
 				@refreshList="onDeleteGoods"
 			></Goods>
 			<Empty v-if="list.length == 0" msg="暂无数据~" />
+		</view>
+		<view class="shop-footer">
+			<text @tap="onAdd" class="cuIcon-add round text-bold bg-green shadow"></text>
 		</view>
 	</view>
 </template>
@@ -92,6 +95,8 @@
 		onLoad(options) {
 			let showcaseId = options.showcaseId || uni.getStorageSync('showcaseId');
 			this.params.showcaseId = showcaseId;
+		},
+		onShow() {
 			const token = uni.getStorageSync('token');
 			if (!token) {
 				uni.navigateTo({
@@ -105,10 +110,7 @@
 				})
 				return false;
 			}
-			this.getVisitOwner(showcaseId);
-		},
-		onShow() {
-			// this.initParams();
+			this.getVisitOwner(this.params.showcaseId);
 		},
 		onShareAppMessage() {
 			const promise = new Promise(resolve => {
@@ -346,6 +348,20 @@
 		.goods-item_content {
 			display: inline-block;
 			width: 50%;
+		}
+		.shop-footer {
+			position: fixed;
+			bottom: 40upx;
+			width: 100%;
+			left: 0;
+			display: flex;
+			justify-content: center;
+			text {
+				padding: 20upx;
+				border-radius: 50%;
+				box-shadow: 0 -3rpx 8upx rgba(0, 0, 0, 0.3);
+				font-size: 50upx;
+			}
 		}
 	}
 </style>

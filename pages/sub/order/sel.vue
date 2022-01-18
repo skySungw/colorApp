@@ -8,7 +8,7 @@
 		<scroll-view scroll-y @scrolltolower="onRefresh" style="height: 100vh">
 			<view class="fixed fixed-shadow" :style="{top: customBar + 'px'}">
 				<scroll-view scroll-x class="bg-white nav text-center">
-					<view :class="['cu-item', {'text-green cur': item.id == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-item="item" :data-index="item.index">{{ item.label }}</view>
+					<view :class="['cu-item', {'text-green cur': item.id == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-item="item" :data-index="item.index">{{ item.label }}({{ item.count }})</view>
 				</scroll-view>
 			</view>
 			<view class="padding-fixed">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-	import { onFetchOrderList } from '@/api';
+	import { onFetchOrderList, onSelectOrderCountByMemberId } from '@/api';
 	import Order from '@/components/order.vue';
 	import Empty from '@/components/empty.vue';
 	export default {
@@ -41,16 +41,20 @@
 				customBar: 0,
 				menu: [{
 					id: -1,
-					label: '全部'
+					label: '全部',
+					count: 0
 				}, {
 					id: 1,
-					label: '待发货'
+					label: '待发货',
+					count: 0
 				},  {
 					id: 2,
-					label: '待收货'
+					label: '待收货',
+					count: 0
 				}, {
 					id: 9,
-					label: '已完成'
+					label: '已完成',
+					count: 0
 				}],
 				// menu: [{
 				// 	id: 0,
@@ -84,12 +88,34 @@
 		// 	}
 		// },
 		methods: {
+			async onSelectOrderTotal() {
+				try {
+					const res = await onSelectOrderCountByMemberId({
+						selType: 1
+					});
+					console.log('res', res);
+					if (res.code === 200) {
+						// 全部
+						this.menu[0]['count'] = res.data.sellOutCount;
+						// 待发货
+						this.menu[1]['count'] = res.data.orderStateCount[1];
+						// 待收货
+						this.menu[2]['count'] = res.data.orderStateCount[2];
+						// 完成
+						this.menu[3]['count'] = res.data.orderStateCount[9];
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			// 是否有下一页
 			hasNext() {
 				return this.params.current < Math.ceil(this.params.total / this.params.size);
 			},
 			// 初始化列表页面参数
 			initParams(type) {
+				this.onSelectOrderTotal();
+				
 				this.curTab = type;
 				this.params.current = 1;
 				this.params.orderState = this.curTab != -1 ? this.curTab : '';

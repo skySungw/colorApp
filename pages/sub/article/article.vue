@@ -52,7 +52,7 @@
 				<view class="comment-content">
 					<view class="flex padding-tb-sm solid-bottom" v-for="(item, index) in records" :key="index">
 						<view class="comment-photo">
-							<image class="round" :src="item.wxHeadImg" mode="aspectFill" />
+							<image class="round" :src="item.wxHeadImg" mode="aspectFill" @tap="goHomePageById(item.userId)"/>
 						</view>
 						<view class="flex-1 margin-left text-sm">
 							<view class="text-bold text-gray flex flex-bettwen-space">
@@ -65,7 +65,7 @@
 							<!-- 评论的评论 -->
 							<view class="flex padding-top-sm" v-for="(childItem, childIndex) in item.commentChild" :key="childIndex">
 								<view class="comment-photo">
-									<image class="round" :src="childItem.fromUserWxHeadImg" mode="aspectFill" />
+									<image class="round" :src="childItem.fromUserWxHeadImg" mode="aspectFill" @tap="goHomePageById(childItem.fromUserId)"/>
 								</view>
 								<view class="flex-1 margin-left text-sm">
 									<view class="text-bold text-gray flex flex-bettwen-space">
@@ -200,6 +200,11 @@
 				console.log('this.', this.articleDetail.userId)
 				uni.navigateTo({
 					url: '/pages/sub/my/home?id=' + this.articleDetail.userId
+				})
+			},
+			goHomePageById(id) {
+				uni.navigateTo({
+					url: '/pages/sub/my/home?id=' + id
 				})
 			},
 			// 评论留言

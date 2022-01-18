@@ -51,7 +51,7 @@
 			</view>
 		</view>
 		<!-- 联系卖家、购买 -->
-		<view v-if="goodsDetail.goodsState == 1" class="operate fixed bottom-fixed flex text-center text-bold">
+		<view v-if="goodsDetail.goodsState == 1 && !goodsDetail.isOwner" class="operate fixed bottom-fixed flex text-center text-bold">
 			<view class="flex-1" @tap="onHandleContract">咨询</view>
 			<view class="flex-1 bg-orange" @click="goPage">购买</view>
 		</view>

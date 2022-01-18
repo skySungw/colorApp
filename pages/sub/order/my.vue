@@ -8,7 +8,7 @@
 		<view class="flex-1 flex flex-direction overflow-hidden">
 			<view class="fixed-shadow">
 				<scroll-view scroll-x class="bg-white nav text-center">
-					<view :class="['cu-item', {'text-green cur': item.id == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-item="item" :data-index="item.index">{{ item.label }}</view>
+					<view :class="['cu-item', {'text-green cur': item.id == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-item="item" :data-index="item.index">{{ item.label }}({{ item.count }})</view>
 				</scroll-view>
 			</view>
 			<view class="flex-1 overflow-hidden">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-	import { onFetchOrderList } from '@/api';
+	import { onFetchOrderList, onSelectOrderCountByMemberId } from '@/api';
 	import Order from '@/components/order.vue';
 	import Empty from '@/components/empty.vue';
 	export default {
@@ -45,22 +45,28 @@
 				customBar: 0,
 				menu: [{
 					id: -1,
-					label: '全部'
+					label: '全部',
+					count: 0
 				}, {
 					id: 0,
-					label: '待支付'
+					label: '待支付',
+					count: 0
 				}, {
 					id: 1,
-					label: '待发货'
+					label: '待发货',
+					count: 0
 				}, {
 					id: 2,
-					label: '待收货'
+					label: '待收货',
+					count: 0
 				}, {
 					id: 9,
-					label: '已完成'
+					label: '已完成',
+					count: 0
 				}, {
 					id: 10,
-					label: '已取消'
+					label: '已取消',
+					count: 0
 				}],
 				curTab: -1, // 全部
 				scrollLeft:0,
@@ -79,12 +85,37 @@
 		// 	}
 		// },
 		methods: {
+			async onSelectOrderTotal() {
+				try {
+					const res = await onSelectOrderCountByMemberId({
+						selType: 0
+					});
+					console.log('res', res);
+					if (res.code === 200) {
+						// 全部
+						this.menu[0]['count'] = res.data.buyCount;
+						// 待支付
+						this.menu[1]['count'] = res.data.orderStateCount[0];
+						// 待发货
+						this.menu[2]['count'] = res.data.orderStateCount[1];
+						// 待收货
+						this.menu[3]['count'] = res.data.orderStateCount[2];
+						// 完成
+						this.menu[4]['count'] = res.data.orderStateCount[9];
+						// 取消
+						this.menu[5]['count'] = res.data.orderStateCount[10];
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			// 是否有下一页
 			hasNext() {
 				return this.params.current < Math.ceil(this.params.total / this.params.size);
 			},
 			// 初始化列表页面参数
 			initParams(type) {
+				this.onSelectOrderTotal();
 				this.noMoreFlag = false;
 				this.curTab = type;
 				this.params.current = 1;

@@ -6,7 +6,7 @@
 		<view class="fixed-shadow">
 			<scroll-view v-if="source === 0" scroll-x class="bg-white nav">
 				<view class="flex text-center">
-					<view :class="['cu-item', 'flex-1', {'text-green cur': index == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-index="index" :data-id="item.id">{{ item.label }}</view>
+					<view :class="['cu-item', 'flex-1', {'text-green cur': index == curTab}]" v-for="(item, index) in menu" :key="index" @click="tabSelect" :data-index="index" :data-id="item.id">{{ item.label }}({{ item.count }})</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-	import { onFetchGoodsBySelf, onAddGoodsToShowCase } from '@/api';
+	import { onFetchGoodsBySelf, onAddGoodsToShowCase, onSelectGoodsCountByMemberId } from '@/api';
 	import Goods from '@/components/goods.vue';
 	import Empty from '@/components/empty.vue';
 	export default {
@@ -66,13 +66,16 @@
 				list: [], // 商品列表
 				menu: [{
 					id: 1,
-					label: '上架中'
+					label: '上架中',
+					count: 0
 				},{
 					id: 0,
-					label: '已下架'
+					label: '已下架',
+					count: 0
 				}, {
 					id: 2,
-					label: '已售出'
+					label: '已售出',
+					count: 0
 				}],
 				curTab: 0,
 				scrollLeft:0,
@@ -83,6 +86,7 @@
 		onLoad(options) {
 			this.params.userId = options.id || '';
 			this.isBack = options.isBack == 1 ? false : true;
+			
 			if (options.source) {
 				this.source = options.source;
 				this.showcaseId = options.showcaseId;
@@ -95,8 +99,23 @@
 			this.initParams();
 		},
 		methods: {
+			// 查询商品具体数量
+			async onSelectGoodsTotal() {
+				try {
+					const res = await onSelectGoodsCountByMemberId();
+					console.log('onSelectGoodsCountByMemberId res', res);
+					if (res.code === 200) {
+						this.menu[0]['count'] = res.data.upCount;
+						this.menu[1]['count'] = res.data.downCount;
+						this.menu[2]['count'] = res.data.soldCount;
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
+			// 橱窗渠道，跳到发布页
 			onPublish() {
-				uni.redirectTo({
+				uni.navigateTo({
 					url: `/pages/sub/publish/publishGoods?source=${this.source}&showcaseId=${this.showcaseId}`
 				})
 			},
@@ -183,6 +202,8 @@
 			},
 			// 初始化列表页面参数
 			initParams() {
+				// 查看商品数量
+				this.onSelectGoodsTotal();
 				this.noMoreFlag = false;
 				this.params.current = 1;
 				this.params.total = 0;

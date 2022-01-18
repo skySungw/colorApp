@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "我的帖子",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "card": "/components/card",
-    "empty": "/components/empty"
-  }
-}

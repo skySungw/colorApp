@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "发布商品成功",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "poster": "/components/poster"
-  }
-}

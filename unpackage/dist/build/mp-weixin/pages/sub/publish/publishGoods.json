@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "发布商品",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "bgyxedit": "/components/bgyxedit/bgyxedit",
-    "contact": "/components/contact"
-  }
-}

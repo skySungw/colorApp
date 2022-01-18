@@ -1,1 +1,0 @@
-<view class="empty-container text-center padding-bottom data-v-53acc305"><view class="data-v-53acc305"><image src="/static/empty-log.png" mode="aspectFit" class="data-v-53acc305"></image></view><view class="text-grey text-sm data-v-53acc305">{{msg}}</view></view>

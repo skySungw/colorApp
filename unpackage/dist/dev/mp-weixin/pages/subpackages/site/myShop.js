@@ -268,12 +268,14 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   },
   methods: {
     // 删除商品
-    onDeleteGoods: function onDeleteGoods(item) {var _this3 = this;
-      this.list.forEach(function (v, i) {
-        if (v.goodsCode === item.goodsCode) {
-          _this3.list.splice(i, 1);
-        }
-      });
+    onDeleteGoods: function onDeleteGoods(item) {
+      this.initParams();
+      // this.list.forEach((v, i) => {
+      // 	if (v.goodsCode === item.goodsCode) {
+      // 		console.log('i', i);
+      // 		this.list.splice(i, 1);
+      // 	}
+      // })
     },
     onSearchCancel: function onSearchCancel() {
       this.isSearchFocus = false;
@@ -281,13 +283,13 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       this.list = [];
       this.getShowCaseList();
     },
-    onInput: function onInput(e) {var _this4 = this;
+    onInput: function onInput(e) {var _this3 = this;
       this.searchValue = e.detail.value;
       clearTimeout(this.timer);
       this.timer = setTimeout(function () {
-        _this4.list = [];
-        clearTimeout(_this4.timer);
-        _this4.getShowCaseList();
+        _this3.list = [];
+        clearTimeout(_this3.timer);
+        _this3.getShowCaseList();
       }, this.time);
     },
     // 显示搜索栏
@@ -316,18 +318,18 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
     },
     // 获取身份标识
-    getVisitOwner: function getVisitOwner(showcaseId) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+    getVisitOwner: function getVisitOwner(showcaseId) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _api.onFetchOwnerStateShowcase)({
                     showcaseId: showcaseId }));case 3:res = _context.sent;
 
                 if (res.code === 200) {
                   // "status": 1身份状态 0 橱窗拥有者 1 游客
-                  _this5.idStatus = res.data.status;
-                  _this5.siteName = res.data.ownerUserName;
-                  if (_this5.idStatus == 1) {
-                    _this5.title = "".concat(_this5.siteName, "\u7684\u6A71\u7A97");
-                    _this5.menu = [{
+                  _this4.idStatus = res.data.status;
+                  _this4.siteName = res.data.ownerUserName;
+                  if (_this4.idStatus == 1) {
+                    _this4.title = "".concat(_this4.siteName, "\u7684\u6A71\u7A97");
+                    _this4.menu = [{
                       id: 9,
                       name: '全部' },
                     {
@@ -335,13 +337,13 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                       name: '我添加的' }];
 
                   } else {
-                    _this5.title = '我的橱窗';
+                    _this4.title = '我的橱窗';
                   }
                 }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
 
                 console.log('err', _context.t0);case 10:
 
-                _this5.initParams();case 11:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
+                _this4.initParams();case 11:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
     },
     // 是否有下一页
     hasNext: function hasNext() {
@@ -358,20 +360,20 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       this.getShowCaseList();
     },
     // 获取商品列表
-    getShowCaseList: function getShowCaseList() {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res, list;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    getShowCaseList: function getShowCaseList() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res, list;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 uni.showLoading();_context2.prev = 1;
 
-                Object.assign(_this6.params, {
-                  goodsName: _this6.searchValue });_context2.next = 5;return (
+                Object.assign(_this5.params, {
+                  goodsName: _this5.searchValue });_context2.next = 5;return (
 
-                  (0, _api.onFetchShowcasePage)(_this6.params));case 5:res = _context2.sent;
+                  (0, _api.onFetchShowcasePage)(_this5.params));case 5:res = _context2.sent;
                 if (res.code === 200) {
 
-                  _this6.params.total = res.data.total;
+                  _this5.params.total = res.data.total;
                   list = res.data.records;
                   list.forEach(function (v, i) {
                     var flag = false;
-                    if (_this6.idStatus == 1) {
+                    if (_this5.idStatus == 1) {
                       if (v.isDelete) {
                         flag = true;
                       }
@@ -380,12 +382,12 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     }
                     list[i]['showDelete'] = flag;
                   });
-                  if (_this6.params.current === 1) {
-                    _this6.list = list;
+                  if (_this5.params.current === 1) {
+                    _this5.list = list;
                   } else {
-                    _this6.list = _this6.list.concat(list);
+                    _this5.list = _this5.list.concat(list);
                   }
-                  console.error('this.list', _this6.list);
+                  console.error('this.list', _this5.list);
                   // 是否有下一页数据
                   // this.hasNext = res.hasNext;
                 }

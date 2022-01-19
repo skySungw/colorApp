@@ -137,11 +137,13 @@
 		methods: {
 			// 删除商品
 			onDeleteGoods(item) {
-				this.list.forEach((v, i) => {
-					if (v.goodsCode === item.goodsCode) {
-						this.list.splice(i, 1);
-					}
-				})
+				this.initParams();
+				// this.list.forEach((v, i) => {
+				// 	if (v.goodsCode === item.goodsCode) {
+				// 		console.log('i', i);
+				// 		this.list.splice(i, 1);
+				// 	}
+				// })
 			},
 			onSearchCancel() {
 				this.isSearchFocus = false;

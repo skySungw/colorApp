@@ -35,6 +35,12 @@
           "pathName": "pages/sub/publish/publishGoods",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/subpackages/site/myShop",
+          "pathName": "pages/subpackages/site/myShop",
+          "query": "showcaseId=1",
+          "scene": null
         }
       ]
     }

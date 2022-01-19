@@ -151,14 +151,13 @@
 			}
 		},
 		created() {
-			console.log('this.item', this.item)
 			switch(this.source) {
 				case 2: // 产品库来源
 					this.operate = this.item.isAdd;
 					break;
 				case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
 					this.operate = this.item.showDelete;
-					console.log('this.op')
+					console.log('this.op', this.operate);
 					break;
 			}
 			// 收藏商品页，显示商品状态
@@ -208,10 +207,11 @@
 							title: '操作成功',
 							icon: 'none',
 							complete: () => {
+								console.log('flag', flag)
 								if (flag) {
 									this.operate = false;	
 								} else {
-									this.$emit('refreshList', this.item);
+									this.$emit('refreshList');
 								}
 								// this.$emit('refreshList');
 							}

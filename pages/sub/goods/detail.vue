@@ -11,12 +11,16 @@
 		</swiper>
 		<!-- 标题、价格、分享区 -->
 		<view class="detail-content_title flex text-xl padding-lr padding-tb-sm solid-bottom">
+			<!-- 头像 -->
+			<view class="padding-right-sm">
+				<view @tap="goHomePage" class="cu-avatar round" :style="'background-image:url(' + goodsDetail.sellerUserHeadImg + ');'"></view>
+			</view>
 			<!-- 标题、价格 -->
 			<view class="flex-1 padding-right-sm">
 				<view class="text-bold"><text v-if="goodsDetail.goodsState == 2" class="text-red">【已售出】</text>{{ goodsDetail.goodsName }}</view>
-				<view class="margin-top-sm flex flex-bettwen-space">
+				<view class="margin-top-sm flex">
 					<view class="text-red margin-right" v-if="goodsDetail.goodsPrice">￥{{ goodsDetail.goodsPrice }}</view>
-					<view class="text-sm" v-if="goodsDetail.distance">
+					<view class="text-sm flex align-center" v-if="goodsDetail.distance">
 						<text class="cuIcon-location text-gray"></text>
 						<text class="text-black">距您</text><text class="text-black">{{ goodsDetail.distance }} km</text>
 					</view>
@@ -64,14 +68,17 @@
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
+				<view v-if="goodsDetail.sellerContactType === 0" class="padding padding-big" @tap="makeCall">
+					{{ goodsDetail.sellerContact }}<text @tap="makeCall" class="padding-lr text-blue">点击拨号</text>
+				</view>
 				<view v-if="goodsDetail.sellerContactType === 1">
 					<view class="text-bold text-left padding-sm">长按识别二维码</view>
 					<view class="bg-img">
 					  <image :src="goodsDetail.sellerContact" mode="aspectFill"></image>
 					</view>
 				</view>
-				<view v-else class="padding padding-big" @tap="makeCall">
-					{{ goodsDetail.sellerContact }}<text @tap="makeCall" class="padding-lr text-blue">点击拨号</text>
+				<view v-if="goodsDetail.sellerContactType === 2" class="padding padding-big" @tap="onCopy">
+					微信号：{{ goodsDetail.sellerContact }}<text @tap="onCopy" :data-text="goodsDetail.sellerContact" class="padding-lr text-blue">点击复制</text>
 				</view>
 		    <view class="cu-bar bg-white">
 		      <view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
@@ -127,6 +134,28 @@
 			// #endif        
 		},
 		methods: {
+			// 点击复制
+			onCopy(e) {
+				uni.setClipboardData({
+					data: e.currentTarget.dataset.text,
+					success: function (res) {
+						uni.getClipboardData({
+							success: function (res) {
+								uni.showToast({
+									title: '复制成功'
+								})
+							}
+						})
+					}
+				})
+			},
+			// 进入个人主页
+			goHomePage() {
+				uni.navigateTo({
+					url: '/pages/sub/my/home?id=' + this.goodsDetail.sellerMemberId
+				})
+			},
+			// 分享朋友圈
 			onShareAppMessage() {
 				const { goodsDetail } = this.data;
 				return {

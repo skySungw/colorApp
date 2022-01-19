@@ -435,7 +435,7 @@
 			onSelectConcat(e) {
 				// this.sellerContactType = e.detail.value
 				const selectContactObj = this.pickerList[e.detail.value];
-				this.sellerContactType = selectContactObj.sellerContactType;
+				this.sellerContactType = selectContactObj.contactType;
 				this.sellerContact = selectContactObj.contactContent;
 				this.selectContactObj = selectContactObj;
 			},

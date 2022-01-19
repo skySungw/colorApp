@@ -1,0 +1,42 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/sub/my/goodsCollection",
+          "pathName": "pages/sub/my/goodsCollection",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/sub/goods/detail",
+          "pathName": "pages/sub/goods/detail",
+          "query": "id=73",
+          "scene": null
+        },
+        {
+          "name": "pages/sub/goods/detail",
+          "pathName": "pages/sub/goods/detail",
+          "query": "id=63",
+          "scene": null
+        },
+        {
+          "name": "pages/sub/publish/publishGoods",
+          "pathName": "pages/sub/publish/publishGoods",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

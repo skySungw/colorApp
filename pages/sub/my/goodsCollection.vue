@@ -6,7 +6,7 @@
 		</cu-custom>
 		<view v-if="list.length > 0" class="flex-1 overflow-hidden">
 			<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
-				<Goods v-for="(item, index) in list" :key="index" :item="item" :source="0"></Goods>
+				<Goods v-for="(item, index) in list" :key="index" :item="item" :source="5"></Goods>
 				<view v-if="noMoreFlag" class="text-center padding-sm">我是有底线的~</view>
 			</scroll-view>
 		</view>

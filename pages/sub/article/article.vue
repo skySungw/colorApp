@@ -197,7 +197,6 @@
 			},
 			// 进入个人主页
 			goHomePage() {
-				console.log('this.', this.articleDetail.userId)
 				uni.navigateTo({
 					url: '/pages/sub/my/home?id=' + this.articleDetail.userId
 				})

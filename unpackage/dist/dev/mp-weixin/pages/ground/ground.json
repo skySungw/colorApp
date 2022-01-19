@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "广场 ",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "tab-bar": "/components/tab",
+    "nav-bar": "/components/navBar",
+    "card": "/components/card",
+    "active-card": "/components/activeCard",
+    "empty": "/components/empty"
+  }
+}

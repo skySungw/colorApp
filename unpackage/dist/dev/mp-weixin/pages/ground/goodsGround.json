@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "宝贝 ",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "nav-bar": "/components/navBar",
+    "goods": "/components/goods",
+    "empty": "/components/empty"
+  }
+}

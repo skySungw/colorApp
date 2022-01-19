@@ -1,0 +1,262 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.page-box {
+  background-color: #F5F5F5;
+}
+.la-header {
+  display: flex;
+  height: 77rpx;
+  background-color: #fff;
+  padding: 0 20rpx 0 20rpx;
+  position: relative;
+}
+.la-header-left {
+  width: 208rpx;
+  font-size: 28rpx;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+.la-header-dw {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0 6rpx;
+}
+.la-header-jtimg {
+  width: 28rpx;
+  height: 28rpx;
+  flex-shrink: 0;
+}
+.la-header-left .la-header-dwimg {
+  width: 38rpx;
+  height: 38rpx;
+}
+.la-header-right {
+  width: calc(100% - 200rpx);
+  position: relative;
+}
+.la-header-right input {
+  height: 60rpx;
+  border-radius: 90rpx;
+  background-color: #f5f5f5;
+  text-align: left;
+  margin-top: 10rpx;
+  padding-left: 60rpx;
+  font-size: 25rpx;
+  color: #000;
+  line-height: 60rpx;
+  position: relative;
+  padding-right: 90rpx;
+}
+.la-header-right .la-header-right-ss {
+  width: 28rpx;
+  height: 28rpx;
+  position: absolute;
+  left: 22rpx;
+  top: 26rpx;
+  z-index: 1;
+}
+.la-nv-dq {
+  height: 58rpx;
+  padding: 0 24rpx 0 24rpx;
+  background-color: #f5f5f5;
+  line-height: 58rpx;
+  text-align: left;
+  font-size: 24rpx;
+  color: #8a8080;
+}
+/* 重新定位 */
+.curAddress_title {
+  height: 58rpx;
+  line-height: 58rpx;
+  font-size: 24rpx;
+  color: #666;
+  padding: 0 23rpx;
+}
+.curAddress_name_view {
+  position: relative;
+  height: 90rpx;
+  display: flex;
+  padding: 0 23rpx;
+  flex-direction: row;
+  background-color: #fff;
+}
+.curAddress_name {
+  flex: 1;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.curAddress_change {
+  width: 170rpx;
+  height: 90rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 25rpx;
+}
+.curAddress_change image {
+  width: 45rpx;
+  height: 45rpx;
+  margin-right: 5rpx;
+}
+.la-nv-list .curAddress_name_view {
+  border-bottom: 1px solid #f5f7f8;
+}
+/* 搜索弹出 */
+.la-search-list {
+  width: 100%;
+  border-top: 1px solid #f5f7f8;
+}
+.curAddress_juli {
+  font-size: 26rpx;
+  color: #999;
+}
+.la-search-list .curAddress_name_view {
+  height: auto;
+  display: block;
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #f5f7f8;
+}
+.la-header-right .la-header-right-img {
+  width: 36rpx;
+  position: absolute;
+  right: 4rpx;
+  top: 3rpx;
+  z-index: 9999;
+  display: block;
+  padding: 20rpx;
+}
+.back-color {
+  background-color: #fff;
+}
+.address-box {
+  /* border-bottom: 20upx solid #f5f5f5; */
+  margin-bottom: 20rpx;
+  background: #ffffff;
+  padding: 10rpx 24rpx 0;
+  position: relative;
+  overflow: hidden;
+}
+.address-box:last-child {
+  border: 0;
+}
+.address-box__title {
+  font-size: 24rpx;
+  color: #999999;
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+}
+.address-box__title image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 8rpx;
+}
+.address-box__current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.address-box__name {
+  font-size: 30rpx;
+  color: #333333;
+  font-weight: bold;
+  padding: 22rpx 0;
+}
+.address-box__name___address {
+  color: #999;
+  font-size: 28rpx;
+}
+.address-box__list {
+  padding-bottom: 20rpx;
+  margin-left: 40rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+.address-box__detail {
+  font-size: 24rpx;
+  color: #666666;
+  margin-top: 14rpx;
+}
+.address-box__btns {
+  position: absolute;
+  bottom: 0;
+  left: 60rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 100%;
+  color: #666666;
+  font-size: 28rpx;
+  border-top: 1rpx solid #F5F5F5;
+  display: flex;
+  align-items: center;
+}
+.address-box__btns image {
+  width: 14rpx;
+  height: 22rpx;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  margin-left: 10rpx;
+  opacity: 0.8;
+}
+.address-box__btns .up {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+.address-box__re-location {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+.address-box__re-location image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 10rpx;
+}
+.address-box__nearby-list .address-box__name {
+  margin-left: 40rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.scroll-Y {
+  height: 100%;
+}
+.absolute {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+

@@ -11,6 +11,20 @@
 				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
 			</view>
 		</view>
+		<!-- 商品收藏 -->
+		<view v-if="source == 5" class="goods-item flex" @click="onGoodsDetail">
+			<image :src="item.goodsImgArray[0]" :lazy-load="true"></image>
+			<view class="goods-item_container flex-1 padding-left-xs">
+				<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
+				<view class="text-bold goods-item_info">{{ item.goodsDesc }}</view>
+				<view class="goods-item_address" v-if="item.goodsAddress">地址：{{ item.goodsAddress }}</view>
+				<view class="goods-item_address" v-if="item.distance">距您 <text class="text-red padding-lr-sm">{{item.distance}}</text> km</view>
+				<view class="goods-item_price text-red text-bold">
+					<text class="cu-tag radius margin-right-sm" :class="goodsState.className">{{ goodsState.label }}</text>
+					<text>￥ {{ item.goodsPrice }}</text>
+				</view>
+			</view>
+		</view>
 		<!-- 产品库列表 -->
 		<view v-if="source == 2" class="relative">
 			<view class="products-content" @tap="onGoodsDetail">
@@ -133,6 +147,7 @@
 		data() {
 			return {
 				operate: false ,// 操作
+				goodsState: '' // 商品状态 0 - 未上架， 1 - 上架中， 2 - 已售出
 			}
 		},
 		created() {
@@ -145,6 +160,24 @@
 					this.operate = this.item.showDelete;
 					console.log('this.op')
 					break;
+			}
+			// 收藏商品页，显示商品状态
+			if (this.source === 5) {
+				const config = {
+					0: {
+						className: 'line-gray',
+						label: '未上架'
+					},
+					1: {
+						className: 'bg-green',
+						label: '出售中'
+					},
+					2: {
+						className: 'bg-gray',
+						label: '已售出'
+					}
+				}
+				this.goodsState = config[this.item.goodsState];
 			}
 		},
 		methods: {

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "商品收藏",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "goods": "/components/goods",
+    "empty": "/components/empty"
+  }
+}

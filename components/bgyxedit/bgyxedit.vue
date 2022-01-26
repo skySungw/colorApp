@@ -49,12 +49,16 @@ export default {
 			type: Boolean,
 			default: true // 是否显示文本按钮
 		},
-		// taskinfodtv: {
-		// 	type: Array,
-		// 	default() {
-		// 		return [{type:'text',value:'',f:false}];
-		// 	}
-		// },
+		content: {
+			type: String,
+			default: '' // 回显内容
+		},
+		taskinfodtv: {
+			type: Array,
+			default() {
+				return [{type:'text',value:'',f:false}];
+			}
+		},
 		mtype: {
 			type: Array,
 			default() {
@@ -77,7 +81,7 @@ export default {
 	data() {
 		return {
 			htmlinfo:'',
-			taskinfodtv: [{type:'text',value:'',f:false}]
+			// taskinfodtv: [{type:'text',value:'',f:false}]
 		};
 	},
 	methods: {
@@ -162,6 +166,7 @@ export default {
 			}
 		},
 		delthisel:function(i, type){
+			if (type) return false;
 			var that = this
 			var arr = this.taskinfodtv
 			// if(i == 0){

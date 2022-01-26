@@ -211,6 +211,8 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   },
   onLoad: function onLoad(options) {
     this.customBar = this.CustomBar;
+  },
+  onShow: function onShow() {
     this.initParams(this.curTab);
   },
   // onReachBottom() {

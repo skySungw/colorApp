@@ -74,7 +74,7 @@
 				<view v-if="goodsDetail.sellerContactType === 1">
 					<view class="text-bold text-left padding-sm">长按识别二维码</view>
 					<view class="bg-img">
-					  <image :src="goodsDetail.sellerContact" mode="aspectFill"></image>
+					  <image :src="goodsDetail.sellerContact" mode="aspectFit" :show-menu-by-longpress="true"></image>
 					</view>
 				</view>
 				<view v-if="goodsDetail.sellerContactType === 2" class="padding padding-big" @tap="onCopy">
@@ -167,6 +167,7 @@
 			getShareBox() {
 				this.sharebox = false;
 			},
+			// 商品详情
 			async getGoodsDetail() {
 				uni.showLoading();
 				try {

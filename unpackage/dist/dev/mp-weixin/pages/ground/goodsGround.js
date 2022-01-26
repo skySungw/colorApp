@@ -223,6 +223,9 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     // });
   },
   onPullDownRefresh: function onPullDownRefresh() {var _this2 = this;
+    uni.showLoading({
+      title: '刷新中...' });
+
     this.title = Math.random();
     setTimeout(function () {
       uni.stopPullDownRefresh();

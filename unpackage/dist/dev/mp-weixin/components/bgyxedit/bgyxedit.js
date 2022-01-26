@@ -163,12 +163,16 @@ var _default2 =
       type: Boolean,
       default: true // 是否显示文本按钮
     },
-    // taskinfodtv: {
-    // 	type: Array,
-    // 	default() {
-    // 		return [{type:'text',value:'',f:false}];
-    // 	}
-    // },
+    content: {
+      type: String,
+      default: '' // 回显内容
+    },
+    taskinfodtv: {
+      type: Array,
+      default: function _default() {
+        return [{ type: 'text', value: '', f: false }];
+      } },
+
     mtype: {
       type: Array,
       default: function _default() {
@@ -190,9 +194,9 @@ var _default2 =
 
   data: function data() {
     return {
-      htmlinfo: '',
-      taskinfodtv: [{ type: 'text', value: '', f: false }] };
-
+      htmlinfo: ''
+      // taskinfodtv: [{type:'text',value:'',f:false}]
+    };
   },
   methods: {
     returnthisinfo: function returnthisinfo() {
@@ -276,6 +280,7 @@ var _default2 =
       }
     },
     delthisel: function delthisel(i, type) {
+      if (type) return false;
       var that = this;
       var arr = this.taskinfodtv;
       // if(i == 0){

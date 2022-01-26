@@ -32,7 +32,10 @@
 			<view class="padding-bottom title">
 				<input placeholder="请输入价格" v-model="goodsPrice" class="publish-title"></input>
 			</view> -->
-			<bgyxedit @bgyxchange="getbgyxinfo" :img="false" :text="false" :placeholderText="placeholderText" :showdone="true" uploadurl="https://qsd.haoleen.com/getdata/getdata/appupimg" filename="img"></bgyxedit>
+			<view class="goods-content">
+				<textarea v-model="goodsContent" @input="onChangeGoodsDesc"></textarea>
+			</view>
+			<!-- <bgyxedit @bgyxchange="getbgyxinfo" :img="false" :text="false" :placeholderText="placeholderText" :showdone="true" :taskinfodtv="info" filename="img"></bgyxedit> -->
 		</view>
 		<!-- 商品封面图 -->
 		<view class="padding-lr">
@@ -93,7 +96,7 @@
 </template>
 
 <script>
-	import { onFetchGoodsCategory, onCreateGoods, onFetchContactType, selectUserLocation, saveUserLocation } from '@/api';
+	import { onFetchGoodsDetail, onFetchGoodsCategory, onCreateGoods, onFetchContactType, selectUserLocation, saveUserLocation } from '@/api';
 	import bgyxedit from '@/components/bgyxedit/bgyxedit';
 	import Contact from '@/components/contact';
 	import ajaxUpload from '@/api/ajaxUpload';
@@ -108,6 +111,9 @@
 		},
 		data() {
 			return {
+				editFlag: false, // 编辑页 false - 新增， true - 编辑
+				goodsCode: '', // 商品id， 编辑页-获取商品信息使用
+				info: [{type:'text',value: [],f:false}], // 回显textarea信息
 				initFlag: true, // 是否重新加载
 				goodsName: '', // 商品名称
 				maxImg: 8,
@@ -141,6 +147,13 @@
 			}
 		},
 		onLoad(options) {
+			if (options.edit) {
+				this.editFlag = true;
+				this.goodsCode = options.goodsCode;
+				// 获取商品详情
+				this.onGetGoodsDetail();
+			}
+			console.log('editFlag', this.editFlag);
 			if (options.source) {
 				this.source = options.source;
 				this.showcaseId = options.showcaseId;
@@ -182,6 +195,29 @@
 			chooseLocation.setLocation(null);
 		},
 		methods: {
+			// onChangeGoodsDesc
+			onChangeGoodsDesc(e) {
+				console.log('e', e.target)
+			},
+			// 获取商品详情
+			async onGetGoodsDetail() {
+				try {
+					const res = await onFetchGoodsDetail({
+						goodsCode: this.goodsCode 
+					});
+					console.log('res', res);
+					if (res.code === 200) {
+						const data = res.data;
+						// this.goodsName = data.goodsName;
+						Object.assign(this, data);
+						this.info = [{type:'text',value: data.goodsContent,f:false}]
+					}
+				} catch(err) {
+					uni.showToast('获取信息失败！');
+					console.log('err', err);
+				}
+			},
+			// 修改联系方式 
 			modifyConcat() {
 				let url = '';
 				if (this.selectContactObj.contactType === 1) {
@@ -515,6 +551,14 @@
 		.wechat {
 			width: 40upx;
 			height: 40upx;
+		}
+		.goods-content {
+			border: 1upx solid #eee;
+			display: flex;
+			textarea {
+				flex: 1;
+				padding: 5upx 10upx;
+			}
 		}
 	}
 </style>

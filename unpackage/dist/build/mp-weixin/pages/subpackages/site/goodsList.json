@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "橱窗商品",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "goods": "/components/goods",
+    "empty": "/components/empty"
+  }
+}

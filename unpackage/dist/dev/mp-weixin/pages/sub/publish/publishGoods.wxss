@@ -31,4 +31,12 @@
   width: 40rpx;
   height: 40rpx;
 }
+.publish-content .goods-content.data-v-7e573d6f {
+  border: 1rpx solid #eee;
+  display: flex;
+}
+.publish-content .goods-content textarea.data-v-7e573d6f {
+  flex: 1;
+  padding: 5rpx 10rpx;
+}
 

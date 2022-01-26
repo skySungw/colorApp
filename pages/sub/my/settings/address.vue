@@ -29,7 +29,7 @@
 </template>
 
 <script>
-	import { onCreateReceiveAddress } from '@/api';
+	import { onCreateReceiveAddress, onFetchAddressById, onUpdateAddress } from '@/api';
 	// #ifdef MP-WEIXIN
 	const chooseLocation = requirePlugin('chooseLocation');
 	// #endif     
@@ -56,6 +56,9 @@
 		onLoad(options) {
 			console.log('options', options);
 			this.id = options.id;
+			if (this.id) {
+				this.onFetchAddressInfo(this.id);
+			}
 		},
 		/**
 		 * 生命周期函数--监听页面显示
@@ -86,6 +89,19 @@
 			chooseLocation.setLocation(null);
 		},
 		methods: {
+			async onFetchAddressInfo(receiveId) {
+				try {
+					const res = await onFetchAddressById({
+						receiveId
+					});
+					if (res.code === 200) {
+						Object.assign(this.params, res.data);
+						this.location = res.data.receiveProvinceName + res.data.receiveCityName + res.data.receiveAreaName;
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			async onSave() {
 				if (!this.params.receiveContact) {
 					uni.showToast({
@@ -116,16 +132,20 @@
 					return false;
 				}
 				try {
-					const res = await onCreateReceiveAddress(this.params);
+					let res;
+					if (this.id) {
+						Object.assign(this.params, {
+							id: this.id
+						})
+						res = await onUpdateAddress(this.params);
+					} else {
+						res = await onCreateReceiveAddress(this.params);
+					}
 					if (res.code === 200) {
 						uni.showToast({
 							title: '操作成功!'
 						});
 						setTimeout(() => {
-							let pages = getCurrentPages();
-							let prevPage = pages[pages.length - 2]; //上一个页面'
-							console.log('prevPage', prevPage)
-							prevPage.$vm.onFetchAddressInfo(res.data);
 							uni.navigateBack({
 								delta: 1
 							})

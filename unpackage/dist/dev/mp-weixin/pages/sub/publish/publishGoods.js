@@ -93,29 +93,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
-try {
-  components = {
-    bgyxedit: function() {
-      return __webpack_require__.e(/*! import() | components/bgyxedit/bgyxedit */ "components/bgyxedit/bgyxedit").then(__webpack_require__.bind(null, /*! @/components/bgyxedit/bgyxedit.vue */ 482))
-    }
-  }
-} catch (e) {
-  if (
-    e.message.indexOf("Cannot find module") !== -1 &&
-    e.message.indexOf(".vue") !== -1
-  ) {
-    console.error(e.message)
-    console.error("1. 排查组件名称拼写是否正确")
-    console.error(
-      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
-    )
-    console.error(
-      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
-    )
-  } else {
-    throw e
-  }
-}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -248,6 +225,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _api = __webpack_require__(/*! @/api */ 21);
 
 
@@ -263,6 +243,9 @@ var chooseLocation = requirePlugin('chooseLocation');var _default = (_components
 
   data: function data() {
     return {
+      editFlag: false, // 编辑页 false - 新增， true - 编辑
+      goodsCode: '', // 商品id， 编辑页-获取商品信息使用
+      info: [{ type: 'text', value: [], f: false }], // 回显textarea信息
       initFlag: true, // 是否重新加载
       goodsName: '', // 商品名称
       maxImg: 8,
@@ -296,6 +279,13 @@ var chooseLocation = requirePlugin('chooseLocation');var _default = (_components
     };
   },
   onLoad: function onLoad(options) {
+    if (options.edit) {
+      this.editFlag = true;
+      this.goodsCode = options.goodsCode;
+      // 获取商品详情
+      this.onGetGoodsDetail();
+    }
+    console.log('editFlag', this.editFlag);
     if (options.source) {
       this.source = options.source;
       this.showcaseId = options.showcaseId;
@@ -337,7 +327,30 @@ function onUnload() {
   chooseLocation.setLocation(null);
 }), _defineProperty(_components$data$onLo, "methods",
 {
-  modifyConcat: function modifyConcat() {var _this = this;
+  // onChangeGoodsDesc
+  onChangeGoodsDesc: function onChangeGoodsDesc(e) {
+    console.log('e', e.target);
+  },
+  // 获取商品详情
+  onGetGoodsDetail: function onGetGoodsDetail() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, data;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+
+                (0, _api.onFetchGoodsDetail)({
+                  goodsCode: _this.goodsCode }));case 3:res = _context.sent;
+
+              console.log('res', res);
+              if (res.code === 200) {
+                data = res.data;
+                // this.goodsName = data.goodsName;
+                Object.assign(_this, data);
+                _this.info = [{ type: 'text', value: data.goodsContent, f: false }];
+              }_context.next = 12;break;case 8:_context.prev = 8;_context.t0 = _context["catch"](0);
+
+              uni.showToast('获取信息失败！');
+              console.log('err', _context.t0);case 12:case "end":return _context.stop();}}}, _callee, null, [[0, 8]]);}))();
+
+  },
+  // 修改联系方式 
+  modifyConcat: function modifyConcat() {var _this2 = this;
     var url = '';
     if (this.selectContactObj.contactType === 1) {
       // 二维码	
@@ -352,9 +365,9 @@ function onUnload() {
       events: {
         getSetting: function getSetting(data) {
           console.error('data', data.data);
-          _this.sellerContact = data.data;
-          _this.selectContactObj.ifNull = false;
-          _this.selectContactObj.contactContent = data.data;
+          _this2.sellerContact = data.data;
+          _this2.selectContactObj.ifNull = false;
+          _this2.selectContactObj.contactContent = data.data;
         } },
 
       success: function success(res) {
@@ -365,22 +378,22 @@ function onUnload() {
 
   },
   // 获取用户地址
-  onSelectLocation: function onSelectLocation() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, _res$data;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+  onSelectLocation: function onSelectLocation() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res, _res$data;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
 
-                (0, _api.selectUserLocation)());case 3:res = _context.sent;
+                (0, _api.selectUserLocation)());case 3:res = _context2.sent;
               if (res.code === 200) {
                 if (res === null || res === void 0 ? void 0 : (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.locationAddress) {
-                  _this2.address = res.data.locationAddress;
-                  _this2.goodsLat = res.data.locationLat;
-                  _this2.goodsLng = res.data.locationLng;
+                  _this3.address = res.data.locationAddress;
+                  _this3.goodsLat = res.data.locationLat;
+                  _this3.goodsLng = res.data.locationLng;
                 }
-              }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
+              }_context2.next = 10;break;case 7:_context2.prev = 7;_context2.t0 = _context2["catch"](0);
 
-              console.log('err', _context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
+              console.log('err', _context2.t0);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}))();
 
   },
   // 跳转到微信号、微信图片
-  onAddContact: function onAddContact() {var _this3 = this;
+  onAddContact: function onAddContact() {var _this4 = this;
     var url = '';
     if (this.selectContactObj.contactType === 1) {
       // 二维码	
@@ -394,9 +407,9 @@ function onUnload() {
       events: {
         getSetting: function getSetting(data) {
           console.error('data', data.data);
-          _this3.sellerContact = data.data;
-          _this3.selectContactObj.ifNull = false;
-          _this3.selectContactObj.contactContent = data.data;
+          _this4.sellerContact = data.data;
+          _this4.selectContactObj.ifNull = false;
+          _this4.selectContactObj.contactContent = data.data;
         } },
 
       success: function success(res) {
@@ -407,69 +420,69 @@ function onUnload() {
 
   },
   // 获取分类列表
-  getCatogryList: function getCatogryList() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
+  getCatogryList: function getCatogryList() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;_context3.next = 3;return (
 
-                (0, _api.onFetchGoodsCategory)());case 3:res = _context2.sent;
+                (0, _api.onFetchGoodsCategory)());case 3:res = _context3.sent;
               if (res.code === 200) {
-                _this4.goodsPickerArr = res.data;
-                _this4.goodsPickerArr.forEach(function (v) {
-                  _this4.goodsPicker.push(v.categoryName);
+                _this5.goodsPickerArr = res.data;
+                _this5.goodsPickerArr.forEach(function (v) {
+                  _this5.goodsPicker.push(v.categoryName);
                 });
-                if (_this4.goodsPickerArr.length) {
-                  _this4.goodsCategoryId = _this4.goodsPickerArr[0]['categoryId'];
-                }
-              }_context2.next = 10;break;case 7:_context2.prev = 7;_context2.t0 = _context2["catch"](0);
-
-              console.log('err', _context2.t0);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}))();
-
-  },
-  // 获取联系方式列表
-  getContactList: function getContactList() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res, selectContactObj;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;_context3.next = 3;return (
-
-                (0, _api.onFetchContactType)());case 3:res = _context3.sent;
-              if (res.code === 200) {
-                if (res.data.length > 0) {
-                  // 默认选择第一个联系方式
-                  selectContactObj = res.data[0];
-                  _this5.sellerContactType = selectContactObj.contactType;
-                  _this5.sellerContact = selectContactObj.contactContent;
-                  _this5.selectContactObj = selectContactObj;
-                  // 联系人列表
-                  _this5.pickerList = res.data;
+                if (_this5.goodsPickerArr.length) {
+                  _this5.goodsCategoryId = _this5.goodsPickerArr[0]['categoryId'];
                 }
               }_context3.next = 10;break;case 7:_context3.prev = 7;_context3.t0 = _context3["catch"](0);
 
               console.log('err', _context3.t0);case 10:case "end":return _context3.stop();}}}, _callee3, null, [[0, 7]]);}))();
 
   },
+  // 获取联系方式列表
+  getContactList: function getContactList() {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res, selectContactObj;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
+
+                (0, _api.onFetchContactType)());case 3:res = _context4.sent;
+              if (res.code === 200) {
+                if (res.data.length > 0) {
+                  // 默认选择第一个联系方式
+                  selectContactObj = res.data[0];
+                  _this6.sellerContactType = selectContactObj.contactType;
+                  _this6.sellerContact = selectContactObj.contactContent;
+                  _this6.selectContactObj = selectContactObj;
+                  // 联系人列表
+                  _this6.pickerList = res.data;
+                }
+              }_context4.next = 10;break;case 7:_context4.prev = 7;_context4.t0 = _context4["catch"](0);
+
+              console.log('err', _context4.t0);case 10:case "end":return _context4.stop();}}}, _callee4, null, [[0, 7]]);}))();
+
+  },
   // 发布商品
-  publish: function publish() {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var params, res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;
+  publish: function publish() {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var params, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
 
               // const lat = uni.getStorageSync('lat');
               // const lng = uni.getStorageSync('lng');
               params = {
-                goodsName: _this6.goodsName,
-                goodsImg: _this6.goodsImg,
-                goodsPrice: _this6.goodsPrice,
-                goodsStock: _this6.goodsStock,
+                goodsName: _this7.goodsName,
+                goodsImg: _this7.goodsImg,
+                goodsPrice: _this7.goodsPrice,
+                goodsStock: _this7.goodsStock,
                 // goodsLat: this.goodsLat || lat,
                 // goodsLng: this.goodsLng || lng,
-                goodsContent: _this6.goodsContent,
-                goodsDesc: _this6.goodsDesc,
-                sellerContactType: _this6.sellerContactType,
-                sellerContact: _this6.sellerContact,
-                goodsAddress: _this6.goodsAddress,
-                goodsCategoryId: _this6.goodsCategoryId };_context4.next = 4;return (
+                goodsContent: _this7.goodsContent,
+                goodsDesc: _this7.goodsDesc,
+                sellerContactType: _this7.sellerContactType,
+                sellerContact: _this7.sellerContact,
+                goodsAddress: _this7.goodsAddress,
+                goodsCategoryId: _this7.goodsCategoryId };_context5.next = 4;return (
 
-                (0, _api.onCreateGoods)(params));case 4:res = _context4.sent;
+                (0, _api.onCreateGoods)(params));case 4:res = _context5.sent;
               console.log('res', res);
               if (res.code === 200) {
                 uni.showToast({
                   title: '发布成功',
                   complete: function complete() {
                     var url = '/pages/sub/my/goods';
-                    if (_this6.source == 1) {
-                      url = "/pages/sub/my/goods?source=".concat(_this6.source, "&showcaseId=").concat(_this6.showcaseId, "&goodsCode=").concat(res.data.goodsCode);
+                    if (_this7.source == 1) {
+                      url = "/pages/sub/my/goods?source=".concat(_this7.source, "&showcaseId=").concat(_this7.showcaseId, "&goodsCode=").concat(res.data.goodsCode);
                     }
                     setTimeout(function () {
                       uni.redirectTo({
@@ -482,9 +495,9 @@ function onUnload() {
                 // uni.navigateTo({
                 // 	url: `/pages/sub/publish/publishSuccess?params=${JSON.stringify(params)}`
                 // })
-              }_context4.next = 12;break;case 9:_context4.prev = 9;_context4.t0 = _context4["catch"](0);
+              }_context5.next = 12;break;case 9:_context5.prev = 9;_context5.t0 = _context5["catch"](0);
 
-              console.log('err', _context4.t0);case 12:case "end":return _context4.stop();}}}, _callee4, null, [[0, 9]]);}))();
+              console.log('err', _context5.t0);case 12:case "end":return _context5.stop();}}}, _callee5, null, [[0, 9]]);}))();
 
   },
   // 校验字段
@@ -541,24 +554,24 @@ function onUnload() {
     this.publish();
   },
   // 保存地址
-  onSaveAddress: function onSaveAddress() {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var res, addressInfo;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;_context5.next = 3;return (
+  onSaveAddress: function onSaveAddress() {var _this8 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var res, addressInfo;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:_context6.prev = 0;_context6.next = 3;return (
 
                 (0, _api.saveUserLocation)({
-                  "locationLat": _this7.goodsLat,
-                  "locationLng": _this7.goodsLng,
-                  "locationAddress": _this7.address }));case 3:res = _context5.sent;
+                  "locationLat": _this8.goodsLat,
+                  "locationLng": _this8.goodsLng,
+                  "locationAddress": _this8.address }));case 3:res = _context6.sent;
 
               if (res.code === 200) {
                 addressInfo = uni.getStorageInfoSync('addressInfo') || {};
                 Object.assign(addressInfo, {
-                  title: _this7.address,
-                  lat: _this7.goodsLat,
-                  lng: _this7.goodsLng });
+                  title: _this8.address,
+                  lat: _this8.goodsLat,
+                  lng: _this8.goodsLng });
 
                 uni.setStorageSync('addressInfo', addressInfo);
-              }_context5.next = 10;break;case 7:_context5.prev = 7;_context5.t0 = _context5["catch"](0);
+              }_context6.next = 10;break;case 7:_context6.prev = 7;_context6.t0 = _context6["catch"](0);
 
-              console.log('err', _context5.t0);case 10:case "end":return _context5.stop();}}}, _callee5, null, [[0, 7]]);}))();
+              console.log('err', _context6.t0);case 10:case "end":return _context6.stop();}}}, _callee6, null, [[0, 7]]);}))();
 
   },
   // 地图选点
@@ -594,7 +607,7 @@ function onUnload() {
     this.sellerContact = selectContactObj.contactContent;
     this.selectContactObj = selectContactObj;
   },
-  onChooseImage: function onChooseImage() {var _this8 = this;
+  onChooseImage: function onChooseImage() {var _this9 = this;
     // 重新触发onshow
     this.initFlag = false;
 
@@ -603,8 +616,8 @@ function onUnload() {
       sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
       success: function success(res) {
         var tempFilePaths = res.tempFilePaths;
-        if (_this8.imgList.length + tempFilePaths.length > _this8.maxImg) {
-          var len = _this8.imgList.length + tempFilePaths.length - _this8.maxImg;
+        if (_this9.imgList.length + tempFilePaths.length > _this9.maxImg) {
+          var len = _this9.imgList.length + tempFilePaths.length - _this9.maxImg;
           tempFilePaths = tempFilePaths.splice(len);
         }
         tempFilePaths.forEach(function (v) {
@@ -614,12 +627,12 @@ function onUnload() {
             success: function success(uploadFileRes) {
               var upimg = JSON.parse(uploadFileRes.data);
               if (upimg.code === 200) {
-                if (_this8.imgList.length != 0) {
-                  _this8.imgList = _this8.imgList.concat([v]);
-                  _this8.goodsImg = _this8.goodsImg.concat([upimg.data.fileUrl]);
+                if (_this9.imgList.length != 0) {
+                  _this9.imgList = _this9.imgList.concat([v]);
+                  _this9.goodsImg = _this9.goodsImg.concat([upimg.data.fileUrl]);
                 } else {
-                  _this8.imgList.push(v);
-                  _this8.goodsImg = [upimg.data.fileUrl];
+                  _this9.imgList.push(v);
+                  _this9.goodsImg = [upimg.data.fileUrl];
                 }
               }
             } });
@@ -634,7 +647,7 @@ function onUnload() {
       current: e.currentTarget.dataset.url });
 
   },
-  onDelImg: function onDelImg(e) {var _this9 = this;
+  onDelImg: function onDelImg(e) {var _this10 = this;
     uni.showModal({
       content: '确定删除？',
       cancelText: '再想想',
@@ -642,20 +655,20 @@ function onUnload() {
       success: function success(res) {
         if (res.confirm) {
           var index = e.currentTarget.dataset.index;
-          _this9.imgList.splice(index, 1);
-          _this9.goodsImg.splice(index, 1);
+          _this10.imgList.splice(index, 1);
+          _this10.goodsImg.splice(index, 1);
         }
       } });
 
   },
-  getbgyxinfo: function getbgyxinfo(e) {var _this10 = this;
+  getbgyxinfo: function getbgyxinfo(e) {var _this11 = this;
     console.log('e', e);
     //获取富文本内容，默认模式拼接的html
     this.goodsContent = e.html;
     //获取原始数据,可自行循环拼接html数据
     this.goodsDesc = '';
     e.data.forEach(function (v) {
-      _this10.goodsDesc += v.value;
+      _this11.goodsDesc += v.value;
     });
   } }), _components$data$onLo);exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

@@ -76,6 +76,8 @@
 		},
 		onLoad(options) {
 			this.customBar = this.CustomBar;
+		},
+		onShow() {
 			this.initParams(this.curTab);
 		},
 		// onReachBottom() {

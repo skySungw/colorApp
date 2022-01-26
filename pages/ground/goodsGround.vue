@@ -91,6 +91,9 @@
 			// });
 		},
 		onPullDownRefresh() {
+			uni.showLoading({
+				title: '刷新中...'
+			});
 			this.title = Math.random();
 			setTimeout(() => {
 				uni.stopPullDownRefresh();
@@ -188,7 +191,7 @@
 		height: 100rpx;
 	}
 	.card-list_container {
-		padding-bottom: 150upx;
+		padding-bottom: 100upx;
 		overflow: hidden;
 	}
 </style>

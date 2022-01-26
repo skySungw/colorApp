@@ -108,7 +108,7 @@
 			</view>
 			<view class="text-right">
 				<!-- 暂时下架编辑功能 -->
-				<!-- <text v-if="status == 0" class="cu-tag line-green radius margin-right-sm text-green">编辑</text> -->
+				<text v-if="status == 0" @tap="onEdit" class="cu-tag line-green radius margin-right-sm text-green">编辑</text>
 				<text v-if="status == 0" @tap="onAdd(1)" class="cu-tag line-cu-tag white radius margin-right-sm text-cu-tag white">上架</text>
 				
 				<text v-if="status == 1" @tap="onAdd(0)" class="cu-tag line-cu-tag white radius margin-right-sm text-cu-tag white">下架</text>
@@ -245,6 +245,13 @@
 					console.log('err', err);
 				}
 			},
+			// 编辑商品
+			onEdit() {
+				uni.navigateTo({
+					url: `/pages/sub/publish/publishGoods?edit=1&goodsCode=${this.item.goodsCode}`
+				})
+			},
+			// 上下架操作
 			async onAdd(type) {
 				console.log('type', type);
 				const TYPE_TEXT = {

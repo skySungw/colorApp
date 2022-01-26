@@ -13,33 +13,15 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/sub/my/goodsCollection",
-          "pathName": "pages/sub/my/goodsCollection",
+          "name": "pages/sub/my/goods",
+          "pathName": "pages/sub/my/goods",
           "query": "",
           "scene": null
         },
         {
-          "name": "pages/sub/goods/detail",
-          "pathName": "pages/sub/goods/detail",
-          "query": "id=73",
-          "scene": null
-        },
-        {
-          "name": "pages/sub/goods/detail",
-          "pathName": "pages/sub/goods/detail",
-          "query": "id=63",
-          "scene": null
-        },
-        {
-          "name": "pages/sub/publish/publishGoods",
-          "pathName": "pages/sub/publish/publishGoods",
+          "name": "pages/ground/goodsGround",
+          "pathName": "pages/ground/goodsGround",
           "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/subpackages/site/myShop",
-          "pathName": "pages/subpackages/site/myShop",
-          "query": "showcaseId=1",
           "scene": null
         }
       ]

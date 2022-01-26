@@ -302,13 +302,17 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                 setTimeout(function () {
                   _this4.onAddAddress();
                 }, 2000);return _context4.abrupt("return",
-                false);case 4:_context4.prev = 4;_context4.next = 7;return (
+                false);case 4:
+
+                uni.showLoading({
+                  title: '支付中...',
+                  mask: true });_context4.prev = 5;_context4.next = 8;return (
 
 
                   (0, _api.onCreateOrder)({
                     goodsInfo: _this4.goodsInfo,
                     receiveId: _this4.addressInfo.receiveId,
-                    orderRemark: _this4.orderRemark }));case 7:res = _context4.sent;
+                    orderRemark: _this4.orderRemark }));case 8:res = _context4.sent;
 
                 if (res.code === 200) {
                   _this4.getPayConfig((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.orderCode);
@@ -325,9 +329,10 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                       }, 2000);
                     } });
 
-                }_context4.next = 14;break;case 11:_context4.prev = 11;_context4.t0 = _context4["catch"](4);
+                }_context4.next = 16;break;case 12:_context4.prev = 12;_context4.t0 = _context4["catch"](5);
 
-                console.log('err', _context4.t0);case 14:case "end":return _context4.stop();}}}, _callee4, null, [[4, 11]]);}))();
+                console.log('err', _context4.t0);
+                uni.hideLoading();case 16:case "end":return _context4.stop();}}}, _callee4, null, [[5, 12]]);}))();
 
     },
     getPayConfig: function getPayConfig(orderCode) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var res, data, param;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;_context5.next = 3;return (

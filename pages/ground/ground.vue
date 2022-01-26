@@ -149,10 +149,11 @@
 			// uni.$off('operateHandle');
 		},
 		onPullDownRefresh() {
-			setTimeout(() => {
-				uni.stopPullDownRefresh();
-				this.initParams();
-			}, 2000);
+			uni.showLoading({
+				title: '刷新中...'
+			});
+			// uni.stopPullDownRefresh();
+			this.initParams();
 		},
 		methods: {
 			// 初始化页面经纬度等数据
@@ -339,9 +340,15 @@
 			},
 			// 初始化列表页面参数
 			initParams() {
+				this.list = [];
+				this.images = [];
+				col1H = 0;
+				col2H = 0;
+				this.cols = [[], []];
+				this.loadingCount = 0;
 				this.params.current = 1;
 				this.params.articleType = this.params.articleType || 0;
-				this.getArticleList();
+				this.getArticleList(true);
 			},
 			onChangeParams(type) {
 				// type 0 - 普通帖子, 1 - 官方帖子
@@ -351,8 +358,13 @@
 				this.onPublishShow();
 			},
 			// 获取帖子页面
-			async getArticleList() {
-				uni.showLoading();
+			async getArticleList(flag) {
+				if (!flag) {
+					uni.showLoading({
+						title: '加载中...'
+					});
+				}
+				
 				try {
 					let res = null;
 					if (this.params.articleType === 2) {
@@ -363,9 +375,9 @@
 					if (res.code === 200) {
 						this.initPage = false;
 						this.params.total = res.data.total;
+						
 						// 整合图片
 						this.loadImages(res.data.records);
-						
 						if (this.params.current === 1) {
 							this.list = res.data.records;
 						} else {

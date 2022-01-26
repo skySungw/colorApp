@@ -172,6 +172,10 @@
 					}, 2000);
 					return false;
 				}
+				uni.showLoading({
+					title: '支付中...',
+					mask: true
+				});
 				try {
 					const res = await onCreateOrder({
 						goodsInfo: this.goodsInfo,
@@ -196,6 +200,7 @@
 					}
 				} catch(err) {
 					console.log('err', err);
+					uni.hideLoading();
 				}
 			},
 			async getPayConfig(orderCode) {

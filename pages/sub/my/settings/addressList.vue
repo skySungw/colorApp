@@ -38,6 +38,8 @@
 		},
 		onLoad(options) {
 			this.selectIndex = options.id || '';
+		},
+		onShow() {
 			this.getAddressList();
 		},
 		methods: {
@@ -53,9 +55,6 @@
 			},
 			// 点击选中
 			onSelectAddress(id) {
-				let pages = getCurrentPages();
-				let prevPage = pages[pages.length - 2]; //上一个页面'
-				prevPage.$vm.onFetchAddressInfo(id);
 				uni.navigateBack({
 					delta: 1
 				})
@@ -64,7 +63,7 @@
 			onGoDetail(item) {
 				console.log('item', item);
 				let url = `/pages/sub/my/settings/address`;
-				url += item ? '?id=' + item : '';
+				url += item ? '?id=' + item.receiveId : '';
 				uni.navigateTo({
 					url
 				})

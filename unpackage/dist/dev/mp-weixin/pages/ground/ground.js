@@ -286,15 +286,16 @@ var col2H = 0;var _default =
   onUnload: function onUnload() {
     // uni.$off('operateHandle');
   },
-  onPullDownRefresh: function onPullDownRefresh() {var _this2 = this;
-    setTimeout(function () {
-      uni.stopPullDownRefresh();
-      _this2.initParams();
-    }, 2000);
+  onPullDownRefresh: function onPullDownRefresh() {
+    uni.showLoading({
+      title: '刷新中...' });
+
+    // uni.stopPullDownRefresh();
+    this.initParams();
   },
   methods: {
     // 初始化页面经纬度等数据
-    init: function init() {var _this3 = this;
+    init: function init() {var _this2 = this;
       // 获取经纬度，并初始化列表数据
       uni.showLoading();
       this.params.lat = uni.getStorageSync('lat');
@@ -302,19 +303,19 @@ var col2H = 0;var _default =
       var addressInfo = uni.getStorageSync('addressInfo');
       if (!(addressInfo === null || addressInfo === void 0 ? void 0 : addressInfo.lat)) {
         this.getSystemLocation(function (res) {
-          _this3.params.lat = res.latitude;
-          _this3.params.lng = res.longitude;
+          _this2.params.lat = res.latitude;
+          _this2.params.lng = res.longitude;
           uni.setStorageSync('lat', res.latitude);
           uni.setStorageSync('lng', res.longitude);
           uni.hideLoading();
           // 获取小区信息
-          _this3.getDictList();
+          _this2.getDictList();
           // 获取帖子列表
-          _this3.initParams();
+          _this2.initParams();
         }, function () {
-          _this3.addressData.title = '选择小区';
+          _this2.addressData.title = '选择小区';
           uni.hideLoading();
-          _this3.initParams();
+          _this2.initParams();
         });
       } else {
         this.addressData = addressInfo;
@@ -325,20 +326,20 @@ var col2H = 0;var _default =
       }
     },
     // 根据经纬度获取小区信息
-    getDictList: function getDictList() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+    getDictList: function getDictList() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _api.selectAddressByLat)({
-                    lat: _this4.params.lat,
-                    lng: _this4.params.lng,
+                    lat: _this3.params.lat,
+                    lng: _this3.params.lng,
                     size: 10,
                     current: 1 }));case 3:res = _context.sent;
 
                 if (res.code === 200) {
-                  _this4.dictList = res.data.records;
-                  if (_this4.dictList.length > 0) {
-                    _this4.addressData = _this4.dictList[0];
-                    _this4.addressData.title = _this4.dictList[0].title;
-                    uni.setStorageSync('addressInfo', _this4.addressData);
+                  _this3.dictList = res.data.records;
+                  if (_this3.dictList.length > 0) {
+                    _this3.addressData = _this3.dictList[0];
+                    _this3.addressData.title = _this3.dictList[0].title;
+                    uni.setStorageSync('addressInfo', _this3.addressData);
                   }
                 }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
 
@@ -375,10 +376,10 @@ var col2H = 0;var _default =
       this.old.scrollTop = e.detail.scrollTop;
     },
     // 到顶
-    goTop: function goTop(e) {var _this5 = this;
+    goTop: function goTop(e) {var _this4 = this;
       this.scrollTop = this.old.scrollTop;
       this.$nextTick(function () {
-        _this5.scrollTop = 0;
+        _this4.scrollTop = 0;
       });
       uni.showToast({
         icon: "none",
@@ -442,16 +443,16 @@ var col2H = 0;var _default =
       }
     },
     // 地图选位置
-    onSelectAddress: function onSelectAddress() {var _this6 = this;
+    onSelectAddress: function onSelectAddress() {var _this5 = this;
       uni.navigateTo({
         url: '/pages/subpackages/address/selectAddress',
         events: {
           // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
           onChangeAddress: function onChangeAddress(_ref) {var data = _ref.data;
-            _this6.addressData.title = data.title;
-            _this6.addressData.lng = data.lng;
-            _this6.addressData.lat = data.lat;
-            uni.setStorageSync('addressInfo', _this6.addressData);
+            _this5.addressData.title = data.title;
+            _this5.addressData.lng = data.lng;
+            _this5.addressData.lat = data.lat;
+            uni.setStorageSync('addressInfo', _this5.addressData);
           } } });
 
 
@@ -477,9 +478,15 @@ var col2H = 0;var _default =
     },
     // 初始化列表页面参数
     initParams: function initParams() {
+      this.list = [];
+      this.images = [];
+      col1H = 0;
+      col2H = 0;
+      this.cols = [[], []];
+      this.loadingCount = 0;
       this.params.current = 1;
       this.params.articleType = this.params.articleType || 0;
-      this.getArticleList();
+      this.getArticleList(true);
     },
     onChangeParams: function onChangeParams(type) {
       // type 0 - 普通帖子, 1 - 官方帖子
@@ -489,25 +496,30 @@ var col2H = 0;var _default =
       this.onPublishShow();
     },
     // 获取帖子页面
-    getArticleList: function getArticleList() {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                uni.showLoading();_context2.prev = 1;
+    getArticleList: function getArticleList(flag) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                if (!flag) {
+                  uni.showLoading({
+                    title: '加载中...' });
+
+                }_context2.prev = 1;
+
 
                 res = null;if (!(
-                _this7.params.articleType === 2)) {_context2.next = 9;break;}_context2.next = 6;return (
-                  (0, _api.onFetchActivity)(_this7.params));case 6:res = _context2.sent;_context2.next = 12;break;case 9:_context2.next = 11;return (
+                _this6.params.articleType === 2)) {_context2.next = 9;break;}_context2.next = 6;return (
+                  (0, _api.onFetchActivity)(_this6.params));case 6:res = _context2.sent;_context2.next = 12;break;case 9:_context2.next = 11;return (
 
-                  (0, _api.onFetchArticle)(_this7.params));case 11:res = _context2.sent;case 12:
+                  (0, _api.onFetchArticle)(_this6.params));case 11:res = _context2.sent;case 12:
 
                 if (res.code === 200) {
-                  _this7.initPage = false;
-                  _this7.params.total = res.data.total;
-                  // 整合图片
-                  _this7.loadImages(res.data.records);
+                  _this6.initPage = false;
+                  _this6.params.total = res.data.total;
 
-                  if (_this7.params.current === 1) {
-                    _this7.list = res.data.records;
+                  // 整合图片
+                  _this6.loadImages(res.data.records);
+                  if (_this6.params.current === 1) {
+                    _this6.list = res.data.records;
                   } else {
-                    _this7.list = _this7.list.concat(res.data.records);
+                    _this6.list = _this6.list.concat(res.data.records);
                   }
                   // 是否有下一页数据
                   // this.hasNext = res.hasNext;
@@ -515,7 +527,7 @@ var col2H = 0;var _default =
                 }
                 uni.hideLoading();_context2.next = 21;break;case 16:_context2.prev = 16;_context2.t0 = _context2["catch"](1);
 
-                _this7.initPage = false;
+                _this6.initPage = false;
                 uni.hideLoading();
                 console.log('errs', _context2.t0);case 21:case "end":return _context2.stop();}}}, _callee2, null, [[1, 16]]);}))();
 

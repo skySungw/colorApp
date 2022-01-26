@@ -4,14 +4,14 @@
 			"path": "pages/ground/ground",
 			"style": {
 				"navigationBarTitleText": "广场 ",
-				"enablePullDownRefresh": true//禁止下拉刷新
+				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/ground/goodsGround",
 			"style": {
 				"navigationBarTitleText": "宝贝 ",
-				"enablePullDownRefresh": false//禁止下拉刷新
+				"enablePullDownRefresh": true
 			}
 		},
 		{

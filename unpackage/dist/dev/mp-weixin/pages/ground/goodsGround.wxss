@@ -28,7 +28,7 @@
   height: 100rpx;
 }
 .card-list_container.data-v-0dbfa4a4 {
-  padding-bottom: 150rpx;
+  padding-bottom: 100rpx;
   overflow: hidden;
 }
 

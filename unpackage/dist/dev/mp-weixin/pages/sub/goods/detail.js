@@ -299,6 +299,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     getShareBox: function getShareBox() {
       this.sharebox = false;
     },
+    // 商品详情
     getGoodsDetail: function getGoodsDetail() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 uni.showLoading();_context.prev = 1;_context.next = 4;return (
 

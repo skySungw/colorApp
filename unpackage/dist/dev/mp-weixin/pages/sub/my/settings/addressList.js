@@ -170,6 +170,8 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   },
   onLoad: function onLoad(options) {
     this.selectIndex = options.id || '';
+  },
+  onShow: function onShow() {
     this.getAddressList();
   },
   methods: {
@@ -185,9 +187,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     },
     // 点击选中
     onSelectAddress: function onSelectAddress(id) {
-      var pages = getCurrentPages();
-      var prevPage = pages[pages.length - 2]; //上一个页面'
-      prevPage.$vm.onFetchAddressInfo(id);
       uni.navigateBack({
         delta: 1 });
 
@@ -196,7 +195,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     onGoDetail: function onGoDetail(item) {
       console.log('item', item);
       var url = "/pages/sub/my/settings/address";
-      url += item ? '?id=' + item : '';
+      url += item ? '?id=' + item.receiveId : '';
       uni.navigateTo({
         url: url });
 

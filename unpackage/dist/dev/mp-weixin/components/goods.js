@@ -361,6 +361,13 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                 console.log('err', _context2.t0);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}))();
 
     },
+    // 编辑商品
+    onEdit: function onEdit() {
+      uni.navigateTo({
+        url: "/pages/sub/publish/publishGoods?edit=1&goodsCode=".concat(this.item.goodsCode) });
+
+    },
+    // 上下架操作
     onAdd: function onAdd(type) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var TYPE_TEXT;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 console.log('type', type);
                 TYPE_TEXT = {

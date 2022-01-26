@@ -188,6 +188,9 @@ var chooseLocation = requirePlugin('chooseLocation');var _default =
   onLoad: function onLoad(options) {
     console.log('options', options);
     this.id = options.id;
+    if (this.id) {
+      this.onFetchAddressInfo(this.id);
+    }
   },
   /**
       * 生命周期函数--监听页面显示
@@ -218,53 +221,70 @@ var chooseLocation = requirePlugin('chooseLocation');var _default =
     chooseLocation.setLocation(null);
   },
   methods: {
-    onSave: function onSave() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (
-                _this.params.receiveContact) {_context.next = 3;break;}
+    onFetchAddressInfo: function onFetchAddressInfo(receiveId) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+
+                  (0, _api.onFetchAddressById)({
+                    receiveId: receiveId }));case 3:res = _context.sent;
+
+                if (res.code === 200) {
+                  Object.assign(_this.params, res.data);
+                  _this.location = res.data.receiveProvinceName + res.data.receiveCityName + res.data.receiveAreaName;
+                }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
+
+                console.log('err', _context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
+
+    },
+    onSave: function onSave() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (
+                _this2.params.receiveContact) {_context2.next = 3;break;}
                 uni.showToast({
                   title: '请填写联系人',
-                  icon: 'none' });return _context.abrupt("return",
+                  icon: 'none' });return _context2.abrupt("return",
 
                 false);case 3:if (
 
-                _this.params.receivePhone) {_context.next = 6;break;}
+                _this2.params.receivePhone) {_context2.next = 6;break;}
                 uni.showToast({
                   title: '请填写联系方式',
-                  icon: 'none' });return _context.abrupt("return",
+                  icon: 'none' });return _context2.abrupt("return",
 
                 false);case 6:if (!(
 
-                _this.params.receivePhone.trim().length !== 11)) {_context.next = 9;break;}
+                _this2.params.receivePhone.trim().length !== 11)) {_context2.next = 9;break;}
                 uni.showToast({
                   title: '请填写11位手机号码',
-                  icon: 'none' });return _context.abrupt("return",
+                  icon: 'none' });return _context2.abrupt("return",
 
                 false);case 9:if (
 
-                _this.params.receiveDetailAddress) {_context.next = 12;break;}
+                _this2.params.receiveDetailAddress) {_context2.next = 12;break;}
                 uni.showToast({
                   title: '请填写详细地址',
-                  icon: 'none' });return _context.abrupt("return",
+                  icon: 'none' });return _context2.abrupt("return",
 
-                false);case 12:_context.prev = 12;_context.next = 15;return (
+                false);case 12:_context2.prev = 12;if (!
 
 
-                  (0, _api.onCreateReceiveAddress)(_this.params));case 15:res = _context.sent;
+
+                _this2.id) {_context2.next = 20;break;}
+                Object.assign(_this2.params, {
+                  id: _this2.id });_context2.next = 17;return (
+
+                  (0, _api.onUpdateAddress)(_this2.params));case 17:res = _context2.sent;_context2.next = 23;break;case 20:_context2.next = 22;return (
+
+                  (0, _api.onCreateReceiveAddress)(_this2.params));case 22:res = _context2.sent;case 23:
+
                 if (res.code === 200) {
                   uni.showToast({
                     title: '操作成功!' });
 
                   setTimeout(function () {
-                    var pages = getCurrentPages();
-                    var prevPage = pages[pages.length - 2]; //上一个页面'
-                    console.log('prevPage', prevPage);
-                    prevPage.$vm.onFetchAddressInfo(res.data);
                     uni.navigateBack({
                       delta: 1 });
 
                   }, 1500);
-                }_context.next = 22;break;case 19:_context.prev = 19;_context.t0 = _context["catch"](12);
+                }_context2.next = 29;break;case 26:_context2.prev = 26;_context2.t0 = _context2["catch"](12);
 
-                console.log('err', _context.t0);case 22:case "end":return _context.stop();}}}, _callee, null, [[12, 19]]);}))();
+                console.log('err', _context2.t0);case 29:case "end":return _context2.stop();}}}, _callee2, null, [[12, 26]]);}))();
 
 
     },

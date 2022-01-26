@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "活动报名",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "active-card": "/components/activeCard",
+    "empty": "/components/empty"
+  }
+}

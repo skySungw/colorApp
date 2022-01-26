@@ -85,6 +85,14 @@ function onFetchAddressById(data) {
 		method: 'GET'
 	})
 }
+// 收货地址----查询单个收货地址接口（完成）
+function onUpdateAddress(data) {
+	return request({
+		url: 'api/user/address/updateReceiveAddress',
+		data,
+		method: 'POST'
+	})
+}
 // 提单页-----提单页信息查询接口
 function onFetchPlaceOrderInfo(data) {
 	return request({
@@ -150,6 +158,7 @@ export default {
 	onFetchGoodsDetail,
 	onCollectionGoods,
 	onFetchAddressList,
+	onUpdateAddress,
 	onFetchAddressById,
 	onFetchPlaceOrderInfo,
 	onCreateOrder,

@@ -479,14 +479,17 @@ function onUnload() {
                 sellerContactType: _this7.sellerContactType,
                 sellerContact: _this7.sellerContact,
                 goodsAddress: _this7.goodsAddress,
-                goodsCategoryId: _this7.goodsCategoryId };
+                goodsCategoryId: _this7.goodsCategoryId };if (!
 
-              if (_this7.editFlag) {
-                Object.assign(params, {
-                  goodsCode: _this7.goodsCode });
 
-              }_context5.next = 5;return (
-                (0, _api.onCreateGoods)(params));case 5:res = _context5.sent;
+              _this7.editFlag) {_context5.next = 9;break;}
+              Object.assign(params, {
+                goodsCode: _this7.goodsCode });_context5.next = 6;return (
+
+                (0, _api.onUpdateGoods)(params));case 6:res = _context5.sent;_context5.next = 12;break;case 9:_context5.next = 11;return (
+
+                (0, _api.onCreateGoods)(params));case 11:res = _context5.sent;case 12:
+
               title = _this7.editFlag ? '修改成功' : '发布成功';
               if (res.code === 200) {
                 uni.showToast({
@@ -507,9 +510,9 @@ function onUnload() {
                 // uni.navigateTo({
                 // 	url: `/pages/sub/publish/publishSuccess?params=${JSON.stringify(params)}`
                 // })
-              }_context5.next = 13;break;case 10:_context5.prev = 10;_context5.t0 = _context5["catch"](0);
+              }_context5.next = 19;break;case 16:_context5.prev = 16;_context5.t0 = _context5["catch"](0);
 
-              console.log('err', _context5.t0);case 13:case "end":return _context5.stop();}}}, _callee5, null, [[0, 10]]);}))();
+              console.log('err', _context5.t0);case 19:case "end":return _context5.stop();}}}, _callee5, null, [[0, 16]]);}))();
 
   },
   // 校验字段

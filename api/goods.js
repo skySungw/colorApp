@@ -54,6 +54,13 @@ function onCreateGoods(data) {
 		data,
 	})
 }
+// 修改宝贝接口
+function onUpdateGoods(data) {
+	return request({
+		url: 'api/goods/goods/updateGoods',
+		data,
+	})
+}
 // 查询宝贝详情接口
 function onFetchGoodsDetail(data) {
 	return request({
@@ -155,6 +162,7 @@ export default {
 	onFetchShowcasePage,
 	onFetchGoodsList,
 	onCreateGoods,
+	onUpdateGoods,
 	onFetchGoodsDetail,
 	onCollectionGoods,
 	onFetchAddressList,

@@ -72,10 +72,10 @@
                 "version" : "1.0.13",
                 "provider" : "wx50b5593e81dd937a"
             },
-						"citySelector": {
-								"version": "1.0.1",
-								"provider": "wx63ffb7b7894e99ae"
-						}
+            "citySelector" : {
+                "version" : "1.0.1",
+                "provider" : "wx63ffb7b7894e99ae"
+            }
         },
         "permission" : {
             "scope.userLocation" : {

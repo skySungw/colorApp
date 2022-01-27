@@ -60,8 +60,9 @@
 				<view class="flex flex-bettwen-space align-center">
 					<view>订单信息</view>
 					<view>
-						<button v-if="orderDetail.sellerInfo.sellerContactType === 2" type="default" class="line-green" size="mini" @tap="getWechat">联系卖家</button>
-						<button v-else type="default" class="line-green" size="mini" @tap="makeCall">联系卖家</button>
+						<button type="default" class="line-green" size="mini" @tap="onContact">{{ source == 1 ? '联系买家' : '联系卖家' }}</button>
+						<!-- <button v-if="orderDetail.sellerInfo.sellerContactType === 2" type="default" class="line-green" size="mini" @tap="getWechat">{{ source == 1 ? '联系买家' : '联系卖家' }}</button>
+						<button v-else type="default" class="line-green" size="mini" @tap="makeCall">{{ source == 1 ? '联系买家' : '联系卖家' }}</button> -->
 					</view>
 				</view>
 				<view>
@@ -94,15 +95,28 @@
 			<button type="primary" class="cu-btn bg-green lg" @tap="onHandleUpdateOrderState(9)">确认收货</button>
 		</view>
 		<!-- 展示二维码 -->
-		<view :class="['cu-modal', {'show': showModal}]" v-if="orderDetail.sellerInfo.sellerContactType === 2">
+		<view :class="['cu-modal', {'show': showModal}]">
 		  <view class="cu-dialog">
-		    <view class="bg-img" :style="{'background-image': 'url(' + orderDetail.sellerInfo.sellerWxQrCode +')', height:'200px'}">
+		   <!-- <view class="bg-img" :style="{'background-image': 'url(' + orderDetail.sellerInfo.sellerWxQrCode +')', height:'200px'}">
 		      <view class="cu-bar justify-end text-white">
 		        <view class="action" @tap="hideModal">
 		          <text class="cuIcon-close "></text>
 		        </view>
 		      </view>
-		    </view>
+		    </view> -->
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">联系方式</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view v-if="orderDetail.sellerInfo.sellerContactType === 2" class="padding padding-big" @tap="onCopy" :data-text="orderDetail.sellerInfo.wxNumber">
+					微信号：{{ orderDetail.sellerInfo.wxNumber }}<text @tap="onCopy" :data-text="orderDetail.sellerInfo.wxNumber" class="padding-lr text-blue">点击复制</text>
+				</view>
+				<view v-if="orderDetail.sellerInfo.sellerContactType === 1">
+					<view class="padding-sm"><text class="text-bold text-sm">长按识别二维码</text></view>
+					<image :show-menu-by-longpress="true" mode="aspectFit" :src="orderDetail.sellerInfo.sellerWxQrCode"></image>
+				</view>
 		    <view class="cu-bar bg-white">
 		      <view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
 		    </view>
@@ -194,10 +208,37 @@
 					uni.hideLoading();
 				}
 			},
+			// 联系买/卖家
+			onContact() {
+				console.log('this.source', this.source)
+				if (this.source == 0) {
+					if (this.orderDetail.sellerInfo.sellerContactType == 2 || this.orderDetail.sellerInfo.sellerContactType == 1) {
+						this.getWechat();
+						return false;
+					}
+				}
+				this.makeCall();
+			},
+			// 点击复制
+			onCopy(e) {
+				uni.setClipboardData({
+					data: e.currentTarget.dataset.text,
+					success: function (res) {
+						uni.getClipboardData({
+							success: function (res) {
+								uni.showToast({
+									title: '复制成功'
+								})
+							}
+						})
+					}
+				})
+			},
 			// 打电话
 			makeCall() {
+				const phoneNumber = this.source == 1 ? this.orderDetail.orderAddress.receivePhone : this.orderDetail.sellerInfo.sellerPhone
 				uni.makePhoneCall({
-				    phoneNumber: this.orderDetail.sellerInfo.sellerPhone
+				    phoneNumber
 				});
 			},
 			// 获取微信二维码
@@ -205,7 +246,7 @@
 				this.showModal = true;
 			},
 			hideModal(e) {
-				this.modalName = false;
+				this.showModal = false;
 			},
 			// 去支付
 			async onPay() {

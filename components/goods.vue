@@ -247,7 +247,7 @@
 			},
 			// 编辑商品
 			onEdit() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: `/pages/sub/publish/publishGoods?edit=1&goodsCode=${this.item.goodsCode}`
 				})
 			},

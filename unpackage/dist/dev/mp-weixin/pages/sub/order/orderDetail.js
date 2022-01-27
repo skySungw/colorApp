@@ -256,6 +256,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _utils = __webpack_require__(/*! @/utils */ 306);
 var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 {
@@ -337,10 +351,37 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                 uni.hideLoading();case 15:case "end":return _context2.stop();}}}, _callee2, null, [[1, 11]]);}))();
 
     },
+    // 联系买/卖家
+    onContact: function onContact() {
+      console.log('this.source', this.source);
+      if (this.source == 0) {
+        if (this.orderDetail.sellerInfo.sellerContactType == 2 || this.orderDetail.sellerInfo.sellerContactType == 1) {
+          this.getWechat();
+          return false;
+        }
+      }
+      this.makeCall();
+    },
+    // 点击复制
+    onCopy: function onCopy(e) {
+      uni.setClipboardData({
+        data: e.currentTarget.dataset.text,
+        success: function success(res) {
+          uni.getClipboardData({
+            success: function success(res) {
+              uni.showToast({
+                title: '复制成功' });
+
+            } });
+
+        } });
+
+    },
     // 打电话
     makeCall: function makeCall() {
+      var phoneNumber = this.source == 1 ? this.orderDetail.orderAddress.receivePhone : this.orderDetail.sellerInfo.sellerPhone;
       uni.makePhoneCall({
-        phoneNumber: this.orderDetail.sellerInfo.sellerPhone });
+        phoneNumber: phoneNumber });
 
     },
     // 获取微信二维码
@@ -348,7 +389,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       this.showModal = true;
     },
     hideModal: function hideModal(e) {
-      this.modalName = false;
+      this.showModal = false;
     },
     // 去支付
     onPay: function onPay() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var that, res, data, param;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:

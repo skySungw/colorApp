@@ -96,7 +96,7 @@
 </template>
 
 <script>
-	import { onFetchGoodsDetail, onFetchGoodsCategory, onCreateGoods, onFetchContactType, selectUserLocation, saveUserLocation } from '@/api';
+	import { onFetchGoodsDetail, onFetchGoodsCategory, onCreateGoods, onUpdateGoods, onFetchContactType, selectUserLocation, saveUserLocation } from '@/api';
 	import bgyxedit from '@/components/bgyxedit/bgyxedit';
 	import Contact from '@/components/contact';
 	import ajaxUpload from '@/api/ajaxUpload';
@@ -349,12 +349,15 @@
 						goodsAddress: this.goodsAddress,
 						goodsCategoryId: this.goodsCategoryId
 					};
+					let res;
 					if (this.editFlag) {
 						Object.assign(params, {
 							goodsCode: this.goodsCode
 						})
+						res = await onUpdateGoods(params);
+					} else {
+						res = await onCreateGoods(params);
 					}
-					const res = await onCreateGoods(params);
 					const title = this.editFlag ? '修改成功' : '发布成功';
 					if (res.code === 200) {
 						uni.showToast({

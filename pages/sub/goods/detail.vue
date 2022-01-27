@@ -77,7 +77,7 @@
 					  <image :src="goodsDetail.sellerContact" mode="aspectFit" :show-menu-by-longpress="true"></image>
 					</view>
 				</view>
-				<view v-if="goodsDetail.sellerContactType === 2" class="padding padding-big" @tap="onCopy">
+				<view v-if="goodsDetail.sellerContactType === 2" class="padding padding-big" @tap="onCopy" :data-text="goodsDetail.sellerContact">
 					微信号：{{ goodsDetail.sellerContact }}<text @tap="onCopy" :data-text="goodsDetail.sellerContact" class="padding-lr text-blue">点击复制</text>
 				</view>
 		    <view class="cu-bar bg-white">

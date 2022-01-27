@@ -3499,6 +3499,13 @@ function onCreateGoods(data) {
     data: data });
 
 }
+// 修改宝贝接口
+function onUpdateGoods(data) {
+  return (0, _request.default)({
+    url: 'api/goods/goods/updateGoods',
+    data: data });
+
+}
 // 查询宝贝详情接口
 function onFetchGoodsDetail(data) {
   return (0, _request.default)({
@@ -3600,6 +3607,7 @@ function onSelectOrderCountByMemberId(data) {
   onFetchShowcasePage: onFetchShowcasePage,
   onFetchGoodsList: onFetchGoodsList,
   onCreateGoods: onCreateGoods,
+  onUpdateGoods: onUpdateGoods,
   onFetchGoodsDetail: onFetchGoodsDetail,
   onCollectionGoods: onCollectionGoods,
   onFetchAddressList: onFetchAddressList,

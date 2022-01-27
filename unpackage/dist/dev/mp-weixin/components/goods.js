@@ -363,7 +363,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     },
     // 编辑商品
     onEdit: function onEdit() {
-      uni.navigateTo({
+      uni.redirectTo({
         url: "/pages/sub/publish/publishGoods?edit=1&goodsCode=".concat(this.item.goodsCode) });
 
     },

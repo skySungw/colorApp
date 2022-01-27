@@ -330,9 +330,12 @@ function onUnload() {
   // onChangeGoodsDesc
   onChangeGoodsDesc: function onChangeGoodsDesc(e) {
     console.log('e', e.target);
+    var value = e.target.value;
+    this.goodsContent = value;
+    this.goodsDesc = value;
   },
   // 获取商品详情
-  onGetGoodsDetail: function onGetGoodsDetail() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, data;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+  onGetGoodsDetail: function onGetGoodsDetail() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, data, imgList;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                 (0, _api.onFetchGoodsDetail)({
                   goodsCode: _this.goodsCode }));case 3:res = _context.sent;
@@ -342,7 +345,11 @@ function onUnload() {
                 data = res.data;
                 // this.goodsName = data.goodsName;
                 Object.assign(_this, data);
-                _this.info = [{ type: 'text', value: data.goodsContent, f: false }];
+                // this.info = [{type:'text',value: data.goodsContent,f:false}];
+                imgList = res.data.goodsImgArray;
+                console.log('imgList', imgList);
+                _this.imgList = imgList;
+                _this.goodsImg = imgList;
               }_context.next = 12;break;case 8:_context.prev = 8;_context.t0 = _context["catch"](0);
 
               uni.showToast('获取信息失败！');
@@ -456,7 +463,7 @@ function onUnload() {
 
   },
   // 发布商品
-  publish: function publish() {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var params, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
+  publish: function publish() {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var params, res, title;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
 
               // const lat = uni.getStorageSync('lat');
               // const lng = uni.getStorageSync('lng');
@@ -472,13 +479,18 @@ function onUnload() {
                 sellerContactType: _this7.sellerContactType,
                 sellerContact: _this7.sellerContact,
                 goodsAddress: _this7.goodsAddress,
-                goodsCategoryId: _this7.goodsCategoryId };_context5.next = 4;return (
+                goodsCategoryId: _this7.goodsCategoryId };
 
-                (0, _api.onCreateGoods)(params));case 4:res = _context5.sent;
-              console.log('res', res);
+              if (_this7.editFlag) {
+                Object.assign(params, {
+                  goodsCode: _this7.goodsCode });
+
+              }_context5.next = 5;return (
+                (0, _api.onCreateGoods)(params));case 5:res = _context5.sent;
+              title = _this7.editFlag ? '修改成功' : '发布成功';
               if (res.code === 200) {
                 uni.showToast({
-                  title: '发布成功',
+                  title: title,
                   complete: function complete() {
                     var url = '/pages/sub/my/goods';
                     if (_this7.source == 1) {
@@ -495,9 +507,9 @@ function onUnload() {
                 // uni.navigateTo({
                 // 	url: `/pages/sub/publish/publishSuccess?params=${JSON.stringify(params)}`
                 // })
-              }_context5.next = 12;break;case 9:_context5.prev = 9;_context5.t0 = _context5["catch"](0);
+              }_context5.next = 13;break;case 10:_context5.prev = 10;_context5.t0 = _context5["catch"](0);
 
-              console.log('err', _context5.t0);case 12:case "end":return _context5.stop();}}}, _callee5, null, [[0, 9]]);}))();
+              console.log('err', _context5.t0);case 13:case "end":return _context5.stop();}}}, _callee5, null, [[0, 10]]);}))();
 
   },
   // 校验字段

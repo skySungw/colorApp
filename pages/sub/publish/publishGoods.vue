@@ -198,6 +198,9 @@
 			// onChangeGoodsDesc
 			onChangeGoodsDesc(e) {
 				console.log('e', e.target)
+				const value = e.target.value;
+				this.goodsContent = value;
+				this.goodsDesc = value;
 			},
 			// 获取商品详情
 			async onGetGoodsDetail() {
@@ -210,7 +213,11 @@
 						const data = res.data;
 						// this.goodsName = data.goodsName;
 						Object.assign(this, data);
-						this.info = [{type:'text',value: data.goodsContent,f:false}]
+						// this.info = [{type:'text',value: data.goodsContent,f:false}];
+						const imgList = res.data.goodsImgArray;
+						console.log('imgList', imgList);
+						this.imgList = imgList;
+						this.goodsImg = imgList;
 					}
 				} catch(err) {
 					uni.showToast('获取信息失败！');
@@ -342,11 +349,16 @@
 						goodsAddress: this.goodsAddress,
 						goodsCategoryId: this.goodsCategoryId
 					};
+					if (this.editFlag) {
+						Object.assign(params, {
+							goodsCode: this.goodsCode
+						})
+					}
 					const res = await onCreateGoods(params);
-					console.log('res', res);
+					const title = this.editFlag ? '修改成功' : '发布成功';
 					if (res.code === 200) {
 						uni.showToast({
-							title: '发布成功',
+							title,
 							complete:() => {
 								let url = '/pages/sub/my/goods';
 								if (this.source == 1) {

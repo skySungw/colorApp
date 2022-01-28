@@ -236,6 +236,7 @@ var _default2 =
 
         uni.chooseImage({
           count: 1,
+          sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
           success: function success(chooseImageRes) {
             var tempFilePaths = chooseImageRes.tempFilePaths;
             uni.showLoading({

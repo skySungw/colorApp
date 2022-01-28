@@ -178,7 +178,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     onChooseImage: function onChooseImage() {var _this = this;
       uni.chooseImage({
         count: 1, //默认9
-        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
         success: function success(res) {
           var tempFilePaths = res.tempFilePaths;
           console.log('tempFilePaths[0]', tempFilePaths);

@@ -214,7 +214,7 @@
 			onChooseImage() {
 				uni.chooseImage({
 					count: this.maxImg, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success: (res) => {
 						let tempFilePaths = res.tempFilePaths;
 						if (this.imgList.length + tempFilePaths.length > this.maxImg) {

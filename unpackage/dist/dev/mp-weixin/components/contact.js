@@ -165,7 +165,7 @@ var _default =
     onChooseImage: function onChooseImage() {var _this = this;
       uni.chooseImage({
         count: 1, //默认9
-        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
         success: function success(res) {
           if (_this.imgList.length != 0) {
             _this.imgList = _this.imgList.concat(res.tempFilePaths);

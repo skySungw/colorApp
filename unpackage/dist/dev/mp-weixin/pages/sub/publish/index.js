@@ -346,7 +346,7 @@ var chooseLocation = requirePlugin('chooseLocation');var _default =
     onChooseImage: function onChooseImage() {var _this4 = this;
       uni.chooseImage({
         count: this.maxImg, //默认9
-        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
         success: function success(res) {
           var tempFilePaths = res.tempFilePaths;
           if (_this4.imgList.length + tempFilePaths.length > _this4.maxImg) {

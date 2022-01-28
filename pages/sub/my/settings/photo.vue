@@ -43,7 +43,7 @@
 			onChooseImage() {
 				uni.chooseImage({
 					count: 1, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success: (res) => {
 						const tempFilePaths = res.tempFilePaths;
 						console.log('tempFilePaths[0]', tempFilePaths)

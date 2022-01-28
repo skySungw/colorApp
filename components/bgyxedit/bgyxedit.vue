@@ -122,24 +122,25 @@ export default {
 				
 				uni.chooseImage({
 					count:1,
-				    success: (chooseImageRes) => {
-				        const tempFilePaths = chooseImageRes.tempFilePaths;
-						uni.showLoading({
-							title:'上传中...'
-						})
-				        uni.uploadFile({
-				            url: that.uploadurl, //上传后返回文件保存的路径即可
-				            filePath: tempFilePaths[0],
-				            name: 'img',
-				            success: (uploadFileRes) => {
-											console.log('uploadFileRes', uploadFileRes)
-											var upimg = uploadFileRes.data
-											that.taskinfodtv.push({type:'img',value:upimg})
-											that.$emit('bgyxchange', that.returninfo());
-											uni.hideLoading()
-				            }
-				        });
-				    }
+					sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
+					success: (chooseImageRes) => {
+							const tempFilePaths = chooseImageRes.tempFilePaths;
+					uni.showLoading({
+						title:'上传中...'
+					})
+							uni.uploadFile({
+									url: that.uploadurl, //上传后返回文件保存的路径即可
+									filePath: tempFilePaths[0],
+									name: 'img',
+									success: (uploadFileRes) => {
+										console.log('uploadFileRes', uploadFileRes)
+										var upimg = uploadFileRes.data
+										that.taskinfodtv.push({type:'img',value:upimg})
+										that.$emit('bgyxchange', that.returninfo());
+										uni.hideLoading()
+									}
+							});
+					}
 				});
 			}
 			if(e == 2){

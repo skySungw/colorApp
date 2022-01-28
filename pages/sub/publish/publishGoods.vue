@@ -399,6 +399,21 @@
 					});
 					return false;
 				}
+				const minPrice = 0.3;
+				const maxPrice = 5000;
+				if (this.goodsPrice < minPrice || this.goodsPrice > maxPrice) {
+					let title = '商品价格不能'
+					if (this.goodsPrice < minPrice) {
+						title += `低于${ minPrice }元`;
+					} else {
+						title += `高于${ maxPrice }元`;
+					}
+					uni.showToast({
+						title,
+						icon: 'none'
+					});
+					return false;
+				}
 				if (!this.goodsDesc) {
 					uni.showToast({
 						title: '请填写商品描述',
@@ -496,7 +511,7 @@
 				
 				uni.chooseImage({
 					count: this.maxImg, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success: (res) => {
 						let tempFilePaths = res.tempFilePaths;
 						if (this.imgList.length + tempFilePaths.length > this.maxImg) {

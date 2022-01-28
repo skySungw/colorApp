@@ -28,7 +28,7 @@
 					<text class="text-grey">微信号</text>
 				</view>
 				<view class="action">
-					<text class="text-grey text-sm">{{ info.wxNumber }}</text>
+					<text class="text-grey text-sm">{{ info.wxNumber || '' }}</text>
 				</view>
 			</view>
 			<view class="cu-item arrow">

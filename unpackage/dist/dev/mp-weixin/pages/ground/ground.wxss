@@ -43,9 +43,9 @@
 .card-list_container .img_item .img-topic_tag.data-v-1d6be7e6 {
   margin-right: 5rpx;
   padding: 5rpx 0;
-  font-size: 18rpx;
-  color: #999;
-  font-weight: 200;
+  font-size: 22rpx;
+  color: #9D9FB8;
+  font-weight: bold;
 }
 .card-list_container .img_item .img-topic_tag text.data-v-1d6be7e6 {
   display: inline-block;

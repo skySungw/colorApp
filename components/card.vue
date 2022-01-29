@@ -12,7 +12,7 @@
 				<view>{{ item.articleDesc || '暂无内容' }}</view>
 			</view>
 	        <view v-if="source != 2" class="flex flex-align-center">
-						<text class="cuIcon-attention text-gray padding-right">{{ item.articleDetail.collectionCount }}</text>
+						<text class="cuIcon-favor text-gray padding-right">{{ item.articleDetail.collectionCount }}</text>
 						<text class="cuIcon-message text-gray margin-left-sm">{{ item.articleDetail.commentCount }}</text>
 	          <!-- <view class="cu-tag bg-red light margin-left-sm">活动</view> -->
 	          <!-- <view class="cu-tag bg-green light sm round">史诗</view> -->

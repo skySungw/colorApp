@@ -59,6 +59,23 @@
 					followState = 1;
 					msg = '已关注';
 				}
+				if (followState) {
+					this.onConfirmOperate(item, followState);
+				} else {
+					uni.showModal({
+						title: '取消关注',
+						confirmText: '确认取消',
+						cancelText: '取消',
+						success: res => {
+							console.log('res', res);
+							if (res.confirm) {
+								this.onConfirmOperate(item, followState);
+							}
+						}
+					})
+				}
+			},
+			async onConfirmOperate(item, followState, msg) {
 				try {
 					const res = await onHandleFollow({
 						userId: item.userId,

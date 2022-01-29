@@ -166,17 +166,34 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   },
   methods: {
     // 关注/取消关注
-    onHandleFollow: function onHandleFollow(item, type) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var followState, msg, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    onHandleFollow: function onHandleFollow(item, type) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var followState, msg;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 followState = 0;
                 msg = '已取消';
                 if (type) {
                   followState = 1;
                   msg = '已关注';
-                }_context.prev = 3;_context.next = 6;return (
+                }
+                if (followState) {
+                  _this.onConfirmOperate(item, followState);
+                } else {
+                  uni.showModal({
+                    title: '取消关注',
+                    confirmText: '确认取消',
+                    cancelText: '取消',
+                    success: function success(res) {
+                      console.log('res', res);
+                      if (res.confirm) {
+                        _this.onConfirmOperate(item, followState);
+                      }
+                    } });
+
+                }case 4:case "end":return _context.stop();}}}, _callee);}))();
+    },
+    onConfirmOperate: function onConfirmOperate(item, followState, msg) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
 
                   (0, _api.onHandleFollow)({
                     userId: item.userId,
-                    followState: followState }));case 6:res = _context.sent;
+                    followState: followState }));case 3:res = _context2.sent;
 
                 if (res.code === 200) {
                   uni.showToast({
@@ -184,10 +201,10 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     icon: 'none',
                     duration: 2000 });
 
-                  _this.$emit('resetList');
-                }_context.next = 13;break;case 10:_context.prev = 10;_context.t0 = _context["catch"](3);
+                  _this2.$emit('resetList');
+                }_context2.next = 10;break;case 7:_context2.prev = 7;_context2.t0 = _context2["catch"](0);
 
-                console.log('err', _context.t0);case 13:case "end":return _context.stop();}}}, _callee, null, [[3, 10]]);}))();
+                console.log('err', _context2.t0);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}))();
 
     },
     goPage: function goPage(item) {

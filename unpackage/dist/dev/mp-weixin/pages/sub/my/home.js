@@ -260,16 +260,11 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
     }
   },
   methods: {
-    // 关注、取消关注
-    onHandleFollow: function onHandleFollow() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var followState, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                followState = 0; // 0 - 取关， 1 - 关注
-                if (_this.followState === 1) {
-                  followState = 1;
-                }_context.prev = 2;_context.next = 5;return (
+    onConfirmOperate: function onConfirmOperate(followState) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _index.onHandleFollow)({
                     userId: _this.pageParam.userId || '',
-                    followState: followState }));case 5:res = _context.sent;
+                    followState: followState }));case 3:res = _context.sent;
 
                 if (res.code === 200) {
                   uni.showToast({
@@ -278,33 +273,55 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
                     duration: 2000 });
 
                   _this.followState = _this.followState == 1 ? 2 : 1;
-                }_context.next = 12;break;case 9:_context.prev = 9;_context.t0 = _context["catch"](2);
+                }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
 
-                console.log('err', _context.t0);case 12:case "end":return _context.stop();}}}, _callee, null, [[2, 9]]);}))();
+                console.log('err', _context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
 
+    },
+    // 关注、取消关注
+    onHandleFollow: function onHandleFollow() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var followState;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                followState = 0; // 0 - 取关， 1 - 关注
+                if (_this2.followState === 1) {
+                  followState = 1;
+                }
+                if (followState) {
+                  _this2.onConfirmOperate(followState);
+                } else {
+                  uni.showModal({
+                    title: '取消关注',
+                    confirmText: '确认取消',
+                    cancelText: '取消',
+                    success: function success(res) {
+                      console.log('res', res);
+                      if (res.confirm) {
+                        _this2.onConfirmOperate(followState);
+                      }
+                    } });
+
+                }case 3:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     // 是否有下一页
     hasNext: function hasNext() {
       return this.pageParam.current < Math.ceil(this.pageParam.total / this.pageParam.size);
     },
     // 获取信息
-    getInfos: function getInfos() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var params, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;
+    getInfos: function getInfos() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var params, res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;
 
-                params = _this2.userId ? {
-                  userId: _this2.userId } :
-                {};_context2.next = 4;return (
-                  (0, _index.selectMemberInfoByToken)(params));case 4:res = _context2.sent;
+                params = _this3.userId ? {
+                  userId: _this3.userId } :
+                {};_context3.next = 4;return (
+                  (0, _index.selectMemberInfoByToken)(params));case 4:res = _context3.sent;
                 if (res.code === 200) {
-                  _this2.info = res.data;
-                  _this2.memberDetail = res.data.memberDetail;
+                  _this3.info = res.data;
+                  _this3.memberDetail = res.data.memberDetail;
                   // this.memberWorks = res.data.memberWorks;
-                  _this2.menu[0].num = res.data.memberWorks.ownerGoodsCount;
-                  _this2.menu[1].num = res.data.memberWorks.articleCount;
+                  _this3.menu[0].num = res.data.memberWorks.ownerGoodsCount;
+                  _this3.menu[1].num = res.data.memberWorks.articleCount;
                   // 是否展示取消关注
-                  _this2.followState = res.data.followState;
-                }_context2.next = 11;break;case 8:_context2.prev = 8;_context2.t0 = _context2["catch"](0);
+                  _this3.followState = res.data.followState;
+                }_context3.next = 11;break;case 8:_context3.prev = 8;_context3.t0 = _context3["catch"](0);
 
-                console.log('err', _context2.t0);case 11:case "end":return _context2.stop();}}}, _callee2, null, [[0, 8]]);}))();
+                console.log('err', _context3.t0);case 11:case "end":return _context3.stop();}}}, _callee3, null, [[0, 8]]);}))();
 
     },
     init: function init(type) {
@@ -320,25 +337,9 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
       }
     },
     // 获取商品列表
-    getGoodsList: function getGoodsList() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;_context3.next = 3;return (
+    getGoodsList: function getGoodsList() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
 
-                  (0, _index.onFetchGoodsByCreator)(_this3.pageParam));case 3:res = _context3.sent;
-                if (res.code === 200) {
-                  _this3.pageParam.total = res.data.total;
-                  if (_this3.pageParam.current == 1) {
-                    _this3.list = res.data.records;
-                  } else {
-                    _this3.list = _this3.list.concat(res.data.records);
-                  }
-                }_context3.next = 10;break;case 7:_context3.prev = 7;_context3.t0 = _context3["catch"](0);
-
-                console.log('err', _context3.t0);case 10:case "end":return _context3.stop();}}}, _callee3, null, [[0, 7]]);}))();
-
-    },
-    // 获取商品列表
-    getArticleList: function getArticleList() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
-
-                  (0, _index.onFetchArticleByCreator)(_this4.pageParam));case 3:res = _context4.sent;
+                  (0, _index.onFetchGoodsByCreator)(_this4.pageParam));case 3:res = _context4.sent;
                 if (res.code === 200) {
                   _this4.pageParam.total = res.data.total;
                   if (_this4.pageParam.current == 1) {
@@ -349,6 +350,22 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
                 }_context4.next = 10;break;case 7:_context4.prev = 7;_context4.t0 = _context4["catch"](0);
 
                 console.log('err', _context4.t0);case 10:case "end":return _context4.stop();}}}, _callee4, null, [[0, 7]]);}))();
+
+    },
+    // 获取商品列表
+    getArticleList: function getArticleList() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;_context5.next = 3;return (
+
+                  (0, _index.onFetchArticleByCreator)(_this5.pageParam));case 3:res = _context5.sent;
+                if (res.code === 200) {
+                  _this5.pageParam.total = res.data.total;
+                  if (_this5.pageParam.current == 1) {
+                    _this5.list = res.data.records;
+                  } else {
+                    _this5.list = _this5.list.concat(res.data.records);
+                  }
+                }_context5.next = 10;break;case 7:_context5.prev = 7;_context5.t0 = _context5["catch"](0);
+
+                console.log('err', _context5.t0);case 10:case "end":return _context5.stop();}}}, _callee5, null, [[0, 7]]);}))();
 
     },
     onGoPage: function onGoPage(item) {

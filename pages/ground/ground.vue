@@ -152,8 +152,10 @@
 			uni.showLoading({
 				title: '刷新中...'
 			});
-			// uni.stopPullDownRefresh();
-			this.initParams();
+			setTimeout(() => {
+				uni.stopPullDownRefresh();
+				this.initParams();
+			}, 2000);
 		},
 		methods: {
 			// 初始化页面经纬度等数据
@@ -439,9 +441,9 @@
 				&_tag {
 					margin-right: 5upx;
 					padding: 5upx 0;
-					font-size: 18upx;
-					color: #999;
-					font-weight: 200;
+					font-size: 22upx;
+					color: #9D9FB8;
+					font-weight: bold;
 					text {
 						display: inline-block;
 						font-weight: bold;

@@ -16,20 +16,26 @@
 				</view>
 				<view>
 					<!-- followState 0 本人， 1 - 展示关注 ， 2 - 取消关注 -->
-					<view v-if="articleDetail.followState" class="cu-tag line-green" @tap="onHandleFollow">{{ articleDetail.followState === 1 ? '+ 关注' : '取消关注'}}</view>
+					<view v-if="articleDetail.followState" class="cu-tag" :class="[{'line-green': articleDetail.followState == 1}, {'line-gray': articleDetail.followState != 1}]" @tap="onHandleFollow">{{ articleDetail.followState === 1 ? '+ 关注' : '取消关注'}}</view>
 				</view>
 			</view>
 			<view class="padding-sm solid-bottom">
 				<view class="text-bold text-black text-lg">{{ articleDetail.articleTitle }}</view>
 				<view class="text-gray text-sm margin-bottom-sm">{{ articleDetail.createtime }}</view>
-				<view v-if="imgList.length" class="padding-top-sm padding-bottom-sm">
+				<rich-text :nodes="articleDetail.articleContent"></rich-text>
+			<!-- 	<view v-if="imgList.length" class="padding-top-sm padding-bottom-sm">
 					<swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000" duration="500">
 					  <swiper-item v-for="(item, index) in imgList" :key="index" @click="onViewImage" :data-index="index">
 					    <image :src="item" mode="aspectFill"></image>
 					  </swiper-item>
 					</swiper>
+				</view> -->
+				<!-- 商品图 -->
+				<view class="padding-top padding-bottom text-center flex flex-align-column">
+					<view class="flex-1" v-for="(item, index) in imgList" :key="index">
+						<image class="detail-image margin-bottom-sm" @click="onViewImage" :data-index="index" :src="item" mode="widthFix"></image>
+					</view>
 				</view>
-				<rich-text :nodes="articleDetail.articleContent"></rich-text>
 				<view class="padding-top-sm">
 					<view
 						class="cu-tag line-gray round text-bold text-sm text-black topic-tag"
@@ -220,12 +226,7 @@
 					this.fromMemberId = parentItem.userId;
 				}
 			},
-			// 关注、取消关注
-			async onHandleFollow() {
-				let followState = 0; // 0 - 取关， 1 - 关注
-				if (this.articleDetail.followState === 1) {
-					followState = 1;
-				}
+			async onConfirmOperate(followState) {
 				try {
 					const res = await onHandleFollow({
 						userId: this.articleDetail.userId || '',
@@ -241,6 +242,28 @@
 					}
 				} catch(err) {
 					console.log('err', err);
+				}
+			},
+			// 关注、取消关注
+			async onHandleFollow() {
+				let followState = 0; // 0 - 取关， 1 - 关注
+				if (this.articleDetail.followState === 1) {
+					followState = 1;
+				}
+				if (followState) {
+					this.onConfirmOperate(followState);
+				} else {
+					uni.showModal({
+						title: '取消关注',
+						confirmText: '确认取消',
+						cancelText: '取消',
+						success: res => {
+							console.log('res', res);
+							if (res.confirm) {
+								this.onConfirmOperate(followState);
+							}
+						}
+					})
 				}
 			},
 			// 文章详情
@@ -368,5 +391,8 @@
 			height: 100upx;
 		}
 	}
-	
+	.detail-image {
+		display: block;
+		width: 100%;
+	}
 </style>

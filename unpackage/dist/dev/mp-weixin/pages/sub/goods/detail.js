@@ -289,7 +289,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     },
     // 分享朋友圈
     onShareAppMessage: function onShareAppMessage() {var
-      goodsDetail = this.data.goodsDetail;
+      goodsDetail = this.goodsDetail;
       return {
         title: "".concat(goodsDetail.goodsName, "  \xA5").concat(goodsDetail.goodsPrice),
         imageUrl: goodsDetail.goodsImgArray[0] };

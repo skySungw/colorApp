@@ -4,7 +4,7 @@
 			<view slot="backText"></view>
 			<view slot="content">我的关注</view>
 		</cu-custom>
-		<view class="flex-1 flex overflow-hidden">
+		<view class="flex-1 flex overflow-hidden justify-center">
 			<view v-if="list.length > 0" class="flex-1 overflow-hidden">
 				<scroll-view scroll-y class="scroll-Y" @scrolltolower="onRefresh">
 					<PersonCard :list="list" @resetList="getFans" :isFocus="isFocus"></PersonCard>

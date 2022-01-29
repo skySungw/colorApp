@@ -15,7 +15,7 @@
 						<view>{{info.userDesc || ''}}</view>
 					</view>
 					<view v-if="userId" class="flex flex-align-center">
-						<view class="cu-tag line-green" @tap="onHandleFollow">{{ followState == 1 ? '+ 关注' : '取消关注'}}</view>
+						<view class="cu-tag" :class="[{'line-green': followState == 1}, {'line-gray': followState != 1}]" @tap="onHandleFollow">{{ followState == 1 ? '+ 关注' : '取消关注'}}</view>
 					</view>
 				</view>
 				<view class="cu-list grid col-2 no-border">
@@ -119,12 +119,7 @@
 			}
 		},
 		methods: {
-			// 关注、取消关注
-			async onHandleFollow() {
-				let followState = 0; // 0 - 取关， 1 - 关注
-				if (this.followState === 1) {
-					followState = 1;
-				}
+			async onConfirmOperate(followState) {
 				try {
 					const res = await onHandleFollow({
 						userId: this.pageParam.userId || '',
@@ -140,6 +135,28 @@
 					}
 				} catch(err) {
 					console.log('err', err);
+				}
+			},
+			// 关注、取消关注
+			async onHandleFollow() {
+				let followState = 0; // 0 - 取关， 1 - 关注
+				if (this.followState === 1) {
+					followState = 1;
+				}
+				if (followState) {
+					this.onConfirmOperate(followState);
+				} else {
+					uni.showModal({
+						title: '取消关注',
+						confirmText: '确认取消',
+						cancelText: '取消',
+						success: res => {
+							console.log('res', res);
+							if (res.confirm) {
+								this.onConfirmOperate(followState);
+							}
+						}
+					})
 				}
 			},
 			// 是否有下一页

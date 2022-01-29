@@ -44,4 +44,8 @@
 .article-detail .footer.data-v-06205525 {
   height: 100rpx;
 }
+.detail-image.data-v-06205525 {
+  display: block;
+  width: 100%;
+}
 

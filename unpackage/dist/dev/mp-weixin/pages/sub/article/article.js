@@ -268,6 +268,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 {
   data: function data() {
@@ -368,16 +374,11 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
         this.fromMemberId = parentItem.userId;
       }
     },
-    // 关注、取消关注
-    onHandleFollow: function onHandleFollow() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var followState, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                followState = 0; // 0 - 取关， 1 - 关注
-                if (_this.articleDetail.followState === 1) {
-                  followState = 1;
-                }_context.prev = 2;_context.next = 5;return (
+    onConfirmOperate: function onConfirmOperate(followState) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _api.onHandleFollow)({
                     userId: _this.articleDetail.userId || '',
-                    followState: followState }));case 5:res = _context.sent;
+                    followState: followState }));case 3:res = _context.sent;
 
                 if (res.code === 200) {
                   uni.showToast({
@@ -386,101 +387,123 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     duration: 2000 });
 
                   _this.articleDetail.followState = followState === 1 ? 2 : 1;
-                }_context.next = 12;break;case 9:_context.prev = 9;_context.t0 = _context["catch"](2);
+                }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
 
-                console.log('err', _context.t0);case 12:case "end":return _context.stop();}}}, _callee, null, [[2, 9]]);}))();
+                console.log('err', _context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
 
     },
+    // 关注、取消关注
+    onHandleFollow: function onHandleFollow() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var followState;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                followState = 0; // 0 - 取关， 1 - 关注
+                if (_this2.articleDetail.followState === 1) {
+                  followState = 1;
+                }
+                if (followState) {
+                  _this2.onConfirmOperate(followState);
+                } else {
+                  uni.showModal({
+                    title: '取消关注',
+                    confirmText: '确认取消',
+                    cancelText: '取消',
+                    success: function success(res) {
+                      console.log('res', res);
+                      if (res.confirm) {
+                        _this2.onConfirmOperate(followState);
+                      }
+                    } });
+
+                }case 3:case "end":return _context2.stop();}}}, _callee2);}))();
+    },
     // 文章详情
-    getArticleDetail: function getArticleDetail(params) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
+    getArticleDetail: function getArticleDetail(params) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;_context3.next = 3;return (
 
-                  (0, _api.onFetchArticleDetail)(params));case 3:res = _context2.sent;
+                  (0, _api.onFetchArticleDetail)(params));case 3:res = _context3.sent;
                 if (res.code === 200) {
-                  _this2.articleDetail = Object.assign({}, _this2.articleDetail, res.data);
-                  _this2.imgList = res.data.articleContentImg;
-                  _this2.onGetAllComments();
-                }_context2.next = 10;break;case 7:_context2.prev = 7;_context2.t0 = _context2["catch"](0);
+                  _this3.articleDetail = Object.assign({}, _this3.articleDetail, res.data);
+                  _this3.imgList = res.data.articleContentImg;
+                  _this3.onGetAllComments();
+                }_context3.next = 10;break;case 7:_context3.prev = 7;_context3.t0 = _context3["catch"](0);
 
-                console.log('getArticleDetail', _context2.t0);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}))();
+                console.log('getArticleDetail', _context3.t0);case 10:case "end":return _context3.stop();}}}, _callee3, null, [[0, 7]]);}))();
 
     },
     // 获取评论
-    onGetAllComments: function onGetAllComments() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;_context3.next = 3;return (
+    onGetAllComments: function onGetAllComments() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
 
-                  (0, _api.onFetchArticleComment)(_this3.commentParams));case 3:res = _context3.sent;
+                  (0, _api.onFetchArticleComment)(_this4.commentParams));case 3:res = _context4.sent;
                 if (res.code === 200) {
-                  _this3.commentParams.total = res.data.total;
-                  if (_this3.commentParams.current == 1) {
-                    _this3.records = res.data.records;
+                  _this4.commentParams.total = res.data.total;
+                  if (_this4.commentParams.current == 1) {
+                    _this4.records = res.data.records;
                   } else {
-                    _this3.records = _this3.records.concat(res.data.records);
+                    _this4.records = _this4.records.concat(res.data.records);
                   }
-                }_context3.next = 10;break;case 7:_context3.prev = 7;_context3.t0 = _context3["catch"](0);
+                }_context4.next = 10;break;case 7:_context4.prev = 7;_context4.t0 = _context4["catch"](0);
 
-                console.log('err', _context3.t0);case 10:case "end":return _context3.stop();}}}, _callee3, null, [[0, 7]]);}))();
+                console.log('err', _context4.t0);case 10:case "end":return _context4.stop();}}}, _callee4, null, [[0, 7]]);}))();
 
     },
     // 是否有下一页
     hasNext: function hasNext() {
       return this.commentParams.current < Math.ceil(this.commentParams.total / this.commentParams.size);
     },
-    onHandleLeaveMsg: function onHandleLeaveMsg() {var _this4 = this;
+    onHandleLeaveMsg: function onHandleLeaveMsg() {var _this5 = this;
       this.commitFlag = true;
       this.commentType = 0;
       this.$nextTick(function () {
-        console.log(_this4.$refs);
+        console.log(_this5.$refs);
         // this.$refs.commitInput.focus();
       });
     },
-    onLike: function onLike(type) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var likesState, res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;
+    onLike: function onLike(type) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var likesState, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
 
 
 
                 if (type) {
-                  likesState = _this5.articleDetail.articleDetail.isCollection = !_this5.articleDetail.articleDetail.isCollection;
+                  likesState = _this6.articleDetail.articleDetail.isCollection = !_this6.articleDetail.articleDetail.isCollection;
                 } else {
-                  likesState = _this5.articleDetail.articleDetail.isLikes = !_this5.articleDetail.articleDetail.isLikes;
-                }_context4.next = 4;return (
+                  likesState = _this6.articleDetail.articleDetail.isLikes = !_this6.articleDetail.articleDetail.isLikes;
+                }_context5.next = 4;return (
                   (0, _api.onHandleLikes)({
-                    articleCode: _this5.articleCode,
+                    articleCode: _this6.articleCode,
                     likesType: type,
-                    likesState: likesState ? 0 : 1 }));case 4:res = _context4.sent;
+                    likesState: likesState ? 0 : 1 }));case 4:res = _context5.sent;
 
                 if (res.code === 200) {
-                  _this5.init();
-                }_context4.next = 11;break;case 8:_context4.prev = 8;_context4.t0 = _context4["catch"](0);
+                  _this6.init();
+                }_context5.next = 11;break;case 8:_context5.prev = 8;_context5.t0 = _context5["catch"](0);
 
-                console.log('err', _context4.t0);case 11:case "end":return _context4.stop();}}}, _callee4, null, [[0, 8]]);}))();
+                console.log('err', _context5.t0);case 11:case "end":return _context5.stop();}}}, _callee5, null, [[0, 8]]);}))();
 
     },
     // 发送留言
-    onSendMsg: function onSendMsg(type) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var params, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:
+    onSendMsg: function onSendMsg(type) {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var params, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
                 params = {
-                  articleCode: _this6.articleCode,
-                  commentContent: _this6.commitValue,
-                  commentType: _this6.commentType // 0 -文章，1 - 评论
+                  articleCode: _this7.articleCode,
+                  commentContent: _this7.commitValue,
+                  commentType: _this7.commentType // 0 -文章，1 - 评论
                 };
-                if (_this6.commentType) {
+                if (_this7.commentType) {
                   params = Object.assign({}, params, {
-                    fromMemberId: _this6.fromMemberId,
-                    commentId: _this6.commentId });
+                    fromMemberId: _this7.fromMemberId,
+                    commentId: _this7.commentId });
 
-                }_context5.prev = 2;_context5.next = 5;return (
+                }_context6.prev = 2;_context6.next = 5;return (
 
-                  (0, _api.onCreateComment)(params));case 5:res = _context5.sent;
+                  (0, _api.onCreateComment)(params));case 5:res = _context6.sent;
                 if (res.code === 200) {
                   uni.showToast({
                     title: '评论成功',
                     icon: 'none',
                     success: function success() {
-                      _this6.commitFlag = false;
-                      _this6.commitValue = '';
-                      _this6.init();
+                      _this7.commitFlag = false;
+                      _this7.commitValue = '';
+                      _this7.init();
                     } });
 
-                }_context5.next = 12;break;case 9:_context5.prev = 9;_context5.t0 = _context5["catch"](2);
+                }_context6.next = 12;break;case 9:_context6.prev = 9;_context6.t0 = _context6["catch"](2);
 
-                console.log('err', _context5.t0);case 12:case "end":return _context5.stop();}}}, _callee5, null, [[2, 9]]);}))();
+                console.log('err', _context6.t0);case 12:case "end":return _context6.stop();}}}, _callee6, null, [[2, 9]]);}))();
 
 
     } } };exports.default = _default;

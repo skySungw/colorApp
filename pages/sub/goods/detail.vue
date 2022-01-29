@@ -157,7 +157,7 @@
 			},
 			// 分享朋友圈
 			onShareAppMessage() {
-				const { goodsDetail } = this.data;
+				const { goodsDetail } = this;
 				return {
 					title: `${goodsDetail.goodsName}  ¥${goodsDetail.goodsPrice}`,
 					imageUrl: goodsDetail.goodsImgArray[0],

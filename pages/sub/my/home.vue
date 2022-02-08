@@ -17,6 +17,17 @@
 					<view v-if="userId" class="flex flex-align-center">
 						<view class="cu-tag" :class="[{'line-green': followState == 1}, {'line-gray': followState != 1}]" @tap="onHandleFollow">{{ followState == 1 ? '+ 关注' : '取消关注'}}</view>
 					</view>
+					<!-- 分享-->
+					<view class="share flex align-center">
+						<view class="share-button flex align-center">
+							<view class="text-green">
+								分享主页
+							</view>
+							<view class="cuIcon-forwardfill lg text-green text-center">
+							</view>
+							<button class="pop-box-btn" open-type="share"></button>
+						</view>
+					</view>
 				</view>
 				<view class="cu-list grid col-2 no-border">
 					<view class="cu-item" @click="onGoPage({
@@ -119,6 +130,16 @@
 			}
 		},
 		methods: {
+				// 分享朋友圈
+				onShareAppMessage() {
+					const { info } = this;
+					console.log('info', info)
+					return {
+						title: `${ info.userName }  的个人主页`,
+						path: `/pages/sub/my/home?id=${ info.userId }`,
+						imageUrl: info.wxHeadImg,
+					}
+				},
 			async onConfirmOperate(followState) {
 				try {
 					const res = await onHandleFollow({
@@ -297,6 +318,23 @@
 			margin-top: 0;
 			z-index: 999;
 			box-shadow: 0 0 20upx rgba(0, 0, 0, .5);
+		}
+	}
+	.share-button {
+		position: relative;
+		border: 1upx solid green;
+		border-radius: 10upx;
+		padding: 5upx 10upx;
+		.cuIcon-forwardfill {
+			margin-left: 5upx;
+		}
+		.pop-box-btn {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			opacity: 0;
 		}
 	}
 </style>

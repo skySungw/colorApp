@@ -23,6 +23,12 @@
           "pathName": "pages/ground/goodsGround",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/sub/my/my",
+          "pathName": "pages/sub/my/my",
+          "query": "",
+          "scene": null
         }
       ]
     }

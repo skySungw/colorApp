@@ -4,11 +4,11 @@
 			<view slot="content">商品详情</view>
 		</cu-custom>
 		<!-- 商品轮播图 -->
-		<swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000" duration="500">
+		<!-- <swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000" duration="500">
 		  <swiper-item v-for="(item, index) in goodsDetail.goodsImgArray" :key="index" @click="onViewImage" :data-index="index">
 		    <image :src="item" mode="aspectFill"></image>
 		  </swiper-item>
-		</swiper>
+		</swiper> -->
 		<!-- 标题、价格、分享区 -->
 		<view class="detail-content_title flex text-xl padding-lr padding-tb-sm solid-bottom">
 			<!-- 头像 -->

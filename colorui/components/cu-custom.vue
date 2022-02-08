@@ -74,7 +74,7 @@
 			},
 			toHome(){
 				uni.reLaunch({
-					url: '/pages/ground/ground',
+					url: '/pages/ground/goodsGround',
 				})
 			}
 		}

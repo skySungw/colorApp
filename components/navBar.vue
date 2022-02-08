@@ -11,7 +11,7 @@
 		<view class="cu-modal bottom-modal" :class="[{'show': showModal}]" @tap="onHideModal">
 		  <view class="cu-dialog padding" catchtap>
 				<view class="padding">
-					<view v-for="(item, index) in publishArr" :index="index">
+					<view v-for="(item, index) in publishArr" :key="index">
 						<!-- <button class="cu-btn orange lg block line-olive" @tap="onPublish(item)"> {{ item.label }}</button> -->
 						<view class="flex align-center justify-center padding" @tap="onPublish(item)">
 							<view :class="item.bgColor">
@@ -42,14 +42,14 @@
 				showModal: false,
 				menu: [{
 					index: 1,
-					label: '广场',
+					label: '逛逛',
 					icon: 'cuIcon-homefill',
-					url: '/pages/ground/ground'
+					url: '/pages/ground/goodsGround'
 				}, {
 					index: 2,
-					label: '宝贝',
+					label: '帖子',
 					icon: 'cuIcon-baby',
-					url: '/pages/ground/goodsGround'
+					url: '/pages/ground/ground'
 				},
 				// {
 				// 	index: 3,

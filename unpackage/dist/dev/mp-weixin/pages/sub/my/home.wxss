@@ -62,4 +62,21 @@
   z-index: 999;
   box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.5);
 }
+.share-button.data-v-eaa3c5ac {
+  position: relative;
+  border: 1rpx solid green;
+  border-radius: 10rpx;
+  padding: 5rpx 10rpx;
+}
+.share-button .cuIcon-forwardfill.data-v-eaa3c5ac {
+  margin-left: 5rpx;
+}
+.share-button .pop-box-btn.data-v-eaa3c5ac {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+}
 

@@ -35,6 +35,10 @@
   width: 144rpx;
   height: 144rpx;
 }
+.goods-container .goods-item image.big {
+  width: 180rpx;
+  height: 180rpx;
+}
 .goods-container .goods-item_container > view {
   margin: 10rpx 0;
 }

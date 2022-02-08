@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/activeCard":1,"components/card":1,"components/empty":1,"components/navBar":1,"components/goods":1,"components/ad":1,"pages/subpackages/files/components/yinsi":1,"components/order":1,"components/contact":1,"components/poster":1};
+/******/ 		var cssChunks = {"components/empty":1,"components/goods":1,"components/navBar":1,"components/activeCard":1,"components/card":1,"components/ad":1,"pages/subpackages/files/components/yinsi":1,"components/order":1,"components/contact":1,"components/poster":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"colorui/components/cu-custom":"colorui/components/cu-custom","components/activeCard":"components/activeCard","components/card":"components/card","components/empty":"components/empty","components/navBar":"components/navBar","components/tab":"components/tab","components/goods":"components/goods","components/ad":"components/ad","components/swiper":"components/swiper","components/cardList":"components/cardList","pages/subpackages/files/components/yinsi":"pages/subpackages/files/components/yinsi","components/personCard":"components/personCard","components/order":"components/order","components/bgyxedit/bgyxedit":"components/bgyxedit/bgyxedit","components/contact":"components/contact","components/poster":"components/poster"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"colorui/components/cu-custom":"colorui/components/cu-custom","components/empty":"components/empty","components/goods":"components/goods","components/navBar":"components/navBar","components/activeCard":"components/activeCard","components/card":"components/card","components/tab":"components/tab","components/ad":"components/ad","components/swiper":"components/swiper","components/cardList":"components/cardList","pages/subpackages/files/components/yinsi":"pages/subpackages/files/components/yinsi","components/personCard":"components/personCard","components/order":"components/order","components/bgyxedit/bgyxedit":"components/bgyxedit/bgyxedit","components/contact":"components/contact","components/poster":"components/poster"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

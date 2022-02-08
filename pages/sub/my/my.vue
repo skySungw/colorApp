@@ -10,14 +10,29 @@
 				<image src="/static/logo.png" class="user-photo" mode="aspectFit"></image>
 				<view class="flex flex-align-center margin-left-sm text-bold text-xl">点击登录</view>
 			</view>
-			<view class="my-header_container flex" v-else @tap="onGoPage({
-				link: '/pages/sub/my/home'
-			})">
-				<image :src="info.wxHeadImg" class="user-photo" mode="aspectFit"></image>
-				<view class="my-header-right padding-lr">
-					<view class="nickname text-black text-bold">{{info.userName}}</view>
-					<view>ID：{{ info.userId }}<text v-if="false" class="margin-left-sm text-sm text-grey">点击复制</text></view>
-					<view>{{ info.userDesc || '' }}</view>
+			<view class="my-header_container flex flex-bettwen-space" v-else>
+				<view class="flex">
+					<image :src="info.wxHeadImg" class="user-photo" mode="aspectFit" @tap="onGoPage({
+						link: '/pages/sub/my/home'
+					})"></image>
+					<view class="my-header-right padding-lr" @tap="onGoPage({
+						link: '/pages/sub/my/home'
+					})">
+						<view class="nickname text-black text-bold">{{info.userName}}</view>
+						<view>ID：{{ info.userId }}<text v-if="false" class="margin-left-sm text-sm text-grey">点击复制</text></view>
+						<view>{{ info.userDesc || '' }}</view>
+					</view>
+				</view>
+				<!-- 分享-->
+				<view class="share flex align-center">
+					<view class="share-button flex align-center">
+						<view class="text-green">
+							分享主页
+						</view>
+						<view class="cuIcon-forwardfill lg text-green text-center">
+						</view>
+						<button class="pop-box-btn" open-type="share"></button>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -115,6 +130,16 @@
 			this.getInfos();
 		},
 		methods: {
+			// 分享朋友圈
+			onShareAppMessage() {
+				const { info } = this;
+				console.log('info', info)
+				return {
+					title: `${ info.userName }  的个人主页`,
+					path: `/pages/sub/my/home?id=${ info.userId }`,
+					imageUrl: info.wxHeadImg,
+				}
+			},
 			init() {
 				this.info = null;
 				this.memberDetail = { // 粉丝数量
@@ -168,7 +193,7 @@
 				border-radius: 50%;
 			}
 			.my-header-right {
-				width: 500upx;
+				// width: 500upx;
 				view {
 					margin: 10upx 0;
 					color: #666883;
@@ -183,6 +208,23 @@
 	.my-container {
 		.cu-list.grid.no-border>.cu-item {
 				padding: 0;
+		}
+	}
+	.share-button {
+		position: relative;
+		border: 1upx solid green;
+		border-radius: 10upx;
+		padding: 5upx 10upx;
+		.cuIcon-forwardfill {
+			margin-left: 5upx;
+		}
+		.pop-box-btn {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			opacity: 0;
 		}
 	}
 </style>

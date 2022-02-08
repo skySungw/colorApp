@@ -73,7 +73,7 @@
 		<!-- <view class="publish bg-gradual-green" v-if="publishShow"  @click="onPublish">发布</view> -->
 		<!-- <view class="publish" @click="onPublish">发布</view> -->
 		<!-- 其它区域 -->
-		<NavBar :index="1"></NavBar>
+		<NavBar :index="2"></NavBar>
 	</view>
 </template>
 

@@ -2,7 +2,7 @@
 	<view class="goods-container solid-bottom">
 		<!-- 我的主页 -->
 		<view v-if="source == 0" class="goods-item flex" @click="onGoodsDetail">
-			<image :src="item.goodsImgArray[0]" :lazy-load="true"></image>
+			<image class="big" :src="item.goodsImgArray[0]" :lazy-load="true"></image>
 			<view class="goods-item_container flex-1 padding-left-xs">
 				<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
 				<view class="text-bold goods-item_info">{{ item.goodsDesc }}</view>
@@ -324,6 +324,10 @@
 			image {
 				width: 144upx;
 				height: 144upx;
+				&.big {
+					width: 180upx;
+					height: 180upx;
+				}
 			}
 			&_container {
 				& > view {

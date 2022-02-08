@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "宝贝 ",
+  "navigationBarTitleText": "逛逛 ",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "nav-bar": "/components/navBar",

@@ -25,7 +25,7 @@
 		<!-- 发布按钮 -->
 		<!-- <view class="publish bg-gradual-green" v-if="publishShow" @click="onPublish">发布</view> -->
 		<!-- 其它区域 -->
-		<NavBar :index="2"></NavBar>
+		<NavBar :index="1"></NavBar>
 	</view>
 </template>
 

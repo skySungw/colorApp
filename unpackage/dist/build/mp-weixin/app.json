@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/ground/ground",
     "pages/ground/goodsGround",
+    "pages/ground/ground",
     "pages/index/index",
     "pages/quanzi/quanzi"
   ],
@@ -88,5 +88,6 @@
   },
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

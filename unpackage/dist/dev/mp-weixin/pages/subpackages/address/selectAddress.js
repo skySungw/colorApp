@@ -402,13 +402,14 @@ var citySelector = requirePlugin('citySelector');var _default =
       }, this.time);
     },
     // 获取小区列表
-    getArea: function getArea(areaName) {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
+    getArea: function getArea(areaName) {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:if (
+                areaName) {_context4.next = 2;break;}return _context4.abrupt("return", false);case 2:_context4.prev = 2;_context4.next = 5;return (
 
                   (0, _api.selectAddressExploreByCityAndArea)({
                     size: _this7.params.size,
                     current: _this7.params.current,
                     cityName: _this7.address_data.city,
-                    areaName: areaName }));case 3:res = _context4.sent;
+                    areaName: areaName }));case 5:res = _context4.sent;
 
                 if (res.code === 200) {
                   _this7.params.total = res.data.total;
@@ -417,9 +418,9 @@ var citySelector = requirePlugin('citySelector');var _default =
                   } else {
                     _this7.list = _this7.list.concat(res.data.records);
                   }
-                }_context4.next = 10;break;case 7:_context4.prev = 7;_context4.t0 = _context4["catch"](0);
+                }_context4.next = 12;break;case 9:_context4.prev = 9;_context4.t0 = _context4["catch"](2);
 
-                console.log('err', _context4.t0);case 10:case "end":return _context4.stop();}}}, _callee4, null, [[0, 7]]);}))();
+                console.log('err', _context4.t0);case 12:case "end":return _context4.stop();}}}, _callee4, null, [[2, 9]]);}))();
 
     },
     // 清除选择

@@ -8,10 +8,17 @@
 				</view>
 				<view
 					class="action border-custom"
-					v-if="isCustom"
+					v-if="isCustom && isBack"
 					:style="[{width: Custom.width + 'px'}, {height: Custom.height + 'px'}]"
 				>
-					<text class="cuIcon-back" @tap="BackPage" v-if="isBack"></text>
+					<text class="cuIcon-back" @tap="BackPage"></text>
+					<text class="cuIcon-homefill" @tap="toHome"></text>
+				</view>
+				<view
+					class="action border-custom"
+					v-else-if="isCustom && !isBack"
+					:style="[{width: Custom.height + 'px'}, {height: Custom.height + 'px'}, {'line-height': Custom.height + 'px'}]"
+				>
 					<text class="cuIcon-homefill" @tap="toHome"></text>
 				</view>
 				<view class="content" :style="[{top:StatusBar + 'px'}]">

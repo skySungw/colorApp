@@ -211,7 +211,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var Goods = function Goods() {__webpack_require__.e(/*! require.ensure | components/goods */ "components/goods").then((function () {return resolve(__webpack_require__(/*! @/components/goods.vue */ 419));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Card = function Card() {__webpack_require__.e(/*! require.ensure | components/card */ "components/card").then((function () {return resolve(__webpack_require__(/*! @/components/card.vue */ 431));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Empty = function Empty() {__webpack_require__.e(/*! require.ensure | components/empty */ "components/empty").then((function () {return resolve(__webpack_require__(/*! @/components/empty.vue */ 261));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
@@ -224,6 +223,7 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
 
   data: function data() {
     return {
+      isBack: true, // 1 - false 不可返回，只能到首页; 0 - true 可以返回
       followState: 1,
       userId: '',
       customBar: 0,
@@ -259,6 +259,7 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
 
   },
   onLoad: function onLoad(options) {
+    this.isBack = options.isBack == 1 ? false : true;
     this.userId = options.id || '';
     this.pageParam.userId = options.id || '';
     this.getInfos();
@@ -277,7 +278,7 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
       console.log('info', info);
       return {
         title: "".concat(info.userName, "  \u7684\u4E2A\u4EBA\u4E3B\u9875"),
-        path: "/pages/sub/my/home?id=".concat(info.userId),
+        path: "/pages/sub/my/home?id=".concat(info.userId, "&isBack=1"),
         imageUrl: info.wxHeadImg };
 
     },

@@ -64,9 +64,6 @@
 }
 .share-button.data-v-eaa3c5ac {
   position: relative;
-  border: 1rpx solid green;
-  border-radius: 10rpx;
-  padding: 5rpx 10rpx;
 }
 .share-button .cuIcon-forwardfill.data-v-eaa3c5ac {
   margin-left: 5rpx;

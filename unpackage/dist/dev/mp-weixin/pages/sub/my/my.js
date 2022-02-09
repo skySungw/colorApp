@@ -268,7 +268,7 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
       console.log('info', info);
       return {
         title: "".concat(info.userName, "  \u7684\u4E2A\u4EBA\u4E3B\u9875"),
-        path: "/pages/sub/my/home?id=".concat(info.userId),
+        path: "/pages/sub/my/home?id=".concat(info.userId, "&isBack=1"),
         imageUrl: info.wxHeadImg };
 
     },

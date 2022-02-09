@@ -271,6 +271,7 @@
 			},
 			// 获取小区列表
 			async getArea(areaName) {
+				if (!areaName) return false;
 				try {
 					const res = await selectAddressExploreByCityAndArea({
 						size: this.params.size,

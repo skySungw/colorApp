@@ -46,9 +46,6 @@
 }
 .share-button {
   position: relative;
-  border: 1rpx solid green;
-  border-radius: 10rpx;
-  padding: 5rpx 10rpx;
 }
 .share-button .cuIcon-forwardfill {
   margin-left: 5rpx;

@@ -1,7 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<view slot="backText"></view>
+		<cu-custom bgColor="bg-gradual-green" :isBack="isBack" :isCustom="true">
 			<view slot="content">个人主页</view>
 		</cu-custom>
 		<!-- 页面滚动 -->
@@ -18,8 +17,8 @@
 						<view class="cu-tag" :class="[{'line-green': followState == 1}, {'line-gray': followState != 1}]" @tap="onHandleFollow">{{ followState == 1 ? '+ 关注' : '取消关注'}}</view>
 					</view>
 					<!-- 分享-->
-					<view class="share flex align-center">
-						<view class="share-button flex align-center">
+					<view class="share flex align-center margin-left-sm">
+						<view class="cu-tag line-green share-button flex align-center">
 							<view class="text-green">
 								分享主页
 							</view>
@@ -83,6 +82,7 @@
 		},
 		data() {
 			return {
+				isBack: true, // 1 - false 不可返回，只能到首页; 0 - true 可以返回
 				followState: 1,
 				userId: '',
 				customBar: 0,
@@ -118,6 +118,7 @@
 			}
 		},
 		onLoad(options) {
+			this.isBack = options.isBack == 1 ? false : true;
 			this.userId = options.id || '';
 			this.pageParam.userId = options.id || '';
 			this.getInfos();
@@ -136,7 +137,7 @@
 					console.log('info', info)
 					return {
 						title: `${ info.userName }  的个人主页`,
-						path: `/pages/sub/my/home?id=${ info.userId }`,
+						path: `/pages/sub/my/home?id=${ info.userId }&isBack=1`,
 						imageUrl: info.wxHeadImg,
 					}
 				},
@@ -322,9 +323,9 @@
 	}
 	.share-button {
 		position: relative;
-		border: 1upx solid green;
-		border-radius: 10upx;
-		padding: 5upx 10upx;
+		// border: 1upx solid #39b54a;
+		// border-radius: 10upx;
+		// padding: 5upx 10upx;
 		.cuIcon-forwardfill {
 			margin-left: 5upx;
 		}

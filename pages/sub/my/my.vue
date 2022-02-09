@@ -25,7 +25,7 @@
 				</view>
 				<!-- 分享-->
 				<view class="share flex align-center">
-					<view class="share-button flex align-center">
+					<view class="cu-tag line-green share-button flex align-center">
 						<view class="text-green">
 							分享主页
 						</view>
@@ -136,7 +136,7 @@
 				console.log('info', info)
 				return {
 					title: `${ info.userName }  的个人主页`,
-					path: `/pages/sub/my/home?id=${ info.userId }`,
+					path: `/pages/sub/my/home?id=${ info.userId }&isBack=1`,
 					imageUrl: info.wxHeadImg,
 				}
 			},
@@ -212,9 +212,9 @@
 	}
 	.share-button {
 		position: relative;
-		border: 1upx solid green;
-		border-radius: 10upx;
-		padding: 5upx 10upx;
+		// border: 1upx solid green;
+		// border-radius: 10upx;
+		// padding: 5upx 10upx;
 		.cuIcon-forwardfill {
 			margin-left: 5upx;
 		}

@@ -524,6 +524,13 @@ function onUnload() {
 
       return false;
     }
+    if (this.goodsName.length >= 50) {
+      uni.showToast({
+        title: '商品名不能超过50个字',
+        icon: 'none' });
+
+      return false;
+    }
     if (!this.goodsPrice) {
       uni.showToast({
         title: '请输入商品价格',

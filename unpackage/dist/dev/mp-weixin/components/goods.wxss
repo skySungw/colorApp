@@ -57,6 +57,7 @@
 }
 .goods-container .products-content image {
   border-radius: 10rpx;
+  box-shadow: 0 0 4rpx rgba(0, 0, 0, 0.2);
 }
 .flex-1 {
   flex: 1;

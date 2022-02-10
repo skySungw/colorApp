@@ -35,6 +35,12 @@
           "pathName": "pages/sub/my/home",
           "query": "isBack=1",
           "scene": null
+        },
+        {
+          "name": "pages/subpackages/site/myShop",
+          "pathName": "pages/subpackages/site/myShop",
+          "query": "",
+          "scene": null
         }
       ]
     }

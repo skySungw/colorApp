@@ -28,7 +28,7 @@
 		<!-- 产品库列表 -->
 		<view v-if="source == 2" class="relative">
 			<view class="products-content" @tap="onGoodsDetail">
-				<image :src="item.goodsImgArray[0]" mode="aspectFit" :lazy-load="true"></image>
+				<image :src="item.goodsImgArray[0]" mode="aspectFill" :lazy-load="true"></image>
 				<view>
 					<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
 				</view>
@@ -55,14 +55,14 @@
 			</view>
 		</view> -->
 		<!-- 橱窗列表 -->
-		<view v-if="source == 3" class="relative">
+		<view v-if="source == 3" class="relative shop-products">
 			<view class="products-content" @tap="onGoodsDetail">
-				<image :src="item.goodsImgArray[0]" mode="aspectFit" :lazy-load="true"></image>
+				<image :src="item.goodsImgArray[0]" mode="aspectFill" :lazy-load="true"></image>
 				<view>
 					<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
 				</view>
 				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
-				<view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view>
+				<!-- <view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view> -->
 			</view>
 			<view v-if="operate" class="delete-absolute delete">
 				<text class="cuIcon-roundclosefill lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
@@ -351,6 +351,7 @@
 		.products-content {
 			image {
 				border-radius: 10upx;
+				box-shadow: 0 0 4upx rgba(0, 0, 0, .2);
 			}
 		}
 	}

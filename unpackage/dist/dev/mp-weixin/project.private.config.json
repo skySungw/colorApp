@@ -41,6 +41,12 @@
           "pathName": "pages/subpackages/site/myShop",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/subpackages/site/goodsList",
+          "pathName": "pages/subpackages/site/goodsList",
+          "query": "",
+          "scene": null
         }
       ]
     }

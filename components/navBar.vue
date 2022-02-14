@@ -40,6 +40,10 @@
 				type: Number,
 				default: 1
 			},
+			idStatus: {
+				type: Number,
+				default: 1, // idStatus 0 - 拥有者， 1 - 游客
+			},
 			onAdd: Function
 		},
 		data() {
@@ -96,45 +100,47 @@
 					url: '/pages/sub/publish/index',
 					icon: 'cuIcon-edit lg',
 					bgColor: 'padding img-tag margin-right-sm bg-cyan',
-				}, {
-					id: 1,
-					show: true,
-					title: '邻里晒一晒',
-					label: '晒出有趣的事',
-					url: '/pages/sub/publish/index',
-					icon: 'cuIcon-evaluate lg',
-					bgColor: 'padding img-tag margin-right-sm bg-gradual-orange',
-				}, {
-					id: 1,
-					show: true,
-					title: '我要求购',
-					label: '大家帮忙解决',
-					url: '/pages/sub/publish/index',
-					icon: 'cuIcon-magic lg',
-					bgColor: 'padding img-tag margin-right-sm bg-gradual-blue',
-				}, {
-					id: 1,
-					show: true,
-					title: '我要找房',
-					label: '租房没有烦恼',
-					url: '/pages/sub/publish/index',
-					icon: 'cuIcon-home lg',
-					bgColor: 'padding img-tag margin-right-sm bg-gradual-green',
-				}, {
-					id: 0,
-					show: false,
-					title: '橱窗商品',
-					label: '快速发布商品',
-					icon: 'cuIcon-add lg',
-					bgColor: 'padding img-tag margin-right-sm bg-gradual-red',
-				}]
+				},
+				// {
+				// 	id: 1,
+				// 	show: true,
+				// 	title: '邻里晒一晒',
+				// 	label: '晒出有趣的事',
+				// 	url: '/pages/sub/publish/index',
+				// 	icon: 'cuIcon-evaluate lg',
+				// 	bgColor: 'padding img-tag margin-right-sm bg-gradual-orange',
+				// }, {
+				// 	id: 1,
+				// 	show: true,
+				// 	title: '我要求购',
+				// 	label: '大家帮忙解决',
+				// 	url: '/pages/sub/publish/index',
+				// 	icon: 'cuIcon-magic lg',
+				// 	bgColor: 'padding img-tag margin-right-sm bg-gradual-blue',
+				// }, {
+				// 	id: 1,
+				// 	show: true,
+				// 	title: '我要找房',
+				// 	label: '租房没有烦恼',
+				// 	url: '/pages/sub/publish/index',
+				// 	icon: 'cuIcon-home lg',
+				// 	bgColor: 'padding img-tag margin-right-sm bg-gradual-green',
+				// }, {
+				// 	id: 0,
+				// 	show: false,
+				// 	title: '橱窗商品',
+				// 	label: '快速发布商品',
+				// 	icon: 'cuIcon-add lg',
+				// 	bgColor: 'padding img-tag margin-right-sm bg-gradual-red',
+				// },
+				]
 			}
 		},
 		created() {
 			this.menu.forEach(v => v.index == this.index ? v.active = true : '');
-			if (this.index == 4) {
-				this.publishArr[this.publishArr.length - 1]['show'] = true;
-			}
+			// if (this.index == 4) {
+			// 	this.publishArr[0]['show'] = true;
+			// }
 		},
 		methods: {
 			changeMenu(item) {
@@ -163,15 +169,15 @@
 				const token = uni.getStorageSync('token');
 				const url = item.url;
 				this.onHideModal();
-				console.log('token', token)
 				if (token) {
 					// if (this.index == 4) {
 					// 	this.onAdd && this.onAdd(this.showCaseId);
 					// } else {
 					// 	this.onShowModal();
 					// }
-					if (!url) {
-						this.onAdd && this.onAdd(this.showCaseId);
+					
+					if (this.index == 4) {
+						this.onAdd && this.onAdd(this.showCaseId, this.idStatus);
 						return false;
 					}
 					uni.navigateTo({

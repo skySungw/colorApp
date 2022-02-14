@@ -2221,9 +2221,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 124:
-/*!****************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/config/config.js ***!
-  \****************************************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/config/config.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2296,9 +2296,9 @@ module.exports = {
 /***/ }),
 
 /***/ 153:
-/*!*****************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/ajaxUpload.js ***!
-  \*****************************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/ajaxUpload.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2351,9 +2351,9 @@ ajax;exports.default = _default;
 /***/ }),
 
 /***/ 154:
-/*!**********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/api.js ***!
-  \**********************************************************************************/
+/*!*******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/api.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3188,9 +3188,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 21:
-/*!************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/index.js ***!
-  \************************************************************************************/
+/*!*********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/index.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3208,9 +3208,9 @@ _location.default);
 /***/ }),
 
 /***/ 22:
-/*!*********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/my.js ***!
-  \*********************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/my.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3383,9 +3383,9 @@ function onFetchGoodsBySelf(data) {
 /***/ }),
 
 /***/ 23:
-/*!**************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/request.js ***!
-  \**************************************************************************************/
+/*!***********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/request.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3421,9 +3421,9 @@ request;exports.default = _default;
 /***/ }),
 
 /***/ 24:
-/*!*************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/config.js ***!
-  \*************************************************************************************/
+/*!**********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/config.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3436,9 +3436,9 @@ exports.baseUrl = baseUrl;
 /***/ }),
 
 /***/ 25:
-/*!************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/goods.js ***!
-  \************************************************************************************/
+/*!*********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/goods.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3624,9 +3624,9 @@ function onSelectOrderCountByMemberId(data) {
 /***/ }),
 
 /***/ 26:
-/*!*************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/ground.js ***!
-  \*************************************************************************************/
+/*!**********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/ground.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3778,9 +3778,9 @@ function onSignUpActivity(data) {
 /***/ }),
 
 /***/ 27:
-/*!***************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/location.js ***!
-  \***************************************************************************************/
+/*!************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/location.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9889,9 +9889,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 306:
-/*!**************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/utils/index.js ***!
-  \**************************************************************************************/
+/*!***********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/utils/index.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10378,9 +10378,9 @@ function resolveLocaleChain(locale) {
 /***/ }),
 
 /***/ 450:
-/*!***************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/static/logo.png ***!
-  \***************************************************************************************/
+/*!************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/static/logo.png ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10389,9 +10389,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAD/CAMAAAC3
 /***/ }),
 
 /***/ 499:
-/*!****************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/util.js ***!
-  \****************************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/util.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10747,9 +10747,9 @@ function getHeightFixModelInfo(oWidth, oHeight, x, y, width, height) {
 /***/ }),
 
 /***/ 5:
-/*!**********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/pages.json ***!
-  \**********************************************************************************/
+/*!*******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/pages.json ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10758,9 +10758,9 @@ function getHeightFixModelInfo(oWidth, oHeight, x, y, width, height) {
 /***/ }),
 
 /***/ 500:
-/*!***********************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/image-tools.js ***!
-  \***********************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/image-tools.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10916,9 +10916,9 @@ function base64ToPath(base64) {
 /***/ }),
 
 /***/ 501:
-/*!****************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/draw.js ***!
-  \****************************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/draw.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12379,9 +12379,9 @@ Draw = /*#__PURE__*/function () {
 /***/ }),
 
 /***/ 502:
-/*!******************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/qrcode.js ***!
-  \******************************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/qrcode.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

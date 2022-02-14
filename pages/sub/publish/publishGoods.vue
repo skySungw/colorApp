@@ -96,7 +96,7 @@
 </template>
 
 <script>
-	import { onFetchGoodsDetail, onFetchGoodsCategory, onCreateGoods, onUpdateGoods, onFetchContactType, selectUserLocation, saveUserLocation } from '@/api';
+	import { onFetchGoodsDetail, onFetchGoodsCategory, onCreateGoods, onUpdateGoods, onFetchContactType, selectUserLocation, saveUserLocation, onAddGoodsToShowCase } from '@/api';
 	import bgyxedit from '@/components/bgyxedit/bgyxedit';
 	import Contact from '@/components/contact';
 	import ajaxUpload from '@/api/ajaxUpload';
@@ -357,6 +357,7 @@
 						res = await onUpdateGoods(params);
 					} else {
 						res = await onCreateGoods(params);
+						this.goodsCode = res.data.goodsCode;
 					}
 					const title = this.editFlag ? '修改成功' : '发布成功';
 					if (res.code === 200) {
@@ -364,15 +365,13 @@
 							title,
 							complete:() => {
 								let url = '/pages/sub/my/goods';
+								let flag = true;
 								if (this.source == 1) {
-									url = `/pages/sub/my/goods?source=${this.source}&showcaseId=${this.showcaseId}&goodsCode=${res.data.goodsCode}`
+									flag = false;
+									// url = `/pages/sub/my/goods?source=${this.source}&showcaseId=${this.showcaseId}&goodsCode=${res.data.goodsCode}`
+									url = `/pages/subpackages/site/myShop?showcaseId=${ this.showcaseId }`;
 								}
-								setTimeout(() => {
-									uni.redirectTo({
-										url
-									})
-								}, 1500)
-								
+								this.addGoods(url, flag);
 							}
 						})
 						// uni.navigateTo({
@@ -457,6 +456,32 @@
 				// 	return false;
 				// }
 				this.publish();
+			},
+			// 添加橱窗商品
+			async addGoods(url, flag) {
+				if (flag) {
+					setTimeout(() => {
+						uni.redirectTo({
+							url
+						})
+					}, 1500);
+					return false;
+				}
+				try {
+					const res = await onAddGoodsToShowCase({
+						goodsIds: [this.goodsCode],
+						showcaseId: this.showcaseId
+					});
+					if (res.code === 200) {
+						setTimeout(() => {
+							uni.redirectTo({
+								url
+							})
+						}, 1500)
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
 			},
 			// 保存地址
 			async onSaveAddress() {

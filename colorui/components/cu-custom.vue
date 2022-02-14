@@ -2,13 +2,13 @@
 	<view>
 		<view class="cu-custom" :style="[{height:CustomBar + 'px'}]">
 			<view class="cu-bar fixed" :style="style" :class="[bgImage!=''?'none-bg text-white bg-img':'',bgColor]">
-				<view class="action" @tap="BackPage" v-if="isBack && !isCustom">
+				<view class="action" @tap="BackPage" v-if="isBack && !isCustom && isShow">
 					<text class="cuIcon-back"></text>
 					<slot name="backText"></slot>
 				</view>
 				<view
 					class="action border-custom"
-					v-if="isCustom && isBack"
+					v-if="isCustom && isBack && isShow"
 					:style="[{width: Custom.width + 'px'}, {height: Custom.height + 'px'}]"
 				>
 					<text class="cuIcon-back" @tap="BackPage"></text>
@@ -16,7 +16,7 @@
 				</view>
 				<view
 					class="action border-custom"
-					v-else-if="isCustom && !isBack"
+					v-else-if="isCustom && !isBack && isShow"
 					:style="[{width: Custom.height + 'px'}, {height: Custom.height + 'px'}, {'line-height': Custom.height + 'px'}]"
 				>
 					<text class="cuIcon-homefill" @tap="toHome"></text>
@@ -72,6 +72,10 @@
 				type: String,
 				default: ''
 			},
+			isShow: {
+				type: Boolean,
+				default: true
+			}
 		},
 		methods: {
 			BackPage() {

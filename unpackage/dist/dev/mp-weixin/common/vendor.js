@@ -947,7 +947,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2221,9 +2221,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 124:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/config/config.js ***!
-  \*************************************************************************/
+/*!****************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/config/config.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2296,9 +2296,9 @@ module.exports = {
 /***/ }),
 
 /***/ 153:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/ajaxUpload.js ***!
-  \**************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/ajaxUpload.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2351,9 +2351,9 @@ ajax;exports.default = _default;
 /***/ }),
 
 /***/ 154:
-/*!*******************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/api.js ***!
-  \*******************************************************************/
+/*!**********************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/api.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3188,9 +3188,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 21:
-/*!*********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/index.js ***!
-  \*********************************************************************/
+/*!************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/index.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3208,9 +3208,9 @@ _location.default);
 /***/ }),
 
 /***/ 22:
-/*!******************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/my.js ***!
-  \******************************************************************/
+/*!*********************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/my.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3383,9 +3383,9 @@ function onFetchGoodsBySelf(data) {
 /***/ }),
 
 /***/ 23:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/request.js ***!
-  \***********************************************************************/
+/*!**************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/request.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3421,9 +3421,9 @@ request;exports.default = _default;
 /***/ }),
 
 /***/ 24:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/config.js ***!
-  \**********************************************************************/
+/*!*************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/config.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3436,9 +3436,9 @@ exports.baseUrl = baseUrl;
 /***/ }),
 
 /***/ 25:
-/*!*********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/goods.js ***!
-  \*********************************************************************/
+/*!************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/goods.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3624,9 +3624,9 @@ function onSelectOrderCountByMemberId(data) {
 /***/ }),
 
 /***/ 26:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/ground.js ***!
-  \**********************************************************************/
+/*!*************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/ground.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3778,9 +3778,9 @@ function onSignUpActivity(data) {
 /***/ }),
 
 /***/ 27:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/location.js ***!
-  \************************************************************************/
+/*!***************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/location.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9363,7 +9363,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9384,14 +9384,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9477,7 +9477,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9889,9 +9889,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 306:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/utils/index.js ***!
-  \***********************************************************************/
+/*!**************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/utils/index.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10378,9 +10378,9 @@ function resolveLocaleChain(locale) {
 /***/ }),
 
 /***/ 450:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/static/logo.png ***!
-  \************************************************************************/
+/*!***************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/static/logo.png ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10389,9 +10389,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAD/CAMAAAC3
 /***/ }),
 
 /***/ 499:
-/*!*************************************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/util.js ***!
-  \*************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/util.js ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10747,9 +10747,9 @@ function getHeightFixModelInfo(oWidth, oHeight, x, y, width, height) {
 /***/ }),
 
 /***/ 5:
-/*!*******************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/pages.json ***!
-  \*******************************************************************/
+/*!**********************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/pages.json ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10758,9 +10758,9 @@ function getHeightFixModelInfo(oWidth, oHeight, x, y, width, height) {
 /***/ }),
 
 /***/ 500:
-/*!********************************************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/image-tools.js ***!
-  \********************************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/image-tools.js ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10916,9 +10916,9 @@ function base64ToPath(base64) {
 /***/ }),
 
 /***/ 501:
-/*!*************************************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/draw.js ***!
-  \*************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/draw.js ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12379,9 +12379,9 @@ Draw = /*#__PURE__*/function () {
 /***/ }),
 
 /***/ 502:
-/*!***************************************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/qrcode.js ***!
-  \***************************************************************************************************/
+/*!******************************************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/qrcode.js ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

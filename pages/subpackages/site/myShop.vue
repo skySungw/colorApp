@@ -1,6 +1,6 @@
 <template>
 	<view class="my-shop full-height absolute flex flex-direction bg-white">
-		<cu-custom bgColor="bg-gradual-green" :isBack="true" :isCustom="true">
+		<cu-custom bgColor="bg-gradual-green" :isBack="true" :isShow="isShow" :isCustom="true">
 			<view slot="content">{{ title }}</view>
 		</cu-custom>
 		<!-- banner -->
@@ -28,7 +28,7 @@
 			</view>
 		</view>
 		<!-- 页面滚动 -->
-		<view class="flex-1 bg-white">
+		<view class="flex-1 bg-white my-shop_content">
 			<Goods
 				class="goods-item_content"
 				v-for="(item, index) in list"
@@ -41,9 +41,11 @@
 			></Goods>
 			<Empty v-if="list.length == 0" msg="暂无数据~" />
 		</view>
-		<view class="shop-footer">
+		<!-- <view class="shop-footer">
 			<text @tap="onAdd" class="cuIcon-add round text-bold bg-green shadow"></text>
-		</view>
+		</view> -->
+		<!-- 其它区域 -->
+		<NavBar :index="4" :onAdd="onAdd" :showCaseId="params.showcaseId"></NavBar>
 	</view>
 </template>
 
@@ -51,15 +53,18 @@
 	import { onFetchShowcasePage } from '@/api';
 	import { onFetchOwnerStateShowcase } from '@/api';
 	
+	import NavBar from '@/components/navBar';
 	import Goods from '@/components/goods';
 	import Empty from '@/components/empty.vue';
 	export default {
 		components: {
+			NavBar,
 			Goods,
 			Empty
 		},
 		data() {
 			return {
+				isShow: true, // 是否显示菜单， false - 不显示， true - 显示
 				title: '',
 				menuIndex: 0,
 				menuId: 9,
@@ -93,7 +98,9 @@
 			}
 		},
 		onLoad(options) {
+			this.isShow = options.isShow == 1 ? true : false;
 			let showcaseId = options.showcaseId || uni.getStorageSync('showcaseId');
+			console.log('options.showcaseId', options.showcaseId)
 			this.params.showcaseId = showcaseId;
 		},
 		onShow() {
@@ -172,14 +179,14 @@
 				this.initParams();
 			},
 			// 橱窗商品列表
-			onAdd() {
+			onAdd(showcaseId) {
 				let url = ''
 			
 				// 站长本人
 				if (this.idStatus === 0) {
 					url = '/pages/subpackages/site/goodsList';
 				} else {
-					url = `/pages/sub/my/goods?source=1&showcaseId=${this.params.showcaseId}`;
+					url = `/pages/sub/my/goods?source=1&showcaseId=${showcaseId ?? this.params.showcaseId}`;
 				}
 				uni.navigateTo({
 					url
@@ -286,7 +293,7 @@
 <style lang="scss" scoped>
 	.strick-top {
 		position: sticky;
-		z-index: 9;
+		// z-index: 9;
 	}
 	.padding-fixed {
 		padding-top: 100upx;
@@ -351,9 +358,12 @@
 			display: inline-block;
 			width: 50%;
 		}
+		&_content {
+			padding-bottom: 150upx;
+		}
 		.shop-footer {
 			position: fixed;
-			bottom: 40upx;
+			bottom: 240upx;
 			width: 100%;
 			left: 0;
 			display: flex;

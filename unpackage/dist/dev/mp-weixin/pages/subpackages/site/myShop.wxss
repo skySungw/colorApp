@@ -27,7 +27,6 @@
 .strick-top.data-v-17019782 {
   position: -webkit-sticky;
   position: sticky;
-  z-index: 9;
 }
 .padding-fixed.data-v-17019782 {
   padding-top: 100rpx;
@@ -87,9 +86,12 @@
   display: inline-block;
   width: 50%;
 }
+.my-shop_content.data-v-17019782 {
+  padding-bottom: 150rpx;
+}
 .my-shop .shop-footer.data-v-17019782 {
   position: fixed;
-  bottom: 40rpx;
+  bottom: 240rpx;
   width: 100%;
   left: 0;
   display: flex;

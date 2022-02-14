@@ -11,9 +11,9 @@
 		<view class="cu-modal bottom-modal" :class="[{'show': showModal}]" @tap="onHideModal">
 		  <view class="cu-dialog padding" catchtap>
 				<view class="padding">
-					<view v-for="(item, index) in publishArr" :key="index">
+					<view v-for="(item, itemIndex) in publishArr" :key="itemIndex">
 						<!-- <button class="cu-btn orange lg block line-olive" @tap="onPublish(item)"> {{ item.label }}</button> -->
-						<view class="flex align-center justify-center padding" @tap="onPublish(item)">
+						<view class="flex align-center justify-center padding" v-if="item.show" @tap="onPublish(item)">
 							<view :class="item.bgColor">
 								<text :class="item.icon"></text>
 							</view>
@@ -35,14 +35,19 @@
 <script>
 	export default {
 		props: {
-			index: Number
+			index: Number,
+			showCaseId: {
+				type: Number,
+				default: 1
+			},
+			onAdd: Function
 		},
 		data() {
 			return {
 				showModal: false,
 				menu: [{
 					index: 1,
-					label: '逛逛',
+					label: '同城',
 					icon: 'cuIcon-homefill',
 					url: '/pages/ground/goodsGround'
 				}, {
@@ -51,24 +56,24 @@
 					icon: 'cuIcon-baby',
 					url: '/pages/ground/ground'
 				},
-				// {
-				// 	index: 3,
-				// 	label: '发布',
-				// 	icon: 'add-action',
-				// 	className: 'add-action',
-				// 	buttonClass: 'cu-btn cuIcon-add bg-green shadow',
-				// },
 				{
 					index: 3,
 					label: '发布',
-					icon: 'cuIcon-roundadd',
+					icon: 'add-action',
+					className: 'add-action',
+					buttonClass: 'cu-btn cuIcon-add bg-green shadow',
 				},
 				// {
-				// 	index: 4,
-				// 	label: '站长',
-				// 	icon: 'cuIcon-shop',
-				// 	url: '/pages/subpackages/site/index'
+				// 	index: 3,
+				// 	label: '发布',
+				// 	icon: 'cuIcon-roundadd',
 				// },
+				{
+					index: 4,
+					label: '逛逛',
+					icon: 'cuIcon-shop',
+					url: `/pages/subpackages/site/myShop?showcaseId=1&menu=0`
+				},
 				{
 					index: 5,
 					label: '我的',
@@ -77,27 +82,64 @@
 				}],
 				publishArr: [{
 					id: 2,
+					show: true,
 					title: '发个闲置品',
 					label: '给附近的人看',
 					url: '/pages/sub/publish/publishGoods',
 					icon: 'cuIcon-camera lg',
-					bgColor: 'padding img-tag margin-right-sm bg-cyan'
+					bgColor: 'padding img-tag margin-right-sm bg-gradual-pink'
 				}, {
 					id: 1,
+					show: true,
 					title: '发生活帖子',
 					label: '分享我的日常',
 					url: '/pages/sub/publish/index',
 					icon: 'cuIcon-edit lg',
+					bgColor: 'padding img-tag margin-right-sm bg-cyan',
+				}, {
+					id: 1,
+					show: true,
+					title: '邻里晒一晒',
+					label: '晒出有趣的事',
+					url: '/pages/sub/publish/index',
+					icon: 'cuIcon-evaluate lg',
+					bgColor: 'padding img-tag margin-right-sm bg-gradual-orange',
+				}, {
+					id: 1,
+					show: true,
+					title: '我要求购',
+					label: '大家帮忙解决',
+					url: '/pages/sub/publish/index',
+					icon: 'cuIcon-magic lg',
+					bgColor: 'padding img-tag margin-right-sm bg-gradual-blue',
+				}, {
+					id: 1,
+					show: true,
+					title: '我要找房',
+					label: '租房没有烦恼',
+					url: '/pages/sub/publish/index',
+					icon: 'cuIcon-home lg',
 					bgColor: 'padding img-tag margin-right-sm bg-gradual-green',
+				}, {
+					id: 0,
+					show: false,
+					title: '橱窗商品',
+					label: '快速发布商品',
+					icon: 'cuIcon-add lg',
+					bgColor: 'padding img-tag margin-right-sm bg-gradual-red',
 				}]
 			}
 		},
 		created() {
-			this.menu.forEach(v => v.index == this.index ? v.active = true : '')
+			this.menu.forEach(v => v.index == this.index ? v.active = true : '');
+			if (this.index == 4) {
+				this.publishArr[this.publishArr.length - 1]['show'] = true;
+			}
 		},
 		methods: {
 			changeMenu(item) {
 				if (item.index != this.index) {
+					console.log('item', item)
 					if (item.url) {
 						uni.redirectTo({
 							url: item.url,
@@ -106,6 +148,7 @@
 							complete: () => {}
 						});
 					} else {
+						console.log('showcaseId', this.index);
 						this.onShowModal();
 					}
 				}
@@ -122,6 +165,15 @@
 				this.onHideModal();
 				console.log('token', token)
 				if (token) {
+					// if (this.index == 4) {
+					// 	this.onAdd && this.onAdd(this.showCaseId);
+					// } else {
+					// 	this.onShowModal();
+					// }
+					if (!url) {
+						this.onAdd && this.onAdd(this.showCaseId);
+						return false;
+					}
 					uni.navigateTo({
 						url: item.url
 					})

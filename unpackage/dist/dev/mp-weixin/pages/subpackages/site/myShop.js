@@ -318,7 +318,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       // 站长本人
       if (idStatus === 0) {
         url = '/pages/subpackages/site/goodsList';
-        url = "/pages/sub/publish/publishGoods?source=1&showcaseId=".concat(showcaseId);
       } else {
         // url = `/pages/sub/my/goods?source=1&showcaseId=${showcaseId}`;
         url = "/pages/sub/publish/publishGoods?source=1&showcaseId=".concat(showcaseId);

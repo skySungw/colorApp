@@ -2359,9 +2359,8 @@ ajax;exports.default = _default;
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.uploadFileUrl = void 0;var _config = __webpack_require__(/*! @/api/config */ 24);
-var uploadFileUrl = _config.baseUrl + 'api/zuul/user/file/uploadFile';
-// uploadFileUrl = uploadFileUrl.replace('api/', '');
-exports.uploadFileUrl = uploadFileUrl;
+var uploadFileUrl = _config.baseUrl + 'api/zuul/user/file/uploadFile';exports.uploadFileUrl = uploadFileUrl;
+exports.uploadFileUrl = uploadFileUrl = uploadFileUrl.replace('api/', '');
 
 /***/ }),
 
@@ -3399,8 +3398,8 @@ request(_x) {return _request.apply(this, arguments);}function _request() {_reque
             method, method = _ref$method === void 0 ? 'POST' : _ref$method,
             dataType = _ref.dataType;
 
-            newUrl = url;
-            // let newUrl = url.replace('api/', '');
+            // let newUrl = url;
+            newUrl = url.replace('api/', '');
             token = uni.getStorageSync('token');
             if (token) {
               header['Authorization'] = 'Bearer ' + token;
@@ -3428,8 +3427,8 @@ request;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.baseUrl = void 0; // const baseUrl = 'http://b2y1841010.iask.in/';
-var baseUrl = 'https://wapi.kiiho.com/';
+Object.defineProperty(exports, "__esModule", { value: true });exports.baseUrl = void 0;var baseUrl = 'http://b2y1841010.iask.in/';
+// const baseUrl = 'https://wapi.kiiho.com/';
 // const baseUrl = 'http://192.168.165.111:8866/'
 exports.baseUrl = baseUrl;
 

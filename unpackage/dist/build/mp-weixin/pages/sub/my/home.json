@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "个人主页",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "goods": "/components/goods",
-    "card": "/components/card",
-    "empty": "/components/empty"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "逛逛 ",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "nav-bar": "/components/navBar",
-    "goods": "/components/goods",
-    "empty": "/components/empty"
-  }
-}

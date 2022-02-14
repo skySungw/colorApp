@@ -168,7 +168,7 @@ var _default =
         url: '/pages/ground/goodsGround' },
       {
         index: 2,
-        label: '帖子',
+        label: '邻友圈',
         icon: 'cuIcon-baby',
         url: '/pages/ground/ground' },
 

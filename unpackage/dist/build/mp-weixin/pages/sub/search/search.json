@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "搜索",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "card": "/components/card",
-    "active-card": "/components/activeCard",
-    "empty": "/components/empty"
-  }
-}

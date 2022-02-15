@@ -45,7 +45,7 @@
 			<text @tap="onAdd" class="cuIcon-add round text-bold bg-green shadow"></text>
 		</view> -->
 		<!-- 其它区域 -->
-		<NavBar :index="4" :onAdd="onAdd" :showCaseId="params.showcaseId"></NavBar>
+		<NavBar :index="4" :onAdd="onAdd" :showCaseId="params.showcaseId" :idStatus="idStatus"></NavBar>
 	</view>
 </template>
 
@@ -179,15 +179,18 @@
 				this.initParams();
 			},
 			// 橱窗商品列表
-			onAdd(showcaseId) {
-				let url = ''
-			
+			onAdd(showcaseId, idStatus) {
+				let url = '';
+				showcaseId ?? this.params.showcaseId;
+				idStatus = idStatus ?? this.idStatus;
 				// 站长本人
-				if (this.idStatus === 0) {
+				if (idStatus === 0) {
 					url = '/pages/subpackages/site/goodsList';
 				} else {
-					url = `/pages/sub/my/goods?source=1&showcaseId=${showcaseId ?? this.params.showcaseId}`;
+					// url = `/pages/sub/my/goods?source=1&showcaseId=${showcaseId}`;
+					url = `/pages/sub/publish/publishGoods?source=1&showcaseId=${showcaseId}`;
 				}
+				console.log('url', url);
 				uni.navigateTo({
 					url
 				})

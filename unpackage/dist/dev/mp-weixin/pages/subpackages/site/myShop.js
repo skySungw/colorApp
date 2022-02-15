@@ -311,15 +311,18 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       this.initParams();
     },
     // 橱窗商品列表
-    onAdd: function onAdd(showcaseId) {
+    onAdd: function onAdd(showcaseId, idStatus) {var _idStatus;
       var url = '';
-
+      showcaseId !== null && showcaseId !== void 0 ? showcaseId : this.params.showcaseId;
+      idStatus = (_idStatus = idStatus) !== null && _idStatus !== void 0 ? _idStatus : this.idStatus;
       // 站长本人
-      if (this.idStatus === 0) {
+      if (idStatus === 0) {
         url = '/pages/subpackages/site/goodsList';
       } else {
-        url = "/pages/sub/my/goods?source=1&showcaseId=".concat(showcaseId !== null && showcaseId !== void 0 ? showcaseId : this.params.showcaseId);
+        // url = `/pages/sub/my/goods?source=1&showcaseId=${showcaseId}`;
+        url = "/pages/sub/publish/publishGoods?source=1&showcaseId=".concat(showcaseId);
       }
+      console.log('url', url);
       uni.navigateTo({
         url: url });
 

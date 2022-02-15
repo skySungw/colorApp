@@ -486,9 +486,10 @@ function onUnload() {
               Object.assign(params, {
                 goodsCode: _this7.goodsCode });_context5.next = 6;return (
 
-                (0, _api.onUpdateGoods)(params));case 6:res = _context5.sent;_context5.next = 12;break;case 9:_context5.next = 11;return (
+                (0, _api.onUpdateGoods)(params));case 6:res = _context5.sent;_context5.next = 13;break;case 9:_context5.next = 11;return (
 
-                (0, _api.onCreateGoods)(params));case 11:res = _context5.sent;case 12:
+                (0, _api.onCreateGoods)(params));case 11:res = _context5.sent;
+              _this7.goodsCode = res.data.goodsCode;case 13:
 
               title = _this7.editFlag ? '修改成功' : '发布成功';
               if (res.code === 200) {
@@ -496,23 +497,21 @@ function onUnload() {
                   title: title,
                   complete: function complete() {
                     var url = '/pages/sub/my/goods';
+                    var flag = true;
                     if (_this7.source == 1) {
-                      url = "/pages/sub/my/goods?source=".concat(_this7.source, "&showcaseId=").concat(_this7.showcaseId, "&goodsCode=").concat(res.data.goodsCode);
+                      flag = false;
+                      // url = `/pages/sub/my/goods?source=${this.source}&showcaseId=${this.showcaseId}&goodsCode=${res.data.goodsCode}`
+                      url = "/pages/subpackages/site/myShop?showcaseId=".concat(_this7.showcaseId);
                     }
-                    setTimeout(function () {
-                      uni.redirectTo({
-                        url: url });
-
-                    }, 1500);
-
+                    _this7.addGoods(url, flag);
                   } });
 
                 // uni.navigateTo({
                 // 	url: `/pages/sub/publish/publishSuccess?params=${JSON.stringify(params)}`
                 // })
-              }_context5.next = 19;break;case 16:_context5.prev = 16;_context5.t0 = _context5["catch"](0);
+              }_context5.next = 20;break;case 17:_context5.prev = 17;_context5.t0 = _context5["catch"](0);
 
-              console.log('err', _context5.t0);case 19:case "end":return _context5.stop();}}}, _callee5, null, [[0, 16]]);}))();
+              console.log('err', _context5.t0);case 20:case "end":return _context5.stop();}}}, _callee5, null, [[0, 17]]);}))();
 
   },
   // 校验字段
@@ -590,25 +589,51 @@ function onUnload() {
     // }
     this.publish();
   },
+  // 添加橱窗商品
+  addGoods: function addGoods(url, flag) {var _this8 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:if (!
+              flag) {_context6.next = 3;break;}
+              setTimeout(function () {
+                uni.redirectTo({
+                  url: url });
+
+              }, 1500);return _context6.abrupt("return",
+              false);case 3:_context6.prev = 3;_context6.next = 6;return (
+
+
+                (0, _api.onAddGoodsToShowCase)({
+                  goodsIds: [_this8.goodsCode],
+                  showcaseId: _this8.showcaseId }));case 6:res = _context6.sent;
+
+              if (res.code === 200) {
+                setTimeout(function () {
+                  uni.redirectTo({
+                    url: url });
+
+                }, 1500);
+              }_context6.next = 13;break;case 10:_context6.prev = 10;_context6.t0 = _context6["catch"](3);
+
+              console.log('err', _context6.t0);case 13:case "end":return _context6.stop();}}}, _callee6, null, [[3, 10]]);}))();
+
+  },
   // 保存地址
-  onSaveAddress: function onSaveAddress() {var _this8 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var res, addressInfo;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:_context6.prev = 0;_context6.next = 3;return (
+  onSaveAddress: function onSaveAddress() {var _this9 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee7() {var res, addressInfo;return _regenerator.default.wrap(function _callee7$(_context7) {while (1) {switch (_context7.prev = _context7.next) {case 0:_context7.prev = 0;_context7.next = 3;return (
 
                 (0, _api.saveUserLocation)({
-                  "locationLat": _this8.goodsLat,
-                  "locationLng": _this8.goodsLng,
-                  "locationAddress": _this8.address }));case 3:res = _context6.sent;
+                  "locationLat": _this9.goodsLat,
+                  "locationLng": _this9.goodsLng,
+                  "locationAddress": _this9.address }));case 3:res = _context7.sent;
 
               if (res.code === 200) {
                 addressInfo = uni.getStorageInfoSync('addressInfo') || {};
                 Object.assign(addressInfo, {
-                  title: _this8.address,
-                  lat: _this8.goodsLat,
-                  lng: _this8.goodsLng });
+                  title: _this9.address,
+                  lat: _this9.goodsLat,
+                  lng: _this9.goodsLng });
 
                 uni.setStorageSync('addressInfo', addressInfo);
-              }_context6.next = 10;break;case 7:_context6.prev = 7;_context6.t0 = _context6["catch"](0);
+              }_context7.next = 10;break;case 7:_context7.prev = 7;_context7.t0 = _context7["catch"](0);
 
-              console.log('err', _context6.t0);case 10:case "end":return _context6.stop();}}}, _callee6, null, [[0, 7]]);}))();
+              console.log('err', _context7.t0);case 10:case "end":return _context7.stop();}}}, _callee7, null, [[0, 7]]);}))();
 
   },
   // 地图选点
@@ -644,7 +669,7 @@ function onUnload() {
     this.sellerContact = selectContactObj.contactContent;
     this.selectContactObj = selectContactObj;
   },
-  onChooseImage: function onChooseImage() {var _this9 = this;
+  onChooseImage: function onChooseImage() {var _this10 = this;
     // 重新触发onshow
     this.initFlag = false;
 
@@ -653,8 +678,8 @@ function onUnload() {
       sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
       success: function success(res) {
         var tempFilePaths = res.tempFilePaths;
-        if (_this9.imgList.length + tempFilePaths.length > _this9.maxImg) {
-          var len = _this9.imgList.length + tempFilePaths.length - _this9.maxImg;
+        if (_this10.imgList.length + tempFilePaths.length > _this10.maxImg) {
+          var len = _this10.imgList.length + tempFilePaths.length - _this10.maxImg;
           tempFilePaths = tempFilePaths.splice(len);
         }
         tempFilePaths.forEach(function (v) {
@@ -664,12 +689,12 @@ function onUnload() {
             success: function success(uploadFileRes) {
               var upimg = JSON.parse(uploadFileRes.data);
               if (upimg.code === 200) {
-                if (_this9.imgList.length != 0) {
-                  _this9.imgList = _this9.imgList.concat([v]);
-                  _this9.goodsImg = _this9.goodsImg.concat([upimg.data.fileUrl]);
+                if (_this10.imgList.length != 0) {
+                  _this10.imgList = _this10.imgList.concat([v]);
+                  _this10.goodsImg = _this10.goodsImg.concat([upimg.data.fileUrl]);
                 } else {
-                  _this9.imgList.push(v);
-                  _this9.goodsImg = [upimg.data.fileUrl];
+                  _this10.imgList.push(v);
+                  _this10.goodsImg = [upimg.data.fileUrl];
                 }
               }
             } });
@@ -684,7 +709,7 @@ function onUnload() {
       current: e.currentTarget.dataset.url });
 
   },
-  onDelImg: function onDelImg(e) {var _this10 = this;
+  onDelImg: function onDelImg(e) {var _this11 = this;
     uni.showModal({
       content: '确定删除？',
       cancelText: '再想想',
@@ -692,20 +717,20 @@ function onUnload() {
       success: function success(res) {
         if (res.confirm) {
           var index = e.currentTarget.dataset.index;
-          _this10.imgList.splice(index, 1);
-          _this10.goodsImg.splice(index, 1);
+          _this11.imgList.splice(index, 1);
+          _this11.goodsImg.splice(index, 1);
         }
       } });
 
   },
-  getbgyxinfo: function getbgyxinfo(e) {var _this11 = this;
+  getbgyxinfo: function getbgyxinfo(e) {var _this12 = this;
     console.log('e', e);
     //获取富文本内容，默认模式拼接的html
     this.goodsContent = e.html;
     //获取原始数据,可自行循环拼接html数据
     this.goodsDesc = '';
     e.data.forEach(function (v) {
-      _this11.goodsDesc += v.value;
+      _this12.goodsDesc += v.value;
     });
   } }), _components$data$onLo);exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

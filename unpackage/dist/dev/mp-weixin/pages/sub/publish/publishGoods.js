@@ -704,6 +704,8 @@ function onUnload() {
 
   },
   onViewImage: function onViewImage(e) {
+    console.log('e.currentTarget.dataset.url', e.currentTarget.dataset.url);
+    console.log('this.imgList', this.imgList);
     uni.previewImage({
       urls: this.imgList,
       current: e.currentTarget.dataset.url });

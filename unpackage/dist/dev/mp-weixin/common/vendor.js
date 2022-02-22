@@ -2359,9 +2359,8 @@ ajax;exports.default = _default;
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.uploadFileUrl = void 0;var _config = __webpack_require__(/*! @/api/config */ 24);
-var uploadFileUrl = _config.baseUrl + 'api/zuul/user/file/uploadFile';
-// uploadFileUrl = uploadFileUrl.replace('api/', '');
-exports.uploadFileUrl = uploadFileUrl;
+var uploadFileUrl = _config.baseUrl + 'api/zuul/user/file/uploadFile';exports.uploadFileUrl = uploadFileUrl;
+exports.uploadFileUrl = uploadFileUrl = uploadFileUrl.replace('api/', '');
 
 /***/ }),
 
@@ -3400,20 +3399,20 @@ request(_x) {return _request.apply(this, arguments);}function _request() {_reque
             dataType = _ref.dataType;
 
             newUrl = url;
-            // let newUrl = url.replace('api/', '');
+            newUrl = newUrl.replace('api/', '');
             token = uni.getStorageSync('token');
             if (token) {
               header['Authorization'] = 'Bearer ' + token;
             }
             header['Content-Type'] = 'application/json; charset=utf-8'; //自定义请求头信息
-            _context.next = 7;return uni.request({
+            _context.next = 8;return uni.request({
               url: _config.baseUrl + newUrl,
               data: data,
               header: header,
               method: method,
-              dataType: dataType });case 7:res = _context.sent;return _context.abrupt("return",
+              dataType: dataType });case 8:res = _context.sent;return _context.abrupt("return",
 
-            res[1].data);case 9:case "end":return _context.stop();}}}, _callee);}));return _request.apply(this, arguments);}var _default =
+            res[1].data);case 10:case "end":return _context.stop();}}}, _callee);}));return _request.apply(this, arguments);}var _default =
 
 request;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
@@ -3428,10 +3427,9 @@ request;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.baseUrl = void 0; // const baseUrl = 'http://b2y1841010.iask.in/';
-var baseUrl = 'https://wapi.kiiho.com/';
+Object.defineProperty(exports, "__esModule", { value: true });exports.baseUrl = void 0;var baseUrl = 'https://wapi.kiiho.com/';exports.baseUrl = baseUrl;
+exports.baseUrl = baseUrl = 'http://b2y1841010.iask.in/';
 // const baseUrl = 'http://192.168.165.111:8866/'
-exports.baseUrl = baseUrl;
 
 /***/ }),
 

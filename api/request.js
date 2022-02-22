@@ -8,7 +8,7 @@ async function request ({
 	dataType
 }) {
 	let newUrl = url;
-	// let newUrl = url.replace('api/', '');
+	newUrl = newUrl.replace('api/', '');
 	let token = uni.getStorageSync('token');
 	if (token) {
 		header['Authorization'] = 'Bearer ' + token;

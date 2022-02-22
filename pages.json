@@ -1,6 +1,13 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/ground/cityList",
+			"style": {
+				"navigationBarTitleText": "同城",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/ground/goodsGround",
 			"style": {
 				"navigationBarTitleText": "逛逛 ",

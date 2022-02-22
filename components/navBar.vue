@@ -53,7 +53,8 @@
 					index: 1,
 					label: '同城',
 					icon: 'cuIcon-homefill',
-					url: '/pages/ground/goodsGround'
+					// url: '/pages/ground/goodsGround'
+					url: '/pages/ground/cityList'
 				}, {
 					index: 2,
 					label: '邻友圈',

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/ground/cityList",
     "pages/ground/goodsGround",
     "pages/ground/ground",
     "pages/index/index",

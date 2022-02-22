@@ -85,7 +85,8 @@
 			},
 			toHome(){
 				uni.reLaunch({
-					url: '/pages/ground/goodsGround',
+					// url: '/pages/ground/goodsGround',
+					url: '/pages/ground/cityList'
 				})
 			}
 		}

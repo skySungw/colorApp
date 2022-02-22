@@ -44,8 +44,8 @@
 			</view>
 			<view class="bg-white padding-bottom-none">
 				<view class="grid col-4 grid-square flex-sub">
-					<view class="bg-img" v-for="(item, index) in imgList" :key="index" :data-url="imgList[index]">
-						<image :src='imgList[index]' mode='aspectFill' @click="onViewImage"></image>
+					<view class="bg-img" v-for="(item, index) in imgList" :key="index" @click="onViewImage" :data-url="imgList[index]">
+						<image :src='imgList[index]' mode='aspectFill'></image>
 						<view class="cu-tag bg-red" @click="onDelImg" :data-index="index">
 							<text class="cuIcon-close"></text>
 						</view>
@@ -572,6 +572,8 @@
 				});
 			},
 			onViewImage(e) {
+				console.log('e.currentTarget.dataset.url', e.currentTarget.dataset.url)
+				console.log('this.imgList', this.imgList)
 				uni.previewImage({
 					urls: this.imgList,
 					current: e.currentTarget.dataset.url

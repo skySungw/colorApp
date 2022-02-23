@@ -1,5 +1,12 @@
 import request from './request';
-
+// 查询同城列表接口
+function onFetchCollectionPage(data) {
+	return request({
+		url: 'api/content/collection/selectCollectionPage',
+		data,
+		method: 'GET'
+	})
+}
 
 // 查询话题列表
 function onFetchTopic(data) {
@@ -125,6 +132,7 @@ function onSignUpActivity(data) {
 	})
 }
 export default {
+	onFetchCollectionPage,
 	onFetchTopicById,
 	onFetchTopic,
 	onPublishTopic,

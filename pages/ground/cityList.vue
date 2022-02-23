@@ -26,43 +26,44 @@
 			<view class="card-list_container flex-1" v-if="activeIndex == 0">
 				<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
 				@scroll="scroll">
-					<view class="card-list_container__item goods-type">
+					<view class="card-list_container__item goods-type" v-for="(item, index) in list" :key="index">
 						<!-- 头像区 -->
 						<view class="card-header flex">
 							<!-- 头像 -->
 							<view class="flex flex-align-center">
-								<view class="cu-avatar round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
+								<view class="cu-avatar round" :style="'background-image:url(' + item.userWxHeadImg + ')'"></view>
 							</view>
 							<!-- 名称 -->
 							<view class="padding-left-sm">
 								<view>
-									<text class="text-bold">蜡笔小新</text>
+									<text class="text-bold">{{ item.userName }}</text>
 								</view>
-								<view>1分钟前</view>
+								<view>{{ item.time }}</view>
 							</view>
 						</view>
-						<!-- 内容区 -->
-						<view class="card-content padding-top">
+						<!-- 帖子内容区 -->
+						<view v-if="item.collectionType == 1" class="card-content padding-top">
 							<!-- 文案区域 -->
 							<view class="card-content_text text-black">
 								<view class="cu-tag bg-green light radius sm">闲置</view>
-								这里是动态，这里是动态，这里是动态，这里是动态，这里是动态
+								{{ item.articleInfo.articleDesc }}
 								<text class="text-cyan margin-left-sm">全文</text>
 							</view>
 							<!-- 图片区域 -->
-							<view class="card-content_image margin-top-sm">
+							<view class="card-content_image margin-top-sm" v-if="item.articleInfo.articleContentImg.length">
 								<view class="grid col-3 grid-square flex-sub">
-									<view class="bg-img" v-for="(item, index) in imgList" :key="index" @click="onViewImage" :data-url="item">
-										<image :src='item' mode='aspectFill'></image>
+									<view class="bg-img" v-for="(imgItem, index) in item.articleInfo.articleContentImg" :key="index" @click="onViewImage" :data-list="item.articleInfo.articleContentImg" :data-url="imgItem">
+										<image :src='imgItem' mode='aspectFill'></image>
 									</view>
 								</view>
 							</view>
 						</view>
+						<!-- 商品内容区 -->
+						<view v-if="item.collectionType == 0" class="card-content padding-top">
+							我是商品
+						</view>
 					</view>
-					<view class="card-list_container__item article-type">
-						
-					</view>
-					
+					<!-- 无更多数据 -->
 					<view v-if="noMoreFlag" class="text-center padding-sm padding-bottom-xl">我是有底线的~</view>
 				</scroll-view>
 			</view>
@@ -79,8 +80,8 @@
 	import Card from '@/components/card';
 	import ActiveCard from '@/components/activeCard';
 	import Empty from '@/components/empty.vue';
-	import { onFetchArticle, onFetchActivity, saveUserLocation, selectAddressByLat } from '@/api';
-	
+	import { onFetchCollectionPage, saveUserLocation, selectAddressByLat } from '@/api';
+	import { handlePublishTimeDesc } from '@/utils';
 
 	export default {
 		components:{
@@ -92,14 +93,7 @@
 		},
 		data() {
 			return {
-				imgList: [
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-				],
+				imgList: [],
 				scrollTop: 0,
 				old: {
 						scrollTop: 0
@@ -115,7 +109,6 @@
 					size: 10, // 页码
 					current: 1, // 当前页
 					total: 0, // 总数量
-					articleType: 0, // 0 - 正常帖子，1 - 官方帖子
 					lat: '',
 					lng: ''
 				},
@@ -271,12 +264,9 @@
 			initParams() {
 				this.list = [];
 				this.params.current = 1;
-				this.params.articleType = this.params.articleType || 0;
 				this.getArticleList(true);
 			},
 			onChangeParams(type) {
-				// type 0 - 普通帖子, 1 - 官方帖子
-				this.params.articleType = type;
 				this.initParams();
 				// 判断是否展示发布按钮
 				this.onPublishShow();
@@ -291,18 +281,18 @@
 				
 				try {
 					let res = null;
-					if (this.params.articleType === 2) {
-						res = await onFetchActivity(this.params);
-					} else {
-						res = await onFetchArticle(this.params);
-					}
+					res = await onFetchCollectionPage(this.params);
 					if (res.code === 200) {
 						this.initPage = false;
 						this.params.total = res.data.total;
+						let list = res.data.records;
+						list.forEach((v, i) => {
+							list[i]['time'] = handlePublishTimeDesc(v.createTime);
+						})
 						if (this.params.current === 1) {
-							this.list = res.data.records;
+							this.list = list;
 						} else {
-							this.list = this.list.concat(res.data.records);
+							this.list = this.list.concat(list);
 						}
 						// 是否有下一页数据
 						// this.hasNext = res.hasNext;
@@ -326,11 +316,12 @@
 				});
 			},
 			onViewImage(e) {
-				console.log('e.currentTarget.dataset.url', e.currentTarget.dataset.url)
-				console.log('this.imgList', this.imgList)
+				const dataSet = e.currentTarget.dataset;
+				this.imgList = dataSet.list;
+				
 				uni.previewImage({
 					urls: this.imgList,
-					current: e.currentTarget.dataset.url
+					current: dataSet.url
 				});
 			},
 		}

@@ -53,6 +53,15 @@
 				:item="item"
 				:source="3"
 				:status="1"
+				:goodsType="menuId"
+				:showcaseId="params.showcaseId"
+				@refreshList="onDeleteGoods"
+			></Goods>
+			<Goods
+				class="goods-item_content"
+				:source="3"
+				:status="1"
+				:goodsType="menuId"
 				:showcaseId="params.showcaseId"
 				@refreshList="onDeleteGoods"
 			></Goods>
@@ -84,8 +93,8 @@
 				shopInfo: null, // 橱窗详情
 				isShow: true, // 是否显示菜单， false - 不显示， true - 显示
 				title: '',
-				menuIndex: 0,
-				menuId: 1,
+				menuIndex: 1,
+				menuId: 2,
 				menuTop: this.CustomBar,
 				menu: [
 				// 	{

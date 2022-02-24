@@ -3930,7 +3930,9 @@ scroll-view.cu-steps .cu-item {
 .lines-white {
 	color: #ffffff;
 }
-
+.text-through {
+	text-decoration: line-through;
+}
 /**
  * 自定义class
  */

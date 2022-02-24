@@ -54,8 +54,8 @@
 				<text v-else class="cuIcon-delete lg text-gray add-goods-icon" @tap="deleteGoods(true)"></text>
 			</view>
 		</view> -->
-		<!-- 橱窗列表 -->
-		<view v-if="source == 3" class="relative shop-products">
+		<!-- 橱窗列表，圈友商品 -->
+		<view v-if="source == 3 && goodsType == 1" class="relative shop-products">
 			<view class="products-content" @tap="onGoodsDetail">
 				<image :src="item.goodsImgArray[0]" mode="aspectFill" :lazy-load="true"></image>
 				<view>
@@ -63,6 +63,28 @@
 				</view>
 				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
 				<!-- <view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view> -->
+			</view>
+			<view v-if="operate" class="delete-absolute delete">
+				<text class="cuIcon-roundclosefill lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
+			</view>
+		</view>
+		<!-- 橱窗列表，京东商品 -->
+		<view v-if="source == 3 && goodsType == 2" class="relative shop-products">
+			<view class="products-content" @tap="onGoodsDetail">
+				<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg" mode="aspectFill" :lazy-load="true"></image>
+				<view class="flex bg-yellow text-red text-sm text-center text-bold flex-align-center">
+					<view class="flex-1">佣金 ￥3.99</view>
+					<view>|</view>
+					<view class="flex-1">佣金比例 2%</view>
+				</view>
+				<view>
+					<text class="text-bold margin-none text-lg">名名名</text>
+				</view>
+				<view>
+					<text class="text-xl text-red text-bold padding-right-sm">￥33</text>
+					<text class="text-sm text-grey text-through">￥45</text>
+				</view>
+				<view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view>
 			</view>
 			<view v-if="operate" class="delete-absolute delete">
 				<text class="cuIcon-roundclosefill lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
@@ -141,6 +163,10 @@
 			},
 			showcaseId: {
 				default: null, // 橱窗id ''
+				type: Number
+			},
+			goodsType: {
+				default: 1, // 商品类型 1 - 圈友商品，2 - 京东商品
 				type: Number
 			}
 		},

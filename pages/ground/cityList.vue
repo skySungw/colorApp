@@ -60,7 +60,22 @@
 						</view>
 						<!-- 商品内容区 -->
 						<view v-if="item.collectionType == 0" class="card-content padding-top">
-							我是商品
+							<view class="goods-container padding-sm bg-gray">
+								<view class="goods-container__title flex">
+									<view class="flex-1 text-bold">
+										{{ item.goodsInfo.goodsName }}
+									</view>
+									<view class="text-red text-bold">
+										￥{{ item.goodsInfo.goodsPrice }}
+									</view>
+								</view>
+								<view class="goods-container__info flex">
+									<view class="cu-avatar radius xl" :style="'background-image:url(' + item.goodsInfo.goodsImgArr[0] + ');'"></view>
+									<view class="flex-1 padding-left-sm">
+										{{ item.goodsInfo.goodsDesc || '我是商品描述，少了一些，看下长度，是否需要处理一下'}}
+									</view>
+								</view>
+							</view>
 						</view>
 					</view>
 					<!-- 无更多数据 -->
@@ -288,6 +303,9 @@
 						let list = res.data.records;
 						list.forEach((v, i) => {
 							list[i]['time'] = handlePublishTimeDesc(v.createTime);
+							if (v['goodsInfo']) {
+								list[i]['goodsInfo']['goodsImgArr'] = JSON.parse(v.goodsInfo.goodsImg)
+							}
 						})
 						if (this.params.current === 1) {
 							this.list = list;
@@ -350,6 +368,11 @@
 					.cu-tag {
 						vertical-align: unset;
 						margin-right: 10upx;
+					}
+				}
+				.goods-container {
+					&__info {
+						margin-top: 5upx;
 					}
 				}
 			}

@@ -103,4 +103,18 @@
   box-shadow: 0 -3rpx 8rpx rgba(0, 0, 0, 0.3);
   font-size: 50rpx;
 }
+.share-button.data-v-17019782 {
+  position: relative;
+}
+.share-button .cuIcon-forwardfill.data-v-17019782 {
+  margin-left: 5rpx;
+}
+.share-button .pop-box-btn.data-v-17019782 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+}
 

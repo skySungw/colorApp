@@ -2220,7 +2220,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 124:
+/***/ 134:
 /*!****************************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/config/config.js ***!
   \****************************************************************************************/
@@ -2295,7 +2295,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 153:
+/***/ 163:
 /*!*****************************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/ajaxUpload.js ***!
   \*****************************************************************************************/
@@ -2303,7 +2303,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _api = __webpack_require__(/*! @/api/api */ 154);
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _api = __webpack_require__(/*! @/api/api */ 164);
 function ajax(_ref)
 
 
@@ -2350,7 +2350,7 @@ ajax;exports.default = _default;
 
 /***/ }),
 
-/***/ 154:
+/***/ 164:
 /*!**********************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/api.js ***!
   \**********************************************************************************/
@@ -3197,12 +3197,14 @@ module.exports = g;
 var _my = _interopRequireDefault(__webpack_require__(/*! ./my */ 22));
 var _goods = _interopRequireDefault(__webpack_require__(/*! ./goods */ 25));
 var _ground = _interopRequireDefault(__webpack_require__(/*! ./ground */ 26));
-var _location = _interopRequireDefault(__webpack_require__(/*! ./location */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
-module.exports = _objectSpread(_objectSpread(_objectSpread(_objectSpread({},
+var _location = _interopRequireDefault(__webpack_require__(/*! ./location */ 27));
+var _site = _interopRequireDefault(__webpack_require__(/*! ./site */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+module.exports = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({},
 _my.default),
 _goods.default),
 _ground.default),
-_location.default);
+_location.default),
+_site.default);
 
 /***/ }),
 
@@ -3839,6 +3841,97 @@ function selectHotCity(data) {
   saveUserLocation: saveUserLocation,
   selectUserLocation: selectUserLocation,
   selectHotCity: selectHotCity };exports.default = _default;
+
+/***/ }),
+
+/***/ 28:
+/*!***********************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/site.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ 23));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+// 查询站长列表接口
+function onFetchGroupHeadList(data) {
+  return (0, _request.default)({
+    url: 'api/user/grouphead/selectGroupHeadList',
+    data: data,
+    method: 'GET' });
+
+}
+
+// 查询站长橱窗信息详情接口
+function onFetchShowcaseInfo(data) {
+  return (0, _request.default)({
+    url: 'api/goods/showcase/selectShowcaseInfo',
+    data: data,
+    method: 'GET' });
+
+}var _default =
+
+{
+  onFetchGroupHeadList: onFetchGroupHeadList,
+  onFetchShowcaseInfo: onFetchShowcaseInfo };exports.default = _default;
+
+/***/ }),
+
+/***/ 29:
+/*!**************************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/utils/index.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.handlePublishTimeDesc = exports.getDateTime = exports.onPadNum = void 0;var onPadNum = function onPadNum(num) {
+  return num < 10 ? '0' + num : num;
+};exports.onPadNum = onPadNum;
+var getDateTime = function getDateTime(time) {
+  var dateTime = new Date(time);
+  console.log(dateTime);
+  var year = dateTime.getFullYear();
+  var month = dateTime.getMonth() + 1;
+  var day = dateTime.getDate();
+  var hour = dateTime.getHours();
+  var minutes = dateTime.getMinutes();
+  var seconds = dateTime.getSeconds();
+  return year + '-' + onPadNum(month) + '-' + onPadNum(day) + ' ' + onPadNum(hour) + ':' + onPadNum(minutes) + ':' + onPadNum(seconds);
+};exports.getDateTime = getDateTime;
+var handlePublishTimeDesc = function handlePublishTimeDesc(post_modified) {
+  // 拿到当前时间戳和发布时的时间戳，然后得出时间戳差
+  var curTime = new Date();
+  var postTime = new Date(post_modified);
+  var timeDiff = curTime.getTime() - postTime.getTime();
+
+  // 单位换算
+  var min = 60 * 1000;
+  var hour = min * 60;
+  var day = hour * 24;
+  var week = day * 7;
+
+  // 计算发布时间距离当前时间的周、天、时、分
+  var exceedWeek = Math.floor(timeDiff / week);
+  var exceedDay = Math.floor(timeDiff / day);
+  var exceedHour = Math.floor(timeDiff / hour);
+  var exceedMin = Math.floor(timeDiff / min);
+
+  // 最后判断时间差到底是属于哪个区间，然后return
+  if (exceedWeek > 0) {
+    return post_modified;
+  } else {
+    if (exceedDay < 7 && exceedDay > 0) {
+      return exceedDay + '天前';
+    } else {
+      if (exceedHour < 24 && exceedHour > 0) {
+        return exceedHour + '小时前';
+      } else {
+        return exceedMin + '分钟前';
+      }
+    }
+  }
+};exports.handlePublishTimeDesc = handlePublishTimeDesc;
 
 /***/ }),
 
@@ -9894,64 +9987,6 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 306:
-/*!**************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/utils/index.js ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.handlePublishTimeDesc = exports.getDateTime = exports.onPadNum = void 0;var onPadNum = function onPadNum(num) {
-  return num < 10 ? '0' + num : num;
-};exports.onPadNum = onPadNum;
-var getDateTime = function getDateTime(time) {
-  var dateTime = new Date(time);
-  console.log(dateTime);
-  var year = dateTime.getFullYear();
-  var month = dateTime.getMonth() + 1;
-  var day = dateTime.getDate();
-  var hour = dateTime.getHours();
-  var minutes = dateTime.getMinutes();
-  var seconds = dateTime.getSeconds();
-  return year + '-' + onPadNum(month) + '-' + onPadNum(day) + ' ' + onPadNum(hour) + ':' + onPadNum(minutes) + ':' + onPadNum(seconds);
-};exports.getDateTime = getDateTime;
-var handlePublishTimeDesc = function handlePublishTimeDesc(post_modified) {
-  // 拿到当前时间戳和发布时的时间戳，然后得出时间戳差
-  var curTime = new Date();
-  var postTime = new Date(post_modified);
-  var timeDiff = curTime.getTime() - postTime.getTime();
-
-  // 单位换算
-  var min = 60 * 1000;
-  var hour = min * 60;
-  var day = hour * 24;
-  var week = day * 7;
-
-  // 计算发布时间距离当前时间的周、天、时、分
-  var exceedWeek = Math.floor(timeDiff / week);
-  var exceedDay = Math.floor(timeDiff / day);
-  var exceedHour = Math.floor(timeDiff / hour);
-  var exceedMin = Math.floor(timeDiff / min);
-
-  // 最后判断时间差到底是属于哪个区间，然后return
-  if (exceedWeek > 0) {
-    return post_modified;
-  } else {
-    if (exceedDay < 7 && exceedDay > 0) {
-      return exceedDay + '天前';
-    } else {
-      if (exceedHour < 24 && exceedHour > 0) {
-        return exceedHour + '小时前';
-      } else {
-        return exceedMin + '分钟前';
-      }
-    }
-  }
-};exports.handlePublishTimeDesc = handlePublishTimeDesc;
-
-/***/ }),
-
 /***/ 4:
 /*!*************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-i18n/dist/uni-i18n.es.js ***!
@@ -10416,7 +10451,7 @@ function resolveLocaleChain(locale) {
 
 /***/ }),
 
-/***/ 450:
+/***/ 459:
 /*!***************************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/static/logo.png ***!
   \***************************************************************************************/
@@ -10427,7 +10462,18 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAD/CAMAAAC3
 
 /***/ }),
 
-/***/ 499:
+/***/ 5:
+/*!**********************************************************************************!*\
+  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/pages.json ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ 508:
 /*!****************************************************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/util.js ***!
   \****************************************************************************************************************/
@@ -10436,7 +10482,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAD/CAMAAAC3
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.base64ToPathFn = base64ToPathFn;exports.downloadFile = downloadFile;exports.showLoading = showLoading;exports.hideLoading = hideLoading;exports.showToast = showToast;exports.saveImageToPhotosAlbum = saveImageToPhotosAlbum;exports.countTextLength = countTextLength;exports.compressImage = compressImage;exports.getImageInfo = getImageInfo;exports.getModeImage = getModeImage;
-var _imageTools = __webpack_require__(/*! ./image-tools */ 500);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
+var _imageTools = __webpack_require__(/*! ./image-tools */ 509);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
 /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * base64转本地路径
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @param { String } path 路径
@@ -10785,18 +10831,7 @@ function getHeightFixModelInfo(oWidth, oHeight, x, y, width, height) {
 
 /***/ }),
 
-/***/ 5:
-/*!**********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/pages.json ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ 500:
+/***/ 509:
 /*!***********************************************************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/image-tools.js ***!
   \***********************************************************************************************************************/
@@ -10954,7 +10989,7 @@ function base64ToPath(base64) {
 
 /***/ }),
 
-/***/ 501:
+/***/ 510:
 /*!****************************************************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/draw.js ***!
   \****************************************************************************************************************/
@@ -10962,10 +10997,10 @@ function base64ToPath(base64) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 18));var _util = __webpack_require__(/*! ./util */ 499);
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 18));var _util = __webpack_require__(/*! ./util */ 508);
 
 
-var _qrcode = _interopRequireDefault(__webpack_require__(/*! ./qrcode */ 502));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _objectWithoutProperties(source, excluded) {if (source == null) return {};var target = _objectWithoutPropertiesLoose(source, excluded);var key, i;if (Object.getOwnPropertySymbols) {var sourceSymbolKeys = Object.getOwnPropertySymbols(source);for (i = 0; i < sourceSymbolKeys.length; i++) {key = sourceSymbolKeys[i];if (excluded.indexOf(key) >= 0) continue;if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;target[key] = source[key];}}return target;}function _objectWithoutPropertiesLoose(source, excluded) {if (source == null) return {};var target = {};var sourceKeys = Object.keys(source);var key, i;for (i = 0; i < sourceKeys.length; i++) {key = sourceKeys[i];if (excluded.indexOf(key) >= 0) continue;target[key] = source[key];}return target;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}
+var _qrcode = _interopRequireDefault(__webpack_require__(/*! ./qrcode */ 511));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _objectWithoutProperties(source, excluded) {if (source == null) return {};var target = _objectWithoutPropertiesLoose(source, excluded);var key, i;if (Object.getOwnPropertySymbols) {var sourceSymbolKeys = Object.getOwnPropertySymbols(source);for (i = 0; i < sourceSymbolKeys.length; i++) {key = sourceSymbolKeys[i];if (excluded.indexOf(key) >= 0) continue;if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;target[key] = source[key];}}return target;}function _objectWithoutPropertiesLoose(source, excluded) {if (source == null) return {};var target = {};var sourceKeys = Object.keys(source);var key, i;for (i = 0; i < sourceKeys.length; i++) {key = sourceKeys[i];if (excluded.indexOf(key) >= 0) continue;target[key] = source[key];}return target;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}
 
 /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 绘制
@@ -12417,7 +12452,7 @@ Draw = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 502:
+/***/ 511:
 /*!******************************************************************************************************************!*\
   !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/qrcode.js ***!
   \******************************************************************************************************************/

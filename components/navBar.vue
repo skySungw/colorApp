@@ -33,6 +33,7 @@
 </template>
 
 <script>
+	import { onFetchGroupHeadList } from '@/api';
 	export default {
 		props: {
 			index: Number,
@@ -48,6 +49,7 @@
 		},
 		data() {
 			return {
+				siteList: [], // 站长列表
 				showModal: false,
 				menu: [{
 					index: 1,
@@ -77,7 +79,8 @@
 					index: 4,
 					label: '逛逛',
 					icon: 'cuIcon-shop',
-					url: `/pages/subpackages/site/myShop?showcaseId=1&menu=0`
+					action: true,
+					preUrl: `/pages/subpackages/site/myShop`
 				},
 				{
 					index: 5,
@@ -144,6 +147,7 @@
 			// }
 		},
 		methods: {
+			// 菜单切换
 			changeMenu(item) {
 				if (item.index != this.index) {
 					console.log('item', item)
@@ -154,10 +158,34 @@
 							fail: () => {},
 							complete: () => {}
 						});
+					} else if(item.action) {
+						this.getSiteList(item);
 					} else {
 						console.log('showcaseId', this.index);
 						this.onShowModal();
 					}
+				}
+			},
+			// 获取站长列表
+			async getSiteList(item) {
+				try {
+					const res = await onFetchGroupHeadList({
+						size: 10,
+						current: 1
+					});
+					if (res.code === 200) {
+						this.siteList = res.data.records;
+						if (this.siteList.length) {
+							uni.redirectTo({
+								url: `${item.preUrl}?showcaseId=${this.siteList[0].goodsShowcaseId}&menu=0`,
+								success: res => {},
+								fail: () => {},
+								complete: () => {}
+							});
+						}
+					}
+				} catch(err) {
+					console.log('err', err);
 				}
 			},
 			onHideModal() {

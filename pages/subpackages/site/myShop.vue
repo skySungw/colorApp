@@ -4,8 +4,25 @@
 			<view slot="content">{{ title }}</view>
 		</cu-custom>
 		<!-- banner -->
-		<view class="banner">
-			<image src="@/static/test/7.jpg" mode="aspectFill"></image>
+		<view class="banner padding-sm flex" v-if="shopInfo">
+			<view>
+				<view class="cu-avatar radius xl" :style="'background-image:url(' + shopInfo.wxHeadImg + ');'"></view>
+			</view>
+			<view class="flex-1 padding-left-sm">
+				<view class="text-bold margin-bottom-sm">{{ shopInfo.showcaseName }}</view>
+				<view class="text-grey text-sm">{{ shopInfo.showcaseDesc }}</view>
+			</view>
+			<!-- 分享-->
+			<view class="share flex align-center">
+				<view class="cu-tag line-green share-button flex align-center">
+					<view class="text-green">
+						分享橱窗
+					</view>
+					<view class="cuIcon-forwardfill lg text-green text-center">
+					</view>
+					<button class="pop-box-btn" open-type="share"></button>
+				</view>
+			</view>
 		</view>
 		<view v-if="isSearchFocus" class="cu-bar search bg-white strick-top" :style="[{top: menuTop + 'px'}]">
 			<view class="search-form round">
@@ -50,7 +67,7 @@
 </template>
 
 <script>
-	import { onFetchShowcasePage } from '@/api';
+	import { onFetchShowcasePage, onFetchShowcaseInfo } from '@/api';
 	import { onFetchOwnerStateShowcase } from '@/api';
 	
 	import NavBar from '@/components/navBar';
@@ -64,20 +81,23 @@
 		},
 		data() {
 			return {
+				shopInfo: null, // 橱窗详情
 				isShow: true, // 是否显示菜单， false - 不显示， true - 显示
 				title: '',
 				menuIndex: 0,
-				menuId: 9,
+				menuId: 1,
 				menuTop: this.CustomBar,
-				menu: [{
-					id: 9,
-					name: '全部'
-				}, {
+				menu: [
+				// 	{
+				// 	id: 9,
+				// 	name: '全部'
+				// }, 
+				{
 					id: 1,
 					name: '圈友商品'
 				}, {
 					id: 2,
-					name: '自营商品'
+					name: '特惠商城'
 				}],
 				idStatus: 1, // 0 - 拥有者， 1 - 游客
 				siteName: '', // 站长名
@@ -102,6 +122,7 @@
 			let showcaseId = options.showcaseId || uni.getStorageSync('showcaseId');
 			console.log('options.showcaseId', options.showcaseId)
 			this.params.showcaseId = showcaseId;
+			this.onGetShowCaseInfo(this.params.showcaseId);
 		},
 		onShow() {
 			const token = uni.getStorageSync('token');
@@ -123,7 +144,8 @@
 			const promise = new Promise(resolve => {
 				setTimeout(() => {
 					resolve({
-						title: `${this.siteName} 的商品橱窗`,
+						// title: `${this.siteName} 的商品橱窗`,
+						title: `${this.shopInfo.showcaseName} 的商品橱窗`,
 						path: `/pages/subpackages/site/myShop?showcaseId=${this.params.showcaseId}`,
 					})
 				}, 2000)
@@ -142,6 +164,20 @@
 			}
 		},
 		methods: {
+			// 获取橱窗信息
+			async onGetShowCaseInfo(showcaseId) {
+				try {
+					const res = await onFetchShowcaseInfo({
+						showcaseId
+					});
+					if (res.code === 200) {
+						console.log('res', res);
+						this.shopInfo = res.data;
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			// 删除商品
 			onDeleteGoods(item) {
 				this.initParams();
@@ -265,7 +301,6 @@
 						} else {
 							this.list = this.list.concat(list);
 						}
-						console.error('this.list', this.list);
 						// 是否有下一页数据
 						// this.hasNext = res.hasNext;
 					}
@@ -377,6 +412,23 @@
 				box-shadow: 0 -3rpx 8upx rgba(0, 0, 0, 0.3);
 				font-size: 50upx;
 			}
+		}
+	}
+	.share-button {
+		position: relative;
+		// border: 1upx solid green;
+		// border-radius: 10upx;
+		// padding: 5upx 10upx;
+		.cuIcon-forwardfill {
+			margin-left: 5upx;
+		}
+		.pop-box-btn {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			opacity: 0;
 		}
 	}
 </style>

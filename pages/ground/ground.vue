@@ -1,26 +1,35 @@
 <template>
 	<!-- <view :style="[{'padding-top':customBar + 'px', 'height': '100vh'}, {background: '#fff'}]"> -->
 	<view class="full-height absolute flex flex-direction bg-white">
-		<cu-custom bgColor="bg-gradual-green" :isBack="false">
-			<view slot="serach">
-				<view class="location flex" @tap="onSelectAddress">
-					<image class="location__img" src="/static/index-location.png"></image>
-					<view class="location__title">{{ addressData.title ? addressData.title : '定位中...' }}</view>
-					<image class="location__arrow" src='/static/bottom-arrow.png'></image>
+		<view class="bg-gradual-green">
+			<cu-custom :isBack="false">
+				<view slot="serach">
+					<view class="location flex" @tap="onSelectAddress">
+						<image class="location__img" src="/static/index-location.png"></image>
+						<view class="location__title">{{ addressData.title ? addressData.title : '定位中...' }}</view>
+						<image class="location__arrow" src='/static/bottom-arrow.png'></image>
+					</view>
+				</view>
+			</cu-custom>
+			<view>
+				<!-- 搜索条 -->
+				<view class="cu-bar search">
+					<view class="search-form round">
+						<text class="cuIcon-search"></text>
+						<input type="text" :placeholder="placeholder" :disabled="true" confirm-type="search" @click="goAdPage({
+							link: '/pages/sub/search/search?type='+ activeIndex
+						})"></input>
+					</view>
 				</view>
 			</view>
-		</cu-custom>
-		<view class="bg-gradual-green">
-			<!-- 搜索条 -->
-			<view class="cu-bar search">
-				<view class="search-form round">
-					<text class="cuIcon-search"></text>
-					<input type="text" :placeholder="placeholder" :disabled="true" confirm-type="search" @click="goAdPage({
-						link: '/pages/sub/search/search?type='+ activeIndex
-					})"></input>
-				</view>
+			<view class="topic-list flex">
+				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
+				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
+				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
+				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
 			</view>
 		</view>
+		
 		<!-- 帖子列表 -->
 		<block v-if="list.length > 0">
 			<view class="card-list_container flex-1" v-if="activeIndex == 0">
@@ -83,7 +92,7 @@
 	import Card from '@/components/card';
 	import ActiveCard from '@/components/activeCard';
 	import Empty from '@/components/empty.vue';
-	import { onFetchArticle, onFetchActivity, saveUserLocation, selectAddressByLat } from '@/api';
+	import { onFetchArticle, onFetchActivity, saveUserLocation, selectAddressByLat, onFetchTopic } from '@/api';
 	
 	let col1H = 0;
 	let col2H = 0;
@@ -97,6 +106,7 @@
 		},
 		data() {
 			return {
+				menuList: [], // 菜单
 				imgWidth: 0, // 图片宽度
 				cols: [[], []],
 				loadingCount: 0,
@@ -136,6 +146,8 @@
 					let scrollH = wh;
 					// 图片宽度
 					this.imgWidth = imgWidth;
+					// 查询话题
+					this.onGetTopic();
 					// this.loadImages();
 					this.init();
 				}
@@ -158,6 +170,29 @@
 			}, 2000);
 		},
 		methods: {
+			tabSelect(e) {
+				const id = e.currentTarget.dataset['item'].id;
+				uni.navigateTo({
+					url: `/pages/subpackages/subject/index?id=${id}`
+				})
+			},
+			// 获取话题菜单
+			async onGetTopic() {
+				try {
+					const res = await onFetchTopic({
+						size: 10,
+						current: 1,
+						isDefault: 1
+					});
+					console.log('res', res);
+					if (res.code === 200) {
+						this.menuList = res.data.records;
+						console.log('this.menuList', this.menuList)
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			// 初始化页面经纬度等数据
 			init() {
 				// 获取经纬度，并初始化列表数据
@@ -427,6 +462,14 @@
 <style scoped lang="scss">
 	.search {
 		height: 100upx;
+	}
+	.topic-list {
+		overflow-x: auto;
+		padding: 0 20upx 10upx;
+		// .cu-tag {
+		// 	margin-right: 20upx;
+		// 	margin-left: 0;
+		// }
 	}
 	.card-list_container {
 		padding-bottom: 100upx;

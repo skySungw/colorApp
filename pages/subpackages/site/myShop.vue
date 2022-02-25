@@ -340,7 +340,7 @@
 <style lang="scss" scoped>
 	.strick-top {
 		position: sticky;
-		// z-index: 9;
+		z-index: 9;
 	}
 	.padding-fixed {
 		padding-top: 100upx;

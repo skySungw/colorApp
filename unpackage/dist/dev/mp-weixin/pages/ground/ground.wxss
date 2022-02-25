@@ -27,6 +27,10 @@
 .search.data-v-1d6be7e6 {
   height: 100rpx;
 }
+.topic-list.data-v-1d6be7e6 {
+  overflow-x: auto;
+  padding: 0 20rpx 10rpx;
+}
 .card-list_container.data-v-1d6be7e6 {
   padding-bottom: 100rpx;
   overflow: hidden;

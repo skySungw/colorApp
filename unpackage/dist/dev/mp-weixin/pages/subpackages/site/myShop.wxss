@@ -27,6 +27,7 @@
 .strick-top.data-v-17019782 {
   position: -webkit-sticky;
   position: sticky;
+  z-index: 9;
 }
 .padding-fixed.data-v-17019782 {
   padding-top: 100rpx;

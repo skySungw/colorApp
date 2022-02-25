@@ -266,7 +266,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       type: Number // 商品索引
     },
     item: {
-      default: 0,
+      default: {},
       type: Object },
 
     source: {
@@ -289,41 +289,53 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   data: function data() {
     return {
       operate: false, // 操作
-      goodsState: '' // 商品状态 0 - 未上架， 1 - 上架中， 2 - 已售出
+      goodsState: '', // 商品状态 0 - 未上架， 1 - 上架中， 2 - 已售出
+      imgWidth: 0 // 图片宽度
     };
   },
-  created: function created() {
-    switch (this.source) {
-      case 2: // 产品库来源
-        this.operate = this.item.isAdd;
-        break;
-      case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
-        this.operate = this.item.showDelete;
-        console.log('this.op', this.operate);
-        break;}
+  created: function created() {var _this = this;
+    uni.getSystemInfo({
+      success: function success(res) {
+        var ww = res.windowWidth;
+        var wh = res.windowHeight;
+        var imgWidth = ww - 60;
+        // 图片宽度
+        _this.imgWidth = imgWidth / 2;
 
-    // 收藏商品页，显示商品状态
-    if (this.source === 5) {
-      var config = {
-        0: {
-          className: 'line-gray',
-          label: '未上架' },
+        switch (_this.source) {
+          case 2: // 产品库来源
+            _this.operate = _this.item.isAdd;
+            break;
+          case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
+            _this.operate = _this.item.showDelete;
+            console.log('this.op', _this.operate);
+            break;}
 
-        1: {
-          className: 'bg-green',
-          label: '出售中' },
+        // 收藏商品页，显示商品状态
+        if (_this.source === 5) {
+          var config = {
+            0: {
+              className: 'line-gray',
+              label: '未上架' },
 
-        2: {
-          className: 'bg-gray',
-          label: '已售出' } };
+            1: {
+              className: 'bg-green',
+              label: '出售中' },
+
+            2: {
+              className: 'bg-gray',
+              label: '已售出' } };
 
 
-      this.goodsState = config[this.item.goodsState];
-    }
+          _this.goodsState = config[_this.item.goodsState];
+        }
+      } });
+
+
   },
   methods: {
     // 删除橱窗商品
-    deleteGoods: function deleteGoods(flag) {var _this = this;
+    deleteGoods: function deleteGoods(flag) {var _this2 = this;
       console.log('flag', flag);
       uni.showModal({
         title: '操作',
@@ -333,16 +345,16 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
         success: function success(res) {
           console.log('res', res);
           if (res.confirm) {
-            _this.onDeleteGoodsByShop(flag);
+            _this2.onDeleteGoodsByShop(flag);
           }
         } });
 
     },
-    onDeleteGoodsByShop: function onDeleteGoodsByShop(flag) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+    onDeleteGoodsByShop: function onDeleteGoodsByShop(flag) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _api.onRemoveGoodsToShowCase)({
-                    goodsIds: [_this2.item.goodsCode],
-                    showcaseId: _this2.showcaseId }));case 3:res = _context.sent;
+                    goodsIds: [_this3.item.goodsCode],
+                    showcaseId: _this3.showcaseId }));case 3:res = _context.sent;
 
                 if (res.code === 200) {
                   uni.showToast({
@@ -351,9 +363,9 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     complete: function complete() {
                       console.log('flag', flag);
                       if (flag) {
-                        _this2.operate = false;
+                        _this3.operate = false;
                       } else {
-                        _this2.$emit('refreshList');
+                        _this3.$emit('refreshList');
                       }
                       // this.$emit('refreshList');
                     } });
@@ -364,18 +376,18 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
     },
     // 添加橱窗商品
-    addGoods: function addGoods() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
+    addGoods: function addGoods() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
 
                   (0, _api.onAddGoodsToShowCase)({
-                    goodsIds: [_this3.item.goodsCode],
-                    showcaseId: _this3.showcaseId }));case 3:res = _context2.sent;
+                    goodsIds: [_this4.item.goodsCode],
+                    showcaseId: _this4.showcaseId }));case 3:res = _context2.sent;
 
                 if (res.code === 200) {
                   uni.showToast({
                     title: '添加成功',
                     icon: 'none',
                     complete: function complete() {
-                      _this3.operate = true;
+                      _this4.operate = true;
                       // setTimeout(() => {
                       // 	this.$emit('refreshList');
                       // }, 2000);
@@ -394,7 +406,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
     },
     // 上下架操作
-    onAdd: function onAdd(type) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var TYPE_TEXT;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    onAdd: function onAdd(type) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var TYPE_TEXT;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 console.log('type', type);
                 TYPE_TEXT = {
                   0: '确认下架',
@@ -408,15 +420,15 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                   success: function success(res) {
                     console.log('res', res);
                     if (res.confirm) {
-                      _this4.onOperate(type);
+                      _this5.onOperate(type);
                     }
                   } });case 3:case "end":return _context3.stop();}}}, _callee3);}))();
 
     },
-    onOperate: function onOperate(type) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
+    onOperate: function onOperate(type) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
 
                   (0, _api.onUpdateGoodsState)({
-                    goodsCode: _this5.item.goodsCode,
+                    goodsCode: _this6.item.goodsCode,
                     operationType: type }));case 3:res = _context4.sent;
 
                 if (res.code === 200) {
@@ -425,7 +437,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     icon: 'none',
                     complete: function complete() {
                       setTimeout(function () {
-                        _this5.$emit('refreshList');
+                        _this6.$emit('refreshList');
                       }, 2000);
                     } });
 

@@ -71,7 +71,7 @@
 		<!-- 橱窗列表，京东商品 -->
 		<view v-if="source == 3 && goodsType == 2" class="relative shop-products">
 			<view class="products-content" @tap="onGoodsDetail">
-				<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg" mode="aspectFill" :lazy-load="true"></image>
+				<image class="products-content_goods__img" :style="'width: ' + imgWidth + 'px; height: ' + imgWidth + 'px;'" src="https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg" mode="aspectFill" :lazy-load="true"></image>
 				<view class="flex bg-yellow text-red text-sm text-center text-bold flex-align-center">
 					<view class="flex-1">佣金 ￥3.99</view>
 					<view>|</view>
@@ -84,7 +84,7 @@
 					<text class="text-xl text-red text-bold padding-right-sm">￥33</text>
 					<text class="text-sm text-grey text-through">￥45</text>
 				</view>
-				<view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view>
+				<view class="text-grey text-bold">已售 {{ 3 }} 件</view>
 			</view>
 			<view v-if="operate" class="delete-absolute delete">
 				<text class="cuIcon-roundclosefill lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
@@ -150,7 +150,7 @@
 				type: Number // 商品索引
 			},
 			item: {
-				default: 0,
+				default: {},
 				type: Object
 			},
 			source: {
@@ -173,37 +173,49 @@
 		data() {
 			return {
 				operate: false ,// 操作
-				goodsState: '' // 商品状态 0 - 未上架， 1 - 上架中， 2 - 已售出
+				goodsState: '' ,// 商品状态 0 - 未上架， 1 - 上架中， 2 - 已售出
+				imgWidth: 0 // 图片宽度
 			}
 		},
 		created() {
-			switch(this.source) {
-				case 2: // 产品库来源
-					this.operate = this.item.isAdd;
-					break;
-				case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
-					this.operate = this.item.showDelete;
-					console.log('this.op', this.operate);
-					break;
-			}
-			// 收藏商品页，显示商品状态
-			if (this.source === 5) {
-				const config = {
-					0: {
-						className: 'line-gray',
-						label: '未上架'
-					},
-					1: {
-						className: 'bg-green',
-						label: '出售中'
-					},
-					2: {
-						className: 'bg-gray',
-						label: '已售出'
+			uni.getSystemInfo({
+				success: (res) => {
+					let ww = res.windowWidth;
+					let wh = res.windowHeight;
+					let imgWidth = ww - 60;
+					// 图片宽度
+					this.imgWidth = imgWidth / 2;
+					
+					switch(this.source) {
+						case 2: // 产品库来源
+							this.operate = this.item.isAdd;
+							break;
+						case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
+							this.operate = this.item.showDelete;
+							console.log('this.op', this.operate);
+							break;
+					}
+					// 收藏商品页，显示商品状态
+					if (this.source === 5) {
+						const config = {
+							0: {
+								className: 'line-gray',
+								label: '未上架'
+							},
+							1: {
+								className: 'bg-green',
+								label: '出售中'
+							},
+							2: {
+								className: 'bg-gray',
+								label: '已售出'
+							}
+						}
+						this.goodsState = config[this.item.goodsState];
 					}
 				}
-				this.goodsState = config[this.item.goodsState];
-			}
+			});
+			
 		},
 		methods: {
 			// 删除橱窗商品

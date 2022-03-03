@@ -46,25 +46,22 @@
 		</view>
 		<!-- 页面滚动 -->
 		<view class="flex-1 bg-white my-shop_content">
-			<Goods
-				class="goods-item_content"
-				v-for="(item, index) in list"
-				:key="index"
-				:item="item"
-				:source="3"
-				:status="1"
-				:goodsType="menuId"
-				:showcaseId="params.showcaseId"
-				@refreshList="onDeleteGoods"
-			></Goods>
-			<Goods
-				class="goods-item_content"
-				:source="3"
-				:status="1"
-				:goodsType="menuId"
-				:showcaseId="params.showcaseId"
-				@refreshList="onDeleteGoods"
-			></Goods>
+			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
+			@scroll="scroll">
+				<Goods
+					class="goods-item_content"
+					v-for="(item, index) in list"
+					:key="index"
+					:item="item"
+					:source="3"
+					:status="1"
+					:goodsType="menuId"
+					:showcaseId="params.showcaseId"
+					@refreshList="onDeleteGoods"
+				></Goods>
+				<!-- 无更多数据 -->
+				<view v-if="noMoreFlag" class="text-center padding-sm padding-bottom-xl">我是有底线的~</view>
+			</scroll-view>
 			<Empty v-if="list.length == 0" msg="暂无数据~" />
 		</view>
 		<!-- <view class="shop-footer">
@@ -93,8 +90,8 @@
 				shopInfo: null, // 橱窗详情
 				isShow: true, // 是否显示菜单， false - 不显示， true - 显示
 				title: '',
-				menuIndex: 1,
-				menuId: 2,
+				menuIndex: 0,
+				menuId: 1,
 				menuTop: this.CustomBar,
 				menu: [
 				// 	{
@@ -123,11 +120,16 @@
 				isSearchFocus: false, // 是否显示搜索框 并 自动聚焦
 				searchValue: '', // 搜索条件
 				timer: null,
-				time: 1000
+				time: 1000,
+				scrollTop: 0,
+				old: {
+					scrollTop: 0
+				},
+				noMoreFlag: false, // 是否有更多数据
 			}
 		},
 		onLoad(options) {
-			this.isShow = options.isShow == 1 ? true : false;
+			this.isShow = options.menu == 1 ? true : false;
 			let showcaseId = options.showcaseId || uni.getStorageSync('showcaseId');
 			console.log('options.showcaseId', options.showcaseId)
 			this.params.showcaseId = showcaseId;
@@ -165,13 +167,13 @@
 				promise 
 			}
 		},
-		onReachBottom() {
-			console.log('bottom');
-			if (this.hasNext()) {
-				this.params.current++;
-				this.getShowCaseList();
-			}
-		},
+		// onReachBottom() {
+		// 	console.log('bottom');
+		// 	if (this.hasNext()) {
+		// 		this.params.current++;
+		// 		this.getShowCaseList();
+		// 	}
+		// },
 		methods: {
 			// 获取橱窗信息
 			async onGetShowCaseInfo(showcaseId) {
@@ -252,13 +254,13 @@
 						this.siteName = res.data.ownerUserName;
 						if (this.idStatus == 1) {
 							this.title = `${this.siteName}的橱窗`;
-							this.menu = [{
-								id: 9,
-								name: '全部'
-							}, {
-								id: 0,
-								name: '我添加的'
-							}];
+							// this.menu = [{
+							// 	id: 9,
+							// 	name: '全部'
+							// }, {
+							// 	id: 0,
+							// 	name: '我添加的'
+							// }];
 						} else {
 							this.title = '我的橱窗'
 						}
@@ -325,22 +327,42 @@
 						url: item.link
 					})
 				}
+			},// 滚动到顶部
+			upper(e) {
+					// console.log('upper', e)
 			},
-			// 触底刷新
-			// onRefresh() {
-			// 	console.log('bottom');
-			// 	if (this.hasNext()) {
-			// 		this.params.current++;
-			// 		this.getShowCaseList();
-			// 	}
-			// },
+			// 滚动到底部
+			lower(e) {
+				console.log('bottom');
+				if (this.hasNext()) {
+					this.noMoreFlag = false;
+					this.params.current++;
+					this.getShowCaseList();
+				} else {
+					this.noMoreFlag = true;
+				}
+			},
+			// 滚动事件
+			scroll(e) {
+					this.old.scrollTop = e.detail.scrollTop
+			},
+			// 到顶
+			goTop(e) {
+				this.scrollTop = this.old.scrollTop
+				this.$nextTick(() => {
+						this.scrollTop = 0
+				});
+				uni.showToast({
+						icon:"none",
+						title:"纵向滚动 scrollTop 值已被修改为 0"
+				})
+			},
 		}
 	}
 </script>
 <style lang="scss" scoped>
 	.strick-top {
 		position: sticky;
-		z-index: 9;
 	}
 	.padding-fixed {
 		padding-top: 100upx;
@@ -406,7 +428,8 @@
 			width: 50%;
 		}
 		&_content {
-			padding-bottom: 150upx;
+			overflow: hidden;
+			padding-bottom: 100upx;
 		}
 		.shop-footer {
 			position: fixed;

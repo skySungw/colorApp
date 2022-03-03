@@ -221,10 +221,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var TabBar = function TabBar() {__webpack_require__.e(/*! require.ensure | components/tab */ "components/tab").then((function () {return resolve(__webpack_require__(/*! @/components/tab */ 421));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var NavBar = function NavBar() {Promise.all(/*! require.ensure | components/navBar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/navBar")]).then((function () {return resolve(__webpack_require__(/*! @/components/navBar */ 426));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Card = function Card() {__webpack_require__.e(/*! require.ensure | components/card */ "components/card").then((function () {return resolve(__webpack_require__(/*! @/components/card */ 433));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ActiveCard = function ActiveCard() {__webpack_require__.e(/*! require.ensure | components/activeCard */ "components/activeCard").then((function () {return resolve(__webpack_require__(/*! @/components/activeCard */ 440));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Empty = function Empty() {__webpack_require__.e(/*! require.ensure | components/empty */ "components/empty").then((function () {return resolve(__webpack_require__(/*! @/components/empty.vue */ 271));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var TabBar = function TabBar() {__webpack_require__.e(/*! require.ensure | components/tab */ "components/tab").then((function () {return resolve(__webpack_require__(/*! @/components/tab */ 427));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var NavBar = function NavBar() {Promise.all(/*! require.ensure | components/navBar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/navBar")]).then((function () {return resolve(__webpack_require__(/*! @/components/navBar */ 432));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Card = function Card() {__webpack_require__.e(/*! require.ensure | components/card */ "components/card").then((function () {return resolve(__webpack_require__(/*! @/components/card */ 439));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ActiveCard = function ActiveCard() {__webpack_require__.e(/*! require.ensure | components/activeCard */ "components/activeCard").then((function () {return resolve(__webpack_require__(/*! @/components/activeCard */ 446));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Empty = function Empty() {__webpack_require__.e(/*! require.ensure | components/empty */ "components/empty").then((function () {return resolve(__webpack_require__(/*! @/components/empty.vue */ 277));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var col1H = 0;
 var col2H = 0;var _default =
@@ -278,8 +275,10 @@ var col2H = 0;var _default =
         var scrollH = wh;
         // 图片宽度
         _this.imgWidth = imgWidth;
+        var topicList = uni.getStorageSync('topicList');
         // 查询话题
-        _this.onGetTopic();
+        _this.menuList = topicList;
+        // this.onGetTopic();
         // this.loadImages();
         _this.init();
       } });
@@ -304,29 +303,13 @@ var col2H = 0;var _default =
   methods: {
     tabSelect: function tabSelect(e) {
       var id = e.currentTarget.dataset['item'].id;
+      console.log('id', id);
       uni.navigateTo({
         url: "/pages/subpackages/subject/index?id=".concat(id) });
 
     },
-    // 获取话题菜单
-    onGetTopic: function onGetTopic() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
-
-                  (0, _api.onFetchTopic)({
-                    size: 10,
-                    current: 1,
-                    isDefault: 1 }));case 3:res = _context.sent;
-
-                console.log('res', res);
-                if (res.code === 200) {
-                  _this3.menuList = res.data.records;
-                  console.log('this.menuList', _this3.menuList);
-                }_context.next = 11;break;case 8:_context.prev = 8;_context.t0 = _context["catch"](0);
-
-                console.log('err', _context.t0);case 11:case "end":return _context.stop();}}}, _callee, null, [[0, 8]]);}))();
-
-    },
     // 初始化页面经纬度等数据
-    init: function init() {var _this4 = this;
+    init: function init() {var _this3 = this;
       // 获取经纬度，并初始化列表数据
       uni.showLoading();
       this.params.lat = uni.getStorageSync('lat');
@@ -334,19 +317,19 @@ var col2H = 0;var _default =
       var addressInfo = uni.getStorageSync('addressInfo');
       if (!(addressInfo === null || addressInfo === void 0 ? void 0 : addressInfo.lat)) {
         this.getSystemLocation(function (res) {
-          _this4.params.lat = res.latitude;
-          _this4.params.lng = res.longitude;
+          _this3.params.lat = res.latitude;
+          _this3.params.lng = res.longitude;
           uni.setStorageSync('lat', res.latitude);
           uni.setStorageSync('lng', res.longitude);
           uni.hideLoading();
           // 获取小区信息
-          _this4.getDictList();
+          _this3.getDictList();
           // 获取帖子列表
-          _this4.initParams();
+          _this3.initParams();
         }, function () {
-          _this4.addressData.title = '选择小区';
+          _this3.addressData.title = '选择小区';
           uni.hideLoading();
-          _this4.initParams();
+          _this3.initParams();
         });
       } else {
         this.addressData = addressInfo;
@@ -357,24 +340,24 @@ var col2H = 0;var _default =
       }
     },
     // 根据经纬度获取小区信息
-    getDictList: function getDictList() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
+    getDictList: function getDictList() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _api.selectAddressByLat)({
-                    lat: _this5.params.lat,
-                    lng: _this5.params.lng,
+                    lat: _this4.params.lat,
+                    lng: _this4.params.lng,
                     size: 10,
-                    current: 1 }));case 3:res = _context2.sent;
+                    current: 1 }));case 3:res = _context.sent;
 
                 if (res.code === 200) {
-                  _this5.dictList = res.data.records;
-                  if (_this5.dictList.length > 0) {
-                    _this5.addressData = _this5.dictList[0];
-                    _this5.addressData.title = _this5.dictList[0].title;
-                    uni.setStorageSync('addressInfo', _this5.addressData);
+                  _this4.dictList = res.data.records;
+                  if (_this4.dictList.length > 0) {
+                    _this4.addressData = _this4.dictList[0];
+                    _this4.addressData.title = _this4.dictList[0].title;
+                    uni.setStorageSync('addressInfo', _this4.addressData);
                   }
-                }_context2.next = 10;break;case 7:_context2.prev = 7;_context2.t0 = _context2["catch"](0);
+                }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
 
-                console.log('err', _context2.t0);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}))();
+                console.log('err', _context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
 
     },
     goPage: function goPage(e) {
@@ -407,10 +390,10 @@ var col2H = 0;var _default =
       this.old.scrollTop = e.detail.scrollTop;
     },
     // 到顶
-    goTop: function goTop(e) {var _this6 = this;
+    goTop: function goTop(e) {var _this5 = this;
       this.scrollTop = this.old.scrollTop;
       this.$nextTick(function () {
-        _this6.scrollTop = 0;
+        _this5.scrollTop = 0;
       });
       uni.showToast({
         icon: "none",
@@ -474,16 +457,16 @@ var col2H = 0;var _default =
       }
     },
     // 地图选位置
-    onSelectAddress: function onSelectAddress() {var _this7 = this;
+    onSelectAddress: function onSelectAddress() {var _this6 = this;
       uni.navigateTo({
         url: '/pages/subpackages/address/selectAddress',
         events: {
           // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
           onChangeAddress: function onChangeAddress(_ref) {var data = _ref.data;
-            _this7.addressData.title = data.title;
-            _this7.addressData.lng = data.lng;
-            _this7.addressData.lat = data.lat;
-            uni.setStorageSync('addressInfo', _this7.addressData);
+            _this6.addressData.title = data.title;
+            _this6.addressData.lng = data.lng;
+            _this6.addressData.lat = data.lat;
+            uni.setStorageSync('addressInfo', _this6.addressData);
           } } });
 
 
@@ -527,40 +510,40 @@ var col2H = 0;var _default =
       this.onPublishShow();
     },
     // 获取帖子页面
-    getArticleList: function getArticleList(flag) {var _this8 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    getArticleList: function getArticleList(flag) {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 if (!flag) {
                   uni.showLoading({
                     title: '加载中...' });
 
-                }_context3.prev = 1;
+                }_context2.prev = 1;
 
 
                 res = null;if (!(
-                _this8.params.articleType === 2)) {_context3.next = 9;break;}_context3.next = 6;return (
-                  (0, _api.onFetchActivity)(_this8.params));case 6:res = _context3.sent;_context3.next = 12;break;case 9:_context3.next = 11;return (
+                _this7.params.articleType === 2)) {_context2.next = 9;break;}_context2.next = 6;return (
+                  (0, _api.onFetchActivity)(_this7.params));case 6:res = _context2.sent;_context2.next = 12;break;case 9:_context2.next = 11;return (
 
-                  (0, _api.onFetchArticle)(_this8.params));case 11:res = _context3.sent;case 12:
+                  (0, _api.onFetchArticle)(_this7.params));case 11:res = _context2.sent;case 12:
 
                 if (res.code === 200) {
-                  _this8.initPage = false;
-                  _this8.params.total = res.data.total;
+                  _this7.initPage = false;
+                  _this7.params.total = res.data.total;
 
                   // 整合图片
-                  _this8.loadImages(res.data.records);
-                  if (_this8.params.current === 1) {
-                    _this8.list = res.data.records;
+                  _this7.loadImages(res.data.records);
+                  if (_this7.params.current === 1) {
+                    _this7.list = res.data.records;
                   } else {
-                    _this8.list = _this8.list.concat(res.data.records);
+                    _this7.list = _this7.list.concat(res.data.records);
                   }
                   // 是否有下一页数据
                   // this.hasNext = res.hasNext;
                   // console.log("this.list", this.list);
                 }
-                uni.hideLoading();_context3.next = 21;break;case 16:_context3.prev = 16;_context3.t0 = _context3["catch"](1);
+                uni.hideLoading();_context2.next = 21;break;case 16:_context2.prev = 16;_context2.t0 = _context2["catch"](1);
 
-                _this8.initPage = false;
+                _this7.initPage = false;
                 uni.hideLoading();
-                console.log('errs', _context3.t0);case 21:case "end":return _context3.stop();}}}, _callee3, null, [[1, 16]]);}))();
+                console.log('errs', _context2.t0);case 21:case "end":return _context2.stop();}}}, _callee2, null, [[1, 16]]);}))();
 
     },
     // 跳页面

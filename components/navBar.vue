@@ -33,7 +33,7 @@
 </template>
 
 <script>
-	import { onFetchGroupHeadList } from '@/api';
+	import { onFetchGroupHeadList, onFetchTopic } from '@/api';
 	export default {
 		props: {
 			index: Number,
@@ -49,6 +49,7 @@
 		},
 		data() {
 			return {
+				topicList: [], // 话题列表
 				siteList: [], // 站长列表
 				showModal: false,
 				menu: [{
@@ -89,7 +90,7 @@
 					url: '/pages/sub/my/my'
 				}],
 				publishArr: [{
-					id: 2,
+					id: 100000,
 					show: true,
 					title: '发个闲置品',
 					label: '给附近的人看',
@@ -97,9 +98,9 @@
 					icon: 'cuIcon-camera lg',
 					bgColor: 'padding img-tag margin-right-sm bg-gradual-pink'
 				}, {
-					id: 1,
+					id: 100001,
 					show: true,
-					title: '发生活帖子',
+					title: '邻里晒一晒',
 					label: '分享我的日常',
 					url: '/pages/sub/publish/index',
 					icon: 'cuIcon-edit lg',
@@ -141,12 +142,58 @@
 			}
 		},
 		created() {
+			this.topicList = uni.getStorageSync('topicList');
+			if (!this.topicList) {
+				this.onGetTopic();	
+			}
+			this.topicList.forEach((v, i) => {
+				let obj;
+				if (v.id == 1) {
+					obj = {
+						topic: true,
+						show: true,
+						title: '我要求购',
+						label: '大家帮忙解决',
+						url: '/pages/sub/publish/index',
+						icon: 'cuIcon-magic lg',
+						bgColor: 'padding img-tag margin-right-sm bg-gradual-blue',
+					}
+				} else {
+					obj = {
+						topic: true,
+						show: true,
+						title: '我要找房',
+						label: '租房没有烦恼',
+						url: '/pages/sub/publish/index',
+						icon: 'cuIcon-home lg',
+						bgColor: 'padding img-tag margin-right-sm bg-gradual-green',
+					}
+				}
+				Object.assign(this.topicList[i], obj)
+			});
+			this.publishArr = this.publishArr.concat(this.topicList);
+			console.log('this.menu', this.publishArr, this.topicList);
 			this.menu.forEach(v => v.index == this.index ? v.active = true : '');
 			// if (this.index == 4) {
 			// 	this.publishArr[0]['show'] = true;
 			// }
 		},
 		methods: {
+			// 获取话题菜单
+			async onGetTopic() {
+				try {
+					const res = await onFetchTopic({
+						size: 10,
+						current: 1,
+						isDefault: 1
+					});
+					if (res.code === 200) {
+						uni.setStorageSync('topicList', res.data.records);
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			// 菜单切换
 			changeMenu(item) {
 				if (item.index != this.index) {
@@ -159,7 +206,17 @@
 							complete: () => {}
 						});
 					} else if(item.action) {
-						this.getSiteList(item);
+						const token = uni.getStorageSync('token');
+						if (token) {
+							this.getSiteList(item);
+						} else {
+							uni.navigateTo({
+								url: '/pages/sub/login/index',
+								success: res => {
+									this.getSiteList(item);
+								}
+							})
+						}
 					} else {
 						console.log('showcaseId', this.index);
 						this.onShowModal();
@@ -208,6 +265,10 @@
 					if (this.index == 4) {
 						this.onAdd && this.onAdd(this.showCaseId, this.idStatus);
 						return false;
+					}
+					// 发帖子，带话题
+					if (item.topic) {
+						uni.setStorageSync('publishTopic', [item]);
 					}
 					uni.navigateTo({
 						url: item.url

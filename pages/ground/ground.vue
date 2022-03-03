@@ -22,10 +22,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="topic-list flex">
-				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
-				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
-				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
+			<view class="topic-list flex" v-if="menuList.length > 0">
 				<view class="cu-tag line-grey round text-white" v-for="(item, index) in menuList" :key="index" :data-item="item" @tap="tabSelect"># {{ item.name }}</view>
 			</view>
 		</view>
@@ -146,8 +143,10 @@
 					let scrollH = wh;
 					// 图片宽度
 					this.imgWidth = imgWidth;
+					let topicList = uni.getStorageSync('topicList');
 					// 查询话题
-					this.onGetTopic();
+					this.menuList = topicList;
+					// this.onGetTopic();
 					// this.loadImages();
 					this.init();
 				}
@@ -172,26 +171,10 @@
 		methods: {
 			tabSelect(e) {
 				const id = e.currentTarget.dataset['item'].id;
+				console.log('id', id);
 				uni.navigateTo({
 					url: `/pages/subpackages/subject/index?id=${id}`
 				})
-			},
-			// 获取话题菜单
-			async onGetTopic() {
-				try {
-					const res = await onFetchTopic({
-						size: 10,
-						current: 1,
-						isDefault: 1
-					});
-					console.log('res', res);
-					if (res.code === 200) {
-						this.menuList = res.data.records;
-						console.log('this.menuList', this.menuList)
-					}
-				} catch(err) {
-					console.log('err', err);
-				}
 			},
 			// 初始化页面经纬度等数据
 			init() {

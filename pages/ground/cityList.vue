@@ -28,7 +28,7 @@
 				@scroll="scroll">
 					<view class="card-list_container__item goods-type" v-for="(item, index) in list" :key="index">
 						<!-- 头像区 -->
-						<view class="card-header flex">
+						<view class="card-header flex" @tap="goHomePage" :data-item="item">
 							<!-- 头像 -->
 							<view class="flex flex-align-center">
 								<view class="cu-avatar round" :style="'background-image:url(' + item.userWxHeadImg + ')'"></view>
@@ -44,15 +44,15 @@
 						<!-- 帖子内容区 -->
 						<view v-if="item.collectionType == 1" class="card-content padding-top">
 							<!-- 文案区域 -->
-							<view class="card-content_text text-black">
-								<view class="cu-tag bg-green light radius sm">闲置</view>
+							<view class="card-content_text text-black" @tap="goPage" :data-item="item.articleInfo">
+								<!-- <view class="cu-tag bg-green light radius sm">闲置</view> -->
 								{{ item.articleInfo.articleDesc }}
-								<text class="text-cyan margin-left-sm">全文</text>
+								<!-- <text class="text-cyan margin-left-sm">全文</text> -->
 							</view>
 							<!-- 图片区域 -->
-							<view class="card-content_image margin-top-sm" v-if="item.articleInfo.articleContentImg.length">
+							<view class="card-content_image margin-top-sm" v-if="item.articleInfo.articleContentImg.length" @tap="goPage" :data-item="item.articleInfo">
 								<view class="grid col-3 grid-square flex-sub">
-									<view class="bg-img" v-for="(imgItem, index) in item.articleInfo.articleContentImg" :key="index" @click="onViewImage" :data-list="item.articleInfo.articleContentImg" :data-url="imgItem">
+									<view class="bg-img" v-for="(imgItem, index) in item.articleInfo.articleContentImg" :key="index" @click.stop="onViewImage" :data-list="item.articleInfo.articleContentImg" :data-url="imgItem">
 										<image :src='imgItem' mode='aspectFill'></image>
 									</view>
 								</view>
@@ -60,7 +60,7 @@
 						</view>
 						<!-- 商品内容区 -->
 						<view v-if="item.collectionType == 0" class="card-content padding-top">
-							<view class="goods-container padding-sm bg-gray">
+							<view class="goods-container padding-sm bg-gray" @tap="onGoodsDetail" :data-item="item.goodsInfo">
 								<view class="goods-container__title flex">
 									<view class="flex-1 text-bold">
 										{{ item.goodsInfo.goodsName }}
@@ -154,6 +154,19 @@
 			}, 2000);
 		},
 		methods: {
+			goHomePage(e) {
+				const item = e.currentTarget.dataset['item'];
+				console.log('item', item)
+				let url;
+				if (item.articleInfo) {
+					url = `/pages/sub/my/home?id=${item.articleInfo.userId}`;
+				} else {
+					url = `/pages/subpackages/site/myShop?showcaseId=${item.goodsInfo.showcaseId}&menu=1`;
+				}
+				uni.navigateTo({
+					url
+				})
+			},
 			// 初始化页面经纬度等数据
 			init() {
 				// 获取经纬度，并初始化列表数据
@@ -210,6 +223,13 @@
 				const item = e.currentTarget.dataset['item'];
 				uni.navigateTo({
 					url: '/pages/sub/article/article?id='+ item.articleCode
+				})
+			},
+			onGoodsDetail(e) {
+				const item = e.currentTarget.dataset['item'];
+				console.log('item', item)
+				uni.navigateTo({
+					url: `/pages/sub/goods/detail?id=${item.goodsId}`
 				})
 			},
 			// 滚动到顶部

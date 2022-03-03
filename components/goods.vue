@@ -71,24 +71,24 @@
 		<!-- 橱窗列表，京东商品 -->
 		<view v-if="source == 3 && goodsType == 2" class="relative shop-products">
 			<view class="products-content" @tap="onGoodsDetail">
-				<image class="products-content_goods__img" :style="'width: ' + imgWidth + 'px; height: ' + imgWidth + 'px;'" src="https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg" mode="aspectFill" :lazy-load="true"></image>
-				<view class="flex bg-yellow text-red text-sm text-center text-bold flex-align-center">
+				<image class="products-content_goods__img" :style="'width: ' + imgWidth + 'px; height: ' + imgWidth + 'px;'" :src="item.goodsImgArray[0]" mode="aspectFill" :lazy-load="true"></image>
+				<!-- <view class="flex bg-yellow text-red text-sm text-center text-bold flex-align-center">
 					<view class="flex-1">佣金 ￥3.99</view>
 					<view>|</view>
 					<view class="flex-1">佣金比例 2%</view>
+				</view> -->
+				<view>
+					<text class="text-bold margin-none text-lg">{{ item.goodsName }}</text>
 				</view>
 				<view>
-					<text class="text-bold margin-none text-lg">名名名</text>
+					<text class="text-xl text-red text-bold padding-right-sm">￥{{ item.goodsPrice }}</text>
+					<text class="text-sm text-grey text-through" v-if="item.goodsCostPrice">￥{{ item.goodsCostPrice }}</text>
 				</view>
-				<view>
-					<text class="text-xl text-red text-bold padding-right-sm">￥33</text>
-					<text class="text-sm text-grey text-through">￥45</text>
-				</view>
-				<view class="text-grey text-bold">已售 {{ 3 }} 件</view>
+				<!-- <view class="text-grey text-bold">已售 {{ 3 }} 件</view> -->
 			</view>
-			<view v-if="operate" class="delete-absolute delete">
+		<!-- 	<view v-if="operate" class="delete-absolute delete">
 				<text class="cuIcon-roundclosefill lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
-			</view>
+			</view> -->
 		</view>
 		<!-- <view v-if="source == 3" class="goods-item flex">
 			<image :src="item.goodsImgArray[0]" :lazy-load="true"></image>
@@ -330,9 +330,17 @@
 					console.log('err', err);
 				}
 			},
+			// 商品详情
 			onGoodsDetail() {
 				const token = uni.getStorageSync('token');
-				const url = '/pages/sub/goods/detail?id=' + this.item.goodsCode;
+				let url;
+				if (this.item.isUrlGoods) {
+					url = `/pages/subpackages/webview/webview`;
+					uni.setStorageSync('url', this.item.urlGoods);
+				} else {
+					url = '/pages/sub/goods/detail?id=' + this.item.goodsCode;
+				}
+				console.log('url', url);
 				if (token) {
 					uni.navigateTo({
 						url

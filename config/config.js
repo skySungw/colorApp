@@ -52,7 +52,7 @@ const myTools = [
 {
 	icon: 'cuIcon-shop',
 	label: '我的橱窗',
-	link: '/pages/subpackages/site/myShop'
+	link: '/pages/subpackages/site/myShop?menu=1'
 }
 // , {
 // 	icon: 'cuIcon-recharge',

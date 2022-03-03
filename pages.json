@@ -57,6 +57,14 @@
 					"navigationBarTitleText": "隐私协议",
 					"enablePullDownRefresh": false
 				}
+		},  {
+				"path": "webview/webview",
+				"style": {
+					"navigationBarTitleText": "特惠商城",
+					"enablePullDownRefresh": false,
+					"navigationBarBackgroundColor": "#39B54A",
+					"navigationBarTextStyle": "white"
+				}
 		}, {
 				"path": "subject/index",
 				"style": {

@@ -1,5 +1,5 @@
 <script>
-	import Vue from 'vue'
+	import Vue from 'vue';
 	export default {
 		onLaunch: function() {
 			// userType - 用户类型， 0 官方人员  1 C端  2 站长端
@@ -51,7 +51,7 @@
 				}
 			})
 		},
-		onShow: function() {
+		onShow: async function() {
 			const pages = getCurrentPages();
 			// console.log('pages', pages);
 			// uni.showToast({
@@ -65,7 +65,7 @@
 			// 	title: '隐藏APP',
 			// 	icon: 'none'
 			// });
-		}
+		},
 	}
 </script>
 

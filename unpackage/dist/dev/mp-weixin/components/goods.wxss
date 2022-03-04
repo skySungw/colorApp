@@ -59,6 +59,12 @@
   border-radius: 10rpx;
   box-shadow: 0 0 4rpx rgba(0, 0, 0, 0.2);
 }
+.photo {
+  border-radius: 50% !important;
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+}
 .flex-1 {
   flex: 1;
 }

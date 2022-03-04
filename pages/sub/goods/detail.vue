@@ -38,6 +38,7 @@
 		<view class="padding solid-bottom">
 			<view class="margin-bottom-sm">
 				<text class="text-bold text-black">商品介绍</text>
+				<text class="text-gray padding-left-sm">{{ goodsDetail.createtime }}</text>
 			</view>
 			<rich-text :nodes="goodsDetail.goodsContent"></rich-text>
 		</view>

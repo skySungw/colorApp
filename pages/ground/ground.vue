@@ -362,8 +362,8 @@
 			initParams() {
 				this.list = [];
 				this.images = [];
-				col1H = 0;
-				col2H = 0;
+				this.col1H = 0;
+				this.col2H = 0;
 				this.cols = [[], []];
 				this.loadingCount = 0;
 				this.params.current = 1;

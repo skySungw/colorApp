@@ -58,8 +58,9 @@
 		<view v-if="source == 3 && goodsType == 1" class="relative shop-products">
 			<view class="products-content" @tap="onGoodsDetail">
 				<image :src="item.goodsImgArray[0]" mode="aspectFill" :lazy-load="true"></image>
-				<view>
-					<text class="text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
+				<view class="flex flex-align-center">
+					<image class="photo" :src="item.wxHeadImg"></image>
+					<text class="flex-1 text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
 				</view>
 				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
 				<!-- <view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view> -->
@@ -400,6 +401,12 @@
 				box-shadow: 0 0 4upx rgba(0, 0, 0, .2);
 			}
 		}
+	}
+	.photo {
+		border-radius: 50% !important;
+		width: 30upx;
+		height: 30upx;
+		margin-right: 10upx;
 	}
 	.flex-1 {
 		flex: 1;

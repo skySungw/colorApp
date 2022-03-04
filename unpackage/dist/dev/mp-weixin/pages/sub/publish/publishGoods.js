@@ -580,6 +580,7 @@ function onUnload() {
 
       return false;
     }
+    this.goodsAddress = this.address;
     // if (this.sellerContactType != 0 && this.sellerContactType != 1) {
     // 	uni.showToast({
     // 		title: '请留下联系方式',

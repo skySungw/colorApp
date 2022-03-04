@@ -91,7 +91,7 @@
 		</view>
 		
 		<!-- 发表评论, 仅展示 -->
-		<view v-if="!commitFlag" class="footer fixed bottom-fixed padding-sm bg-white solid-top flex flex-align-center">
+		<view v-if="!commitFlag" class="footer fixed bottom-fixed padding-bottom-50 padding-sm bg-white solid-top flex flex-align-center">
 			<view @tap="onHandleLeaveMsg" class="flex-1 padding-right bg-gray commit-input padding-sm flex flex-align-center">
 				<text class="cuIcon-write margin-right-xs"></text>
 				<text class="text-gray">说点什么吧...</text>
@@ -104,7 +104,7 @@
 			</view>
 		</view>
 		<!-- 发表评论，输入内容 -->
-		<view v-else class="footer fixed bottom-fixed padding-sm bg-white solid-top flex flex-align-center">
+		<view v-else class="footer fixed bottom-fixed padding-bottom-50 padding-sm bg-white solid-top flex flex-align-center">
 			<view class="flex-1 padding-right bg-gray commit-input padding-sm flex flex-align-center">
 				<text class="cuIcon-write margin-right-xs"></text>
 				<input :focus="isFocus" placeholder="说点什么吧..." v-model="commitValue" />
@@ -330,6 +330,13 @@
 			},
 			// 发送留言
 			async onSendMsg(type) {
+				if (!this.commitValue) {
+					uni.showToast({
+						title: '说点什么吧~',
+						icon: 'none'
+					})
+					return false;
+				}
 				let params = {
 					articleCode: this.articleCode,
 					commentContent: this.commitValue,
@@ -388,7 +395,8 @@
 			border-radius: 50upx;
 		}
 		.footer {
-			height: 100upx;
+			// height: 100upx;
+			z-index: 999;
 		}
 	}
 	.detail-image {

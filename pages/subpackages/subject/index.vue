@@ -60,11 +60,11 @@
 <script>
 	import { onFetchTopicById, onFetchArticle } from '@/api';
 	
-	let col1H = 0;
-	let col2H = 0;
 	export default {
 		data() {
 			return {
+				col1H: 0,
+				col2H: 0,
 				initPage: true, // 是否获取完数据
 				// subjectViewCount: '35.9 亿',
 				// collection: false, // 是否收藏
@@ -187,11 +187,11 @@
 				let col1 = this.cols[0];
 				let col2 = this.cols[1];
 			
-				if (col1H <= col2H) {
-						col1H += imgHeight;
+				if (this.col1H <= this.col2H) {
+						this.col1H += imgHeight;
 						col1.push(imageObj);
 				} else {
-						col2H += imgHeight;
+						this.col2H += imgHeight;
 						col2.push(imageObj);
 				}
 			

@@ -1,4 +1,10 @@
 
+.w50.data-v-f6fba62a {
+	width: 50%;
+}
+.inline-block.data-v-f6fba62a {
+	display: inline-block;
+}
 .box.data-v-f6fba62a {
 	box-shadow: 0 0 10rpx rgba(0, 0, 0, .5);
 }
@@ -6,6 +12,6 @@
 	border-radius: 50%;
 }
 .close-button.data-v-f6fba62a {
-	margin: 90rpx 0 30rpx;
+	margin: 50rpx 0 30rpx;
 }
 

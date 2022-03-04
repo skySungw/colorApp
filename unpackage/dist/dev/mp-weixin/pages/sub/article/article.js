@@ -477,7 +477,14 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
     },
     // 发送留言
-    onSendMsg: function onSendMsg(type) {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var params, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
+    onSendMsg: function onSendMsg(type) {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var params, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:if (
+                _this7.commitValue) {_context6.next = 3;break;}
+                uni.showToast({
+                  title: '说点什么吧~',
+                  icon: 'none' });return _context6.abrupt("return",
+
+                false);case 3:
+
                 params = {
                   articleCode: _this7.articleCode,
                   commentContent: _this7.commitValue,
@@ -488,9 +495,9 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     fromMemberId: _this7.fromMemberId,
                     commentId: _this7.commentId });
 
-                }_context6.prev = 2;_context6.next = 5;return (
+                }_context6.prev = 5;_context6.next = 8;return (
 
-                  (0, _api.onCreateComment)(params));case 5:res = _context6.sent;
+                  (0, _api.onCreateComment)(params));case 8:res = _context6.sent;
                 if (res.code === 200) {
                   uni.showToast({
                     title: '评论成功',
@@ -501,9 +508,9 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                       _this7.init();
                     } });
 
-                }_context6.next = 12;break;case 9:_context6.prev = 9;_context6.t0 = _context6["catch"](2);
+                }_context6.next = 15;break;case 12:_context6.prev = 12;_context6.t0 = _context6["catch"](5);
 
-                console.log('err', _context6.t0);case 12:case "end":return _context6.stop();}}}, _callee6, null, [[2, 9]]);}))();
+                console.log('err', _context6.t0);case 15:case "end":return _context6.stop();}}}, _callee6, null, [[5, 12]]);}))();
 
 
     } } };exports.default = _default;

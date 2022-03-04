@@ -258,37 +258,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
   },
   created: function created() {var _this = this;
-    this.topicList = uni.getStorageSync('topicList');
-    if (!this.topicList) {
-      this.onGetTopic();
-    }
-    this.topicList.forEach(function (v, i) {
-      var obj;
-      if (v.id == 1) {
-        obj = {
-          topic: true,
-          show: true,
-          title: '我要求购',
-          label: '大家帮忙解决',
-          url: '/pages/sub/publish/index',
-          icon: 'cuIcon-magic lg',
-          bgColor: 'padding img-tag margin-right-sm bg-gradual-blue' };
-
-      } else {
-        obj = {
-          topic: true,
-          show: true,
-          title: '我要找房',
-          label: '租房没有烦恼',
-          url: '/pages/sub/publish/index',
-          icon: 'cuIcon-home lg',
-          bgColor: 'padding img-tag margin-right-sm bg-gradual-green' };
-
-      }
-      Object.assign(_this.topicList[i], obj);
-    });
-    this.publishArr = this.publishArr.concat(this.topicList);
-    console.log('this.menu', this.publishArr, this.topicList);
+    this.onGetTopic();
     this.menu.forEach(function (v) {return v.index == _this.index ? v.active = true : '';});
     // if (this.index == 4) {
     // 	this.publishArr[0]['show'] = true;
@@ -296,22 +266,56 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   },
   methods: {
     // 获取话题菜单
-    onGetTopic: function onGetTopic() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+    onGetTopic: function onGetTopic() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var list, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                list = uni.getStorageSync('topicList');
+                console.log('list', list);if (
+                list) {_context.next = 14;break;}
+                console.log('kkkk');_context.prev = 4;_context.next = 7;return (
 
                   (0, _api.onFetchTopic)({
                     size: 10,
                     current: 1,
-                    isDefault: 1 }));case 3:res = _context.sent;
+                    isDefault: 1 }));case 7:res = _context.sent;
 
                 if (res.code === 200) {
-                  uni.setStorageSync('topicList', res.data.records);
-                }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
+                  list = res.data.records;
+                  uni.setStorageSync('topicList', list);
+                  console.log('ccccccc', list);
+                }_context.next = 14;break;case 11:_context.prev = 11;_context.t0 = _context["catch"](4);
 
-                console.log('err', _context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
+                console.log('err', _context.t0);case 14:
 
+
+                list.forEach(function (v, i) {
+                  var obj;
+                  if (v.id == 1) {
+                    obj = {
+                      topic: true,
+                      show: true,
+                      title: '我要求购',
+                      label: '大家帮忙解决',
+                      url: '/pages/sub/publish/index',
+                      icon: 'cuIcon-magic lg',
+                      bgColor: 'padding img-tag margin-right-sm bg-gradual-blue' };
+
+                  } else {
+                    obj = {
+                      topic: true,
+                      show: true,
+                      title: '我要找房',
+                      label: '租房没有烦恼',
+                      url: '/pages/sub/publish/index',
+                      icon: 'cuIcon-home lg',
+                      bgColor: 'padding img-tag margin-right-sm bg-gradual-green' };
+
+                  }
+                  Object.assign(list[i], obj);
+                });
+                _this2.publishArr = _this2.publishArr.concat(list);
+                console.log('mmm', _this2.publishArr);case 17:case "end":return _context.stop();}}}, _callee, null, [[4, 11]]);}))();
     },
     // 菜单切换
-    changeMenu: function changeMenu(item) {var _this2 = this;
+    changeMenu: function changeMenu(item) {var _this3 = this;
       if (item.index != this.index) {
         console.log('item', item);
         if (item.url) {
@@ -329,7 +333,7 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
             uni.navigateTo({
               url: '/pages/sub/login/index',
               success: function success(res) {
-                _this2.getSiteList(item);
+                _this3.getSiteList(item);
               } });
 
           }
@@ -340,17 +344,17 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       }
     },
     // 获取站长列表
-    getSiteList: function getSiteList(item) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
+    getSiteList: function getSiteList(item) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;_context2.next = 3;return (
 
                   (0, _api.onFetchGroupHeadList)({
                     size: 10,
                     current: 1 }));case 3:res = _context2.sent;
 
                 if (res.code === 200) {
-                  _this3.siteList = res.data.records;
-                  if (_this3.siteList.length) {
+                  _this4.siteList = res.data.records;
+                  if (_this4.siteList.length) {
                     uni.redirectTo({
-                      url: "".concat(item.preUrl, "?showcaseId=").concat(_this3.siteList[0].goodsShowcaseId, "&menu=0"),
+                      url: "".concat(item.preUrl, "?showcaseId=").concat(_this4.siteList[0].goodsShowcaseId, "&menu=0"),
                       success: function success(res) {},
                       fail: function fail() {},
                       complete: function complete() {} });
@@ -377,8 +381,8 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
         // } else {
         // 	this.onShowModal();
         // }
-
-        if (this.index == 4) {
+        console.log('itemsss', item, this.index);
+        if (this.index == 4 && item.id == 100000) {
           this.onAdd && this.onAdd(this.showCaseId, this.idStatus);
           return false;
         }

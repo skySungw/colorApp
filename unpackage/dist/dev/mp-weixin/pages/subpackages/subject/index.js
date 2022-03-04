@@ -219,13 +219,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 
-var col1H = 0;
-var col2H = 0;var _default =
 {
   data: function data() {
     return {
+      col1H: 0,
+      col2H: 0,
       initPage: true, // 是否获取完数据
       // subjectViewCount: '35.9 亿',
       // collection: false, // 是否收藏
@@ -348,11 +348,11 @@ var col2H = 0;var _default =
       var col1 = this.cols[0];
       var col2 = this.cols[1];
 
-      if (col1H <= col2H) {
-        col1H += imgHeight;
+      if (this.col1H <= this.col2H) {
+        this.col1H += imgHeight;
         col1.push(imageObj);
       } else {
-        col2H += imgHeight;
+        this.col2H += imgHeight;
         col2.push(imageObj);
       }
 

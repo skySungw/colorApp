@@ -11,7 +11,7 @@
 		<view class="cu-modal bottom-modal" :class="[{'show': showModal}]" @tap="onHideModal">
 		  <view class="cu-dialog padding" catchtap>
 				<view class="padding">
-					<view v-for="(item, itemIndex) in publishArr" :key="itemIndex">
+					<view class="w50 inline-block" v-for="(item, itemIndex) in publishArr" :key="itemIndex">
 						<!-- <button class="cu-btn orange lg block line-olive" @tap="onPublish(item)"> {{ item.label }}</button> -->
 						<view class="flex align-center justify-center padding" v-if="item.show" @tap="onPublish(item)">
 							<view :class="item.bgColor">
@@ -142,37 +142,7 @@
 			}
 		},
 		created() {
-			this.topicList = uni.getStorageSync('topicList');
-			if (!this.topicList) {
-				this.onGetTopic();	
-			}
-			this.topicList.forEach((v, i) => {
-				let obj;
-				if (v.id == 1) {
-					obj = {
-						topic: true,
-						show: true,
-						title: '我要求购',
-						label: '大家帮忙解决',
-						url: '/pages/sub/publish/index',
-						icon: 'cuIcon-magic lg',
-						bgColor: 'padding img-tag margin-right-sm bg-gradual-blue',
-					}
-				} else {
-					obj = {
-						topic: true,
-						show: true,
-						title: '我要找房',
-						label: '租房没有烦恼',
-						url: '/pages/sub/publish/index',
-						icon: 'cuIcon-home lg',
-						bgColor: 'padding img-tag margin-right-sm bg-gradual-green',
-					}
-				}
-				Object.assign(this.topicList[i], obj)
-			});
-			this.publishArr = this.publishArr.concat(this.topicList);
-			console.log('this.menu', this.publishArr, this.topicList);
+			this.onGetTopic();	
 			this.menu.forEach(v => v.index == this.index ? v.active = true : '');
 			// if (this.index == 4) {
 			// 	this.publishArr[0]['show'] = true;
@@ -181,18 +151,52 @@
 		methods: {
 			// 获取话题菜单
 			async onGetTopic() {
-				try {
-					const res = await onFetchTopic({
-						size: 10,
-						current: 1,
-						isDefault: 1
-					});
-					if (res.code === 200) {
-						uni.setStorageSync('topicList', res.data.records);
+				let list = uni.getStorageSync('topicList');
+				console.log('list', list)
+				if (!list) {
+					console.log('kkkk')
+					try {
+						const res = await onFetchTopic({
+							size: 10,
+							current: 1,
+							isDefault: 1
+						});
+						if (res.code === 200) {
+							list = res.data.records;
+							uni.setStorageSync('topicList', list);
+							console.log('ccccccc', list)
+						}
+					} catch(err) {
+						console.log('err', err);
 					}
-				} catch(err) {
-					console.log('err', err);
 				}
+				list.forEach((v, i) => {
+					let obj;
+					if (v.id == 1) {
+						obj = {
+							topic: true,
+							show: true,
+							title: '我要求购',
+							label: '大家帮忙解决',
+							url: '/pages/sub/publish/index',
+							icon: 'cuIcon-magic lg',
+							bgColor: 'padding img-tag margin-right-sm bg-gradual-blue',
+						}
+					} else {
+						obj = {
+							topic: true,
+							show: true,
+							title: '我要找房',
+							label: '租房没有烦恼',
+							url: '/pages/sub/publish/index',
+							icon: 'cuIcon-home lg',
+							bgColor: 'padding img-tag margin-right-sm bg-gradual-green',
+						}
+					}
+					Object.assign(list[i], obj)
+				});
+				this.publishArr = this.publishArr.concat(list);
+				console.log('mmm', this.publishArr);
 			},
 			// 菜单切换
 			changeMenu(item) {
@@ -261,8 +265,8 @@
 					// } else {
 					// 	this.onShowModal();
 					// }
-					
-					if (this.index == 4) {
+					console.log('itemsss', item, this.index)
+					if (this.index == 4 && item.id == 100000) {
 						this.onAdd && this.onAdd(this.showCaseId, this.idStatus);
 						return false;
 					}
@@ -290,6 +294,12 @@
 </script>
 
 <style scoped>
+	.w50 {
+		width: 50%;
+	}
+	.inline-block {
+		display: inline-block;
+	}
 	.box {
 		box-shadow: 0 0 10upx rgba(0, 0, 0, .5);
 	}
@@ -297,6 +307,6 @@
 		border-radius: 50%;
 	}
 	.close-button {
-		margin: 90upx 0 30upx;
+		margin: 50upx 0 30upx;
 	}
 </style>

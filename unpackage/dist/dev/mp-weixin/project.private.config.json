@@ -53,6 +53,12 @@
           "pathName": "pages/ground/ground",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/subpackages/subject/index",
+          "pathName": "pages/subpackages/subject/index",
+          "query": "id=2",
+          "scene": null
         }
       ]
     }

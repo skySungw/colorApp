@@ -3900,9 +3900,10 @@ var getDateTime = function getDateTime(time) {
   return year + '-' + onPadNum(month) + '-' + onPadNum(day) + ' ' + onPadNum(hour) + ':' + onPadNum(minutes) + ':' + onPadNum(seconds);
 };exports.getDateTime = getDateTime;
 var handlePublishTimeDesc = function handlePublishTimeDesc(post_modified) {
+  var timeStr = post_modified.replace(/\-/ig, '/');
   // 拿到当前时间戳和发布时的时间戳，然后得出时间戳差
   var curTime = new Date();
-  var postTime = new Date(post_modified);
+  var postTime = new Date(timeStr);
   var timeDiff = curTime.getTime() - postTime.getTime();
 
   // 单位换算
@@ -3919,15 +3920,15 @@ var handlePublishTimeDesc = function handlePublishTimeDesc(post_modified) {
 
   // 最后判断时间差到底是属于哪个区间，然后return
   if (exceedWeek > 0) {
-    return post_modified;
+    return "".concat(timeStr);
   } else {
     if (exceedDay < 7 && exceedDay > 0) {
-      return exceedDay + '天前';
+      return "".concat(exceedDay, "\u5929\u524D");
     } else {
       if (exceedHour < 24 && exceedHour > 0) {
-        return exceedHour + '小时前';
+        return "".concat(exceedHour, "\u5C0F\u65F6\u524D");
       } else {
-        return exceedMin + '分钟前';
+        return "".concat(exceedMin, "\u5206\u949F\u524D");
       }
     }
   }

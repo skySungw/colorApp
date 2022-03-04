@@ -62,10 +62,13 @@
 					<Card v-for="(item, index) in list" :key="index" :item="item"></Card>
 				</view>
 				<Empty v-if="pageParam.total == 0" msg="暂无更多商品~" />
-				<view v-if="pageParam.current != 1 && !hasNext()" class="text-center padding-top-sm text-grey text-sm">我已经到底了~</view>
+				<!-- <view v-if="pageParam.current != 1" class="text-center padding-top-sm text-grey text-sm">我已经到底了~</view> -->
+				<!-- 无更多数据 -->
+				<view v-if="noMoreFlag" class="text-center padding-sm padding-bottom-xl">我是有底线的~</view>
 			</view>
 		</scroll-view>
-		
+		<!-- 其它区域 -->
+		<NavBar :index="5"></NavBar>
 	</view>
 </template>
 
@@ -74,8 +77,10 @@
 	import Goods from '@/components/goods.vue';
 	import Card from '@/components/card.vue';
 	import Empty from '@/components/empty.vue';
+	import NavBar from '@/components/navBar';
 	export default {
 		components: {
+			NavBar,
 			Goods,
 			Card,
 			Empty
@@ -107,6 +112,7 @@
 				scrollLeft:0,
 				fixed: false, // 是否吸顶
 				list: [], // 商品列表
+				noMoreFlag: false, // 是否有更多数据
 				pageParam: {
 					size: 10,
 					total: 0,
@@ -123,12 +129,6 @@
 			this.pageParam.userId = options.id || '';
 			this.getInfos();
 			this.init();
-		},
-		onReachBottom() {
-			if (this.hasNext()) {
-				this.pageParam.current++;
-				this.init('next');
-			}
 		},
 		methods: {
 				// 分享朋友圈
@@ -274,6 +274,13 @@
 			// 触底刷新
 			onRefresh() {
 				console.log('bottom');
+				if (this.hasNext()) {
+					this.noMoreFlag = false;
+					this.pageParam.current++;
+					this.init('next');
+				} else {
+					this.noMoreFlag = true;
+				}
 			}
 		}
 	}
@@ -281,6 +288,7 @@
 <style lang="scss" scoped>
 	.padding-fixed {
 		padding-top: 210upx;
+		padding-bottom: 100upx;
 	}
 	.flex-1 {
 		flex: 1;

@@ -226,7 +226,8 @@ var chooseLocation = requirePlugin('chooseLocation');var _default =
   },
   onLoad: function onLoad(options) {
     this.topicsList = uni.getStorageSync('publishTopic') || [];
-    console.log('this.topicsList', this.topicsList);
+    uni.removeStorageSync('publishTopic');
+
     if (options.draftId) {
       this.draftId = options.draftId;
     }

@@ -91,8 +91,6 @@
 	import Empty from '@/components/empty.vue';
 	import { onFetchArticle, onFetchActivity, saveUserLocation, selectAddressByLat, onFetchTopic } from '@/api';
 	
-	let col1H = 0;
-	let col2H = 0;
 	export default {
 		components:{
 			TabBar,
@@ -103,6 +101,8 @@
 		},
 		data() {
 			return {
+				col1H: 0,
+				col2H: 0,
 				menuList: [], // 菜单
 				imgWidth: 0, // 图片宽度
 				cols: [[], []],
@@ -308,11 +308,11 @@
 				let col1 = this.cols[0];
 				let col2 = this.cols[1];
 			
-				if (col1H <= col2H) {
-						col1H += imgHeight;
+				if (this.col1H <= this.col2H) {
+						this.col1H += imgHeight;
 						col1.push(imageObj);
 				} else {
-						col2H += imgHeight;
+						this.col2H += imgHeight;
 						col2.push(imageObj);
 				}
 			

@@ -42,7 +42,7 @@
   border-radius: 50rpx;
 }
 .article-detail .footer.data-v-06205525 {
-  height: 100rpx;
+  z-index: 999;
 }
 .detail-image.data-v-06205525 {
   display: block;

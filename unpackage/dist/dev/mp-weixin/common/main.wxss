@@ -4371,4 +4371,7 @@ scroll-view.cu-steps .cu-item {
 .border-radius {
   border-radius: 10rpx;
 }
+.padding-bottom-50 {
+  padding-bottom: 50rpx;
+}
 

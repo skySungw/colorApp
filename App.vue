@@ -131,4 +131,7 @@
 	.border-radius {
 		border-radius: 10upx;
 	}
+	.padding-bottom-50 {
+		padding-bottom: 50upx;
+	}
 </style>

@@ -13,7 +13,7 @@
 						<view class="nickname text-black text-bold">{{info.userName}}</view>
 						<view>{{info.userDesc || ''}}</view>
 					</view>
-					<view v-if="userId" class="flex flex-align-center">
+					<view v-if="userId && token" class="flex flex-align-center">
 						<view class="cu-tag" :class="[{'line-green': followState == 1}, {'line-gray': followState != 1}]" @tap="onHandleFollow">{{ followState == 1 ? '+ 关注' : '取消关注'}}</view>
 					</view>
 					<!-- 分享-->
@@ -120,10 +120,13 @@
 					userId: '',
 					goodsState: 1,// 0 - 下架， 1 - 上架， 2 - 已售出
 					selType: 0 // 0 - 我发布的， 1 - 我参与过的
-				}
+				},
+				token: null
 			}
 		},
 		onLoad(options) {
+			this.token = uni.getStorageSync('token');
+			console.log('token', this.token)
 			this.isBack = options.isBack == 1 ? false : true;
 			this.userId = options.id || '';
 			this.pageParam.userId = options.id || '';

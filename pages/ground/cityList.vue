@@ -229,7 +229,13 @@
 				const item = e.currentTarget.dataset['item'];
 				console.log('item', item)
 				uni.navigateTo({
-					url: `/pages/sub/goods/detail?id=${item.goodsId}`
+					url: '/pages/sub/login/index',
+					success: function(res) {
+						// 通过eventChannel向被打开页面传送数据
+						res.eventChannel.emit('loginUrl', {
+							loginUrl: `/pages/sub/goods/detail?id=${item.goodsId}`,
+						})
+					}
 				})
 			},
 			// 滚动到顶部

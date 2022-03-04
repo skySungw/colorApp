@@ -252,10 +252,13 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
         userId: '',
         goodsState: 1, // 0 - 下架， 1 - 上架， 2 - 已售出
         selType: 0 // 0 - 我发布的， 1 - 我参与过的
-      } };
+      },
+      token: null };
 
   },
   onLoad: function onLoad(options) {
+    this.token = uni.getStorageSync('token');
+    console.log('token', this.token);
     this.isBack = options.isBack == 1 ? false : true;
     this.userId = options.id || '';
     this.pageParam.userId = options.id || '';

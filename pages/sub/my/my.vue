@@ -124,6 +124,7 @@
 		onShow() {
 			const token = uni.getStorageSync('token');
 			this.userType = uni.getStorageSync('userType')
+			console.log('token', token)
 			if (!token) {
 				return false;
 			}

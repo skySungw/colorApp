@@ -256,6 +256,7 @@ var _index = __webpack_require__(/*! @/api/index */ 21);function _interopRequire
   onShow: function onShow() {
     var token = uni.getStorageSync('token');
     this.userType = uni.getStorageSync('userType');
+    console.log('token', token);
     if (!token) {
       return false;
     }

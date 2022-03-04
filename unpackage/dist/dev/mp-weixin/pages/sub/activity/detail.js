@@ -172,12 +172,11 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     onFetchDetail: function onFetchDetail(params) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _api.onFetchActivityDetail)(params));case 3:res = _context.sent;
-                console.log('res', res);
                 if (res.code === 200) {
                   _this.detail = res.data;
-                }_context.next = 11;break;case 8:_context.prev = 8;_context.t0 = _context["catch"](0);
+                }_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
 
-                console.log('err', _context.t0);case 11:case "end":return _context.stop();}}}, _callee, null, [[0, 8]]);}))();
+                console.log('err', _context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
 
     },
     // 报名

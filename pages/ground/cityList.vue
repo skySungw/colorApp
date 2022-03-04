@@ -156,7 +156,6 @@
 		methods: {
 			goHomePage(e) {
 				const item = e.currentTarget.dataset['item'];
-				console.log('item', item)
 				let url;
 				if (item.articleInfo) {
 					url = `/pages/sub/my/home?id=${item.articleInfo.userId}`;
@@ -227,7 +226,6 @@
 			},
 			onGoodsDetail(e) {
 				const item = e.currentTarget.dataset['item'];
-				console.log('item', item)
 				const url = `/pages/sub/goods/detail?id=${item.goodsId}`;
 				if (this.token) {
 					uni.navigateTo({
@@ -353,12 +351,10 @@
 				} catch(err) {
 					this.initPage = false;
 					uni.hideLoading();
-					console.log('errs', err);
 				}
 			},
 			// 跳页面
 			goAdPage(item) {
-				console.log('item', item);
 				uni.navigateTo({
 					url: item.link,
 					success: res => {},

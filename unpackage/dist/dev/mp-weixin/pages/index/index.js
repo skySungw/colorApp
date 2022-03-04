@@ -190,7 +190,6 @@ __webpack_require__.r(__webpack_exports__);
     // },
     // 点广告图，跳页面
     goAdPage: function goAdPage(item) {
-      console.log('item', item);
       uni.navigateTo({
         url: item.adUrl,
         success: function success(res) {},

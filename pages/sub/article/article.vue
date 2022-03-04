@@ -169,7 +169,6 @@
 			this.commentParams.articleId = this.articleCode;
 		},
 		onShow() {
-			console.log('ccc')
 			this.init();
 		},
 		onReachBottom() {
@@ -258,7 +257,6 @@
 						confirmText: '确认取消',
 						cancelText: '取消',
 						success: res => {
-							console.log('res', res);
 							if (res.confirm) {
 								this.onConfirmOperate(followState);
 							}
@@ -303,7 +301,6 @@
 				this.commitFlag = true;
 				this.commentType = 0;
 				this.$nextTick(() => {
-					console.log(this.$refs);
 					// this.$refs.commitInput.focus();
 				})
 			},

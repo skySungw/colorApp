@@ -90,7 +90,6 @@
 		},
 		onLoad(options) {
 			this.goodsInfo = uni.getStorageSync('goodsInfo');
-			console.log('this.goodsInfo', this.goodsInfo)
 			if (this.goodsInfo?.length) {
 				this.init();
 				this.getAddressList();
@@ -111,7 +110,6 @@
 				try {
 					const res = await onFetchAddressList();
 					if (res.code === 200) {
-						console.log('address info', res.data);
 						if (res.data.length) {
 							this.addressInfo = res.data[0];
 						}
@@ -125,7 +123,6 @@
 					const res = await onFetchPlaceOrderInfo({
 						goodsInfo: this.goodsInfo
 					});
-					console.log('res', res);
 					if (res.code === 200) {
 						this.orderInfo = res.data;
 					}
@@ -134,7 +131,6 @@
 				}
 			},
 			async onFetchAddressInfo(receiveId) {
-				console.log('recide', receiveId)
 				try {
 					const res = await onFetchAddressById({
 						receiveId
@@ -217,14 +213,11 @@
 							signType: data.signType,
 							paySign: data.paySign,
 						}
-						console.log('param', param)
 						// 支付
 						uni.requestPayment({
 							provider: 'wxpay',
 							...param,
 							success: function (res) {
-								console.log('res', res);
-								console.log('success:' + JSON.stringify(res));
 								uni.redirectTo({
 									url: '/pages/sub/order/my'
 								})

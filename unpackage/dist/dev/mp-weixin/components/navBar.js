@@ -267,23 +267,20 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   methods: {
     // 获取话题菜单
     onGetTopic: function onGetTopic() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var list, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                list = uni.getStorageSync('topicList');
-                console.log('list', list);if (
-                list) {_context.next = 14;break;}
-                console.log('kkkk');_context.prev = 4;_context.next = 7;return (
+                list = uni.getStorageSync('topicList');if (
+                list) {_context.next = 12;break;}_context.prev = 2;_context.next = 5;return (
 
                   (0, _api.onFetchTopic)({
                     size: 10,
                     current: 1,
-                    isDefault: 1 }));case 7:res = _context.sent;
+                    isDefault: 1 }));case 5:res = _context.sent;
 
                 if (res.code === 200) {
                   list = res.data.records;
                   uni.setStorageSync('topicList', list);
-                  console.log('ccccccc', list);
-                }_context.next = 14;break;case 11:_context.prev = 11;_context.t0 = _context["catch"](4);
+                }_context.next = 12;break;case 9:_context.prev = 9;_context.t0 = _context["catch"](2);
 
-                console.log('err', _context.t0);case 14:
+                console.log('err', _context.t0);case 12:
 
 
                 list.forEach(function (v, i) {
@@ -311,13 +308,11 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                   }
                   Object.assign(list[i], obj);
                 });
-                _this2.publishArr = _this2.publishArr.concat(list);
-                console.log('mmm', _this2.publishArr);case 17:case "end":return _context.stop();}}}, _callee, null, [[4, 11]]);}))();
+                _this2.publishArr = _this2.publishArr.concat(list);case 14:case "end":return _context.stop();}}}, _callee, null, [[2, 9]]);}))();
     },
     // 菜单切换
     changeMenu: function changeMenu(item) {var _this3 = this;
       if (item.index != this.index) {
-        console.log('item', item);
         if (item.url) {
           uni.redirectTo({
             url: item.url,
@@ -338,7 +333,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
           }
         } else {
-          console.log('showcaseId', this.index);
           this.onShowModal();
         }
       }
@@ -381,7 +375,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
         // } else {
         // 	this.onShowModal();
         // }
-        console.log('itemsss', item, this.index);
         if (this.index == 4 && item.id == 100000) {
           this.onAdd && this.onAdd(this.showCaseId, this.idStatus);
           return false;

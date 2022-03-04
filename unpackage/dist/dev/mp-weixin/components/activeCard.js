@@ -168,7 +168,6 @@ var _default =
 
   methods: {
     goDetail: function goDetail() {
-      console.log('activityState', this.item);
       uni.navigateTo({
         url: "/pages/sub/activity/detail?activityCode=".concat(this.item.activityCode) });
 

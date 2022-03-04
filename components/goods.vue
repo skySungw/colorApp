@@ -193,7 +193,6 @@
 							break;
 						case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
 							this.operate = this.item.showDelete;
-							console.log('this.op', this.operate);
 							break;
 					}
 					// 收藏商品页，显示商品状态
@@ -221,14 +220,12 @@
 		methods: {
 			// 删除橱窗商品
 			deleteGoods(flag) {
-				console.log('flag', flag);
 				uni.showModal({
 					title: '操作',
 					content: '确认删除商品',
 					confirmText: '确认',
 					cancelText: '取消',
 					success: (res) => {
-						console.log('res', res);
 						if (res.confirm) {
 							this.onDeleteGoodsByShop(flag);
 						}
@@ -246,7 +243,6 @@
 							title: '操作成功',
 							icon: 'none',
 							complete: () => {
-								console.log('flag', flag)
 								if (flag) {
 									this.operate = false;	
 								} else {
@@ -292,7 +288,6 @@
 			},
 			// 上下架操作
 			async onAdd(type) {
-				console.log('type', type);
 				const TYPE_TEXT = {
 					0: '确认下架',
 					1: '确认上架'
@@ -303,7 +298,6 @@
 					confirmText: '确认',
 					cancelText: '取消',
 					success: (res) => {
-						console.log('res', res);
 						if (res.confirm) {
 							this.onOperate(type);
 						}
@@ -341,7 +335,6 @@
 				} else {
 					url = '/pages/sub/goods/detail?id=' + this.item.goodsCode;
 				}
-				console.log('url', url);
 				if (token) {
 					uni.navigateTo({
 						url

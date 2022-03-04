@@ -56,7 +56,6 @@
 		filters: {
 			getDateTime(time) {
 				const dateTime = new Date(time);
-				console.log(dateTime);
 				const year = dateTime.getFullYear();
 				const month = dateTime.getMonth() + 1;
 				const day = dateTime.getDate();
@@ -68,7 +67,6 @@
 		},
 		methods: {
 			onPay() {
-				console.log('kkk')
 			},
 			onOrderDetail() {
 				uni.navigateTo({

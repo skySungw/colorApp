@@ -42,7 +42,6 @@
 		},
 		methods: {
 			goDetail() {
-				console.log('activityState', this.item);
 				uni.navigateTo({
 					url: `/pages/sub/activity/detail?activityCode=${this.item.activityCode}`,
 				})

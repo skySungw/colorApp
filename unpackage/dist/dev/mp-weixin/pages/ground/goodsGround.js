@@ -196,8 +196,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     this.getSystemLocation(function (res) {
       _this.params.lat = res.latitude;
       _this.params.lng = res.longitude;
-      console.log('当前位置的经度：' + res.longitude);
-      console.log('当前位置的纬度：' + res.latitude);
       uni.setStorageSync('lat', res.latitude);
       uni.setStorageSync('lng', res.longitude);
       _this.initParams();
@@ -289,7 +287,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                   _this4.list = _this4.list.concat(res.data.records);
                   // 是否有下一页数据
                   // this.hasNext = res.hasNext;
-                  console.log("this.list", _this4.list);
                 }
                 uni.hideLoading();_context.next = 12;break;case 8:_context.prev = 8;_context.t0 = _context["catch"](0);
 
@@ -299,7 +296,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     },
     // 跳页面
     goAdPage: function goAdPage(item) {
-      console.log('item', item);
       uni.navigateTo({
         url: item.link,
         success: function success(res) {},

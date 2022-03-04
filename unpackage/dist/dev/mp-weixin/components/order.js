@@ -191,10 +191,8 @@ var _utils = __webpack_require__(/*! @/utils */ 29); //
 //
 var _default = { props: { item: { default: 0, type: Object }, status: { // 订单状态 0 待支付 1 待发货 2 待收货 9 已完成 10 已取消
       default: 0, type: Number }, source: { default: 0, // 0 - 我买的， 1 - 我卖的
-      type: Number } }, data: function data() {return {};}, filters: { getDateTime: function getDateTime(time) {var dateTime = new Date(time);console.log(dateTime);var year = dateTime.getFullYear();var month = dateTime.getMonth() + 1;var day = dateTime.getDate();var hour = dateTime.getHours();var minutes = dateTime.getMinutes();var seconds = dateTime.getSeconds();return year + '-' + (0, _utils.onPadNum)(month) + '-' + (0, _utils.onPadNum)(day) + ' ' + (0, _utils.onPadNum)(hour) + ':' + (0, _utils.onPadNum)(minutes) + ':' + (0, _utils.onPadNum)(seconds);} },
-  methods: {
+      type: Number } }, data: function data() {return {};}, filters: { getDateTime: function getDateTime(time) {var dateTime = new Date(time);var year = dateTime.getFullYear();var month = dateTime.getMonth() + 1;var day = dateTime.getDate();var hour = dateTime.getHours();var minutes = dateTime.getMinutes();var seconds = dateTime.getSeconds();return year + '-' + (0, _utils.onPadNum)(month) + '-' + (0, _utils.onPadNum)(day) + ' ' + (0, _utils.onPadNum)(hour) + ':' + (0, _utils.onPadNum)(minutes) + ':' + (0, _utils.onPadNum)(seconds);} }, methods: {
     onPay: function onPay() {
-      console.log('kkk');
     },
     onOrderDetail: function onOrderDetail() {
       uni.navigateTo({

@@ -222,7 +222,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   },
   onLoad: function onLoad(options) {var _this$goodsInfo;
     this.goodsInfo = uni.getStorageSync('goodsInfo');
-    console.log('this.goodsInfo', this.goodsInfo);
     if ((_this$goodsInfo = this.goodsInfo) === null || _this$goodsInfo === void 0 ? void 0 : _this$goodsInfo.length) {
       this.init();
       this.getAddressList();
@@ -243,7 +242,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
                   (0, _api.onFetchAddressList)());case 3:res = _context.sent;
                 if (res.code === 200) {
-                  console.log('address info', res.data);
                   if (res.data.length) {
                     _this.addressInfo = res.data[0];
                   }
@@ -257,25 +255,23 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                   (0, _api.onFetchPlaceOrderInfo)({
                     goodsInfo: _this2.goodsInfo }));case 3:res = _context2.sent;
 
-                console.log('res', res);
                 if (res.code === 200) {
                   _this2.orderInfo = res.data;
-                }_context2.next = 11;break;case 8:_context2.prev = 8;_context2.t0 = _context2["catch"](0);
+                }_context2.next = 10;break;case 7:_context2.prev = 7;_context2.t0 = _context2["catch"](0);
 
-                console.log("err", _context2.t0);case 11:case "end":return _context2.stop();}}}, _callee2, null, [[0, 8]]);}))();
+                console.log("err", _context2.t0);case 10:case "end":return _context2.stop();}}}, _callee2, null, [[0, 7]]);}))();
 
     },
-    onFetchAddressInfo: function onFetchAddressInfo(receiveId) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                console.log('recide', receiveId);_context3.prev = 1;_context3.next = 4;return (
+    onFetchAddressInfo: function onFetchAddressInfo(receiveId) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;_context3.next = 3;return (
 
                   (0, _api.onFetchAddressById)({
-                    receiveId: receiveId }));case 4:res = _context3.sent;
+                    receiveId: receiveId }));case 3:res = _context3.sent;
 
                 if (res.code === 200) {
                   _this3.addressInfo = res.data;
-                }_context3.next = 11;break;case 8:_context3.prev = 8;_context3.t0 = _context3["catch"](1);
+                }_context3.next = 10;break;case 7:_context3.prev = 7;_context3.t0 = _context3["catch"](0);
 
-                console.log('err', _context3.t0);case 11:case "end":return _context3.stop();}}}, _callee3, null, [[1, 8]]);}))();
+                console.log('err', _context3.t0);case 10:case "end":return _context3.stop();}}}, _callee3, null, [[0, 7]]);}))();
 
     },
     // 添加
@@ -349,14 +345,11 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     signType: data.signType,
                     paySign: data.paySign };
 
-                  console.log('param', param);
                   // 支付
                   uni.requestPayment(_objectSpread(_objectSpread({
                     provider: 'wxpay' },
                   param), {}, {
                     success: function success(res) {
-                      console.log('res', res);
-                      console.log('success:' + JSON.stringify(res));
                       uni.redirectTo({
                         url: '/pages/sub/order/my' });
 

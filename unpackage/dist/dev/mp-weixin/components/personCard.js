@@ -162,7 +162,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
 
   },
   created: function created() {
-    console.log('isFocus', this.isFocus);
   },
   methods: {
     // 关注/取消关注
@@ -181,7 +180,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     confirmText: '确认取消',
                     cancelText: '取消',
                     success: function success(res) {
-                      console.log('res', res);
                       if (res.confirm) {
                         _this.onConfirmOperate(item, followState);
                       }

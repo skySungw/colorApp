@@ -152,9 +152,7 @@
 			// 获取话题菜单
 			async onGetTopic() {
 				let list = uni.getStorageSync('topicList');
-				console.log('list', list)
 				if (!list) {
-					console.log('kkkk')
 					try {
 						const res = await onFetchTopic({
 							size: 10,
@@ -164,7 +162,6 @@
 						if (res.code === 200) {
 							list = res.data.records;
 							uni.setStorageSync('topicList', list);
-							console.log('ccccccc', list)
 						}
 					} catch(err) {
 						console.log('err', err);
@@ -196,12 +193,10 @@
 					Object.assign(list[i], obj)
 				});
 				this.publishArr = this.publishArr.concat(list);
-				console.log('mmm', this.publishArr);
 			},
 			// 菜单切换
 			changeMenu(item) {
 				if (item.index != this.index) {
-					console.log('item', item)
 					if (item.url) {
 						uni.redirectTo({
 							url: item.url,
@@ -222,7 +217,6 @@
 							})
 						}
 					} else {
-						console.log('showcaseId', this.index);
 						this.onShowModal();
 					}
 				}
@@ -265,7 +259,6 @@
 					// } else {
 					// 	this.onShowModal();
 					// }
-					console.log('itemsss', item, this.index)
 					if (this.index == 4 && item.id == 100000) {
 						this.onAdd && this.onAdd(this.showCaseId, this.idStatus);
 						return false;

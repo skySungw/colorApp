@@ -303,7 +303,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   methods: {
     tabSelect: function tabSelect(e) {
       var id = e.currentTarget.dataset['item'].id;
-      console.log('id', id);
       uni.navigateTo({
         url: "/pages/subpackages/subject/index?id=".concat(id) });
 
@@ -548,7 +547,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     },
     // 跳页面
     goAdPage: function goAdPage(item) {
-      console.log('item', item);
       uni.navigateTo({
         url: item.link,
         success: function success(res) {},

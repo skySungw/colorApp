@@ -317,7 +317,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     this.commentParams.articleId = this.articleCode;
   },
   onShow: function onShow() {
-    console.log('ccc');
     this.init();
   },
   onReachBottom: function onReachBottom() {
@@ -406,7 +405,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     confirmText: '确认取消',
                     cancelText: '取消',
                     success: function success(res) {
-                      console.log('res', res);
                       if (res.confirm) {
                         _this2.onConfirmOperate(followState);
                       }
@@ -447,38 +445,37 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     hasNext: function hasNext() {
       return this.commentParams.current < Math.ceil(this.commentParams.total / this.commentParams.size);
     },
-    onHandleLeaveMsg: function onHandleLeaveMsg() {var _this5 = this;
+    onHandleLeaveMsg: function onHandleLeaveMsg() {
       this.commitFlag = true;
       this.commentType = 0;
       this.$nextTick(function () {
-        console.log(_this5.$refs);
         // this.$refs.commitInput.focus();
       });
     },
-    onLike: function onLike(type) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var likesState, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
+    onLike: function onLike(type) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var likesState, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
 
 
 
                 if (type) {
-                  likesState = _this6.articleDetail.articleDetail.isCollection = !_this6.articleDetail.articleDetail.isCollection;
+                  likesState = _this5.articleDetail.articleDetail.isCollection = !_this5.articleDetail.articleDetail.isCollection;
                 } else {
-                  likesState = _this6.articleDetail.articleDetail.isLikes = !_this6.articleDetail.articleDetail.isLikes;
+                  likesState = _this5.articleDetail.articleDetail.isLikes = !_this5.articleDetail.articleDetail.isLikes;
                 }_context5.next = 4;return (
                   (0, _api.onHandleLikes)({
-                    articleCode: _this6.articleCode,
+                    articleCode: _this5.articleCode,
                     likesType: type,
                     likesState: likesState ? 0 : 1 }));case 4:res = _context5.sent;
 
                 if (res.code === 200) {
-                  _this6.init();
+                  _this5.init();
                 }_context5.next = 11;break;case 8:_context5.prev = 8;_context5.t0 = _context5["catch"](0);
 
                 console.log('err', _context5.t0);case 11:case "end":return _context5.stop();}}}, _callee5, null, [[0, 8]]);}))();
 
     },
     // 发送留言
-    onSendMsg: function onSendMsg(type) {var _this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var params, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:if (
-                _this7.commitValue) {_context6.next = 3;break;}
+    onSendMsg: function onSendMsg(type) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var params, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:if (
+                _this6.commitValue) {_context6.next = 3;break;}
                 uni.showToast({
                   title: '说点什么吧~',
                   icon: 'none' });return _context6.abrupt("return",
@@ -486,14 +483,14 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                 false);case 3:
 
                 params = {
-                  articleCode: _this7.articleCode,
-                  commentContent: _this7.commitValue,
-                  commentType: _this7.commentType // 0 -文章，1 - 评论
+                  articleCode: _this6.articleCode,
+                  commentContent: _this6.commitValue,
+                  commentType: _this6.commentType // 0 -文章，1 - 评论
                 };
-                if (_this7.commentType) {
+                if (_this6.commentType) {
                   params = Object.assign({}, params, {
-                    fromMemberId: _this7.fromMemberId,
-                    commentId: _this7.commentId });
+                    fromMemberId: _this6.fromMemberId,
+                    commentId: _this6.commentId });
 
                 }_context6.prev = 5;_context6.next = 8;return (
 
@@ -503,9 +500,9 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     title: '评论成功',
                     icon: 'none',
                     success: function success() {
-                      _this7.commitFlag = false;
-                      _this7.commitValue = '';
-                      _this7.init();
+                      _this6.commitFlag = false;
+                      _this6.commitValue = '';
+                      _this6.init();
                     } });
 
                 }_context6.next = 15;break;case 12:_context6.prev = 12;_context6.t0 = _context6["catch"](5);

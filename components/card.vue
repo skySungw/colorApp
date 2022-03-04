@@ -72,7 +72,6 @@
 					confirmText: '确认',
 					cancelText: '再想想',
 					complete: (res) => {
-						console.log('res', res);
 						if (res.confirm) {
 							this.deleteArticle();
 						}

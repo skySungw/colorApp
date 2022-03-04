@@ -64,8 +64,6 @@
 			this.getSystemLocation((res) => {
 				this.params.lat = res.latitude;
 				this.params.lng = res.longitude
-				  console.log('当前位置的经度：' + res.longitude);
-				  console.log('当前位置的纬度：' + res.latitude);
 					uni.setStorageSync('lat', res.latitude);
 					uni.setStorageSync('lng', res.longitude);
 				this.initParams();
@@ -157,7 +155,6 @@
 						this.list = this.list.concat(res.data.records);
 						// 是否有下一页数据
 						// this.hasNext = res.hasNext;
-						console.log("this.list", this.list);
 					}
 					uni.hideLoading();
 				} catch(err) {
@@ -167,7 +164,6 @@
 			},
 			// 跳页面
 			goAdPage(item) {
-				console.log('item', item);
 				uni.navigateTo({
 					url: item.link,
 					success: res => {},

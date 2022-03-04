@@ -171,7 +171,6 @@
 		methods: {
 			tabSelect(e) {
 				const id = e.currentTarget.dataset['item'].id;
-				console.log('id', id);
 				uni.navigateTo({
 					url: `/pages/subpackages/subject/index?id=${id}`
 				})
@@ -416,7 +415,6 @@
 			},
 			// 跳页面
 			goAdPage(item) {
-				console.log('item', item);
 				uni.navigateTo({
 					url: item.link,
 					success: res => {},

@@ -58,7 +58,6 @@
 			// },
 			// 点广告图，跳页面
 			goAdPage(item) {
-				console.log('item', item);
 				uni.navigateTo({
 					url: item.adUrl,
 					success: res => {},

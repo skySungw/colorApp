@@ -40,7 +40,6 @@
 			async onFetchDetail(params) {
 				try {
 					const res = await onFetchActivityDetail(params);
-					console.log('res', res);
 					if (res.code === 200) {
 						this.detail = res.data;
 					}

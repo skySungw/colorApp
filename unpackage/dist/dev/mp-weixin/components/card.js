@@ -188,7 +188,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
         confirmText: '确认',
         cancelText: '再想想',
         complete: function complete(res) {
-          console.log('res', res);
           if (res.confirm) {
             _this.deleteArticle();
           }

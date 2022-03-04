@@ -48,7 +48,6 @@
 			}
 		},
 		created() {
-			console.log('isFocus', this.isFocus)
 		},
 		methods: {
 			// 关注/取消关注
@@ -67,7 +66,6 @@
 						confirmText: '确认取消',
 						cancelText: '取消',
 						success: res => {
-							console.log('res', res);
 							if (res.confirm) {
 								this.onConfirmOperate(item, followState);
 							}

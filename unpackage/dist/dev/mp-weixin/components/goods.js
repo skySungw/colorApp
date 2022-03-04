@@ -309,7 +309,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
             break;
           case 3: // 橱窗来源，判断是否是当前C的产品，如果是，可以操作删除
             _this.operate = _this.item.showDelete;
-            console.log('this.op', _this.operate);
             break;}
 
         // 收藏商品页，显示商品状态
@@ -337,14 +336,12 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
   methods: {
     // 删除橱窗商品
     deleteGoods: function deleteGoods(flag) {var _this2 = this;
-      console.log('flag', flag);
       uni.showModal({
         title: '操作',
         content: '确认删除商品',
         confirmText: '确认',
         cancelText: '取消',
         success: function success(res) {
-          console.log('res', res);
           if (res.confirm) {
             _this2.onDeleteGoodsByShop(flag);
           }
@@ -362,7 +359,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                     title: '操作成功',
                     icon: 'none',
                     complete: function complete() {
-                      console.log('flag', flag);
                       if (flag) {
                         _this3.operate = false;
                       } else {
@@ -408,7 +404,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
     },
     // 上下架操作
     onAdd: function onAdd(type) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var TYPE_TEXT;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                console.log('type', type);
                 TYPE_TEXT = {
                   0: '确认下架',
                   1: '确认上架' };
@@ -419,11 +414,10 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
                   confirmText: '确认',
                   cancelText: '取消',
                   success: function success(res) {
-                    console.log('res', res);
                     if (res.confirm) {
                       _this5.onOperate(type);
                     }
-                  } });case 3:case "end":return _context3.stop();}}}, _callee3);}))();
+                  } });case 2:case "end":return _context3.stop();}}}, _callee3);}))();
 
     },
     onOperate: function onOperate(type) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_context4.next = 3;return (
@@ -457,7 +451,6 @@ var _api = __webpack_require__(/*! @/api */ 21);function _interopRequireDefault(
       } else {
         url = '/pages/sub/goods/detail?id=' + this.item.goodsCode;
       }
-      console.log('url', url);
       if (token) {
         uni.navigateTo({
           url: url });

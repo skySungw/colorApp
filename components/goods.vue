@@ -330,8 +330,16 @@
 				const token = uni.getStorageSync('token');
 				let url;
 				if (this.item.isUrlGoods) {
-					url = `/pages/subpackages/webview/webview`;
+					// url = `/pages/subpackages/webview/webview`;
 					uni.setStorageSync('url', this.item.urlGoods);
+					uni.navigateToMiniProgram({
+					  appId: 'wx91d27dbf599dff74',
+					  path: `pages/union/proxy/proxy?spreadUrl=${encodeURI(this.item.urlGoods)}`,
+					  extraData: {},
+					  success(res) {
+					    // 打开成功
+					  }
+					})
 				} else {
 					url = '/pages/sub/goods/detail?id=' + this.item.goodsCode;
 				}

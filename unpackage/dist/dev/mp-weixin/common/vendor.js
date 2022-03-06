@@ -947,7 +947,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2091,291 +2091,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 11:
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \**********************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode, /* vue-cli only */
-  components, // fixed by xxxxxx auto components
-  renderjs // fixed by xxxxxx renderjs
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // fixed by xxxxxx auto components
-  if (components) {
-    if (!options.components) {
-      options.components = {}
-    }
-    var hasOwn = Object.prototype.hasOwnProperty
-    for (var name in components) {
-      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
-        options.components[name] = components[name]
-      }
-    }
-  }
-  // fixed by xxxxxx renderjs
-  if (renderjs) {
-    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
-      this[renderjs.__module] = this
-    });
-    (options.mixins || (options.mixins = [])).push(renderjs)
-  }
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
-/***/ 140:
-/*!****************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/config/config.js ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// 我的页面
-var myPageMenu = [{
-  icon: 'cuIcon-cart',
-  label: '我买到的',
-  link: '/pages/sub/order/my' },
-{
-  icon: 'cuIcon-form',
-  label: '我卖出的',
-  link: '/pages/sub/order/sel' },
-{
-  icon: 'cuIcon-goods',
-  label: '商品收藏',
-  link: '/pages/sub/my/goodsCollection' },
-{
-  icon: 'cuIcon-favor',
-  label: '帖子收藏',
-  link: '/pages/sub/my/cardCollection' },
-{
-  icon: 'cuIcon-file',
-  label: '草稿箱',
-  link: '/pages/sub/my/draft' },
-{
-  icon: 'cuIcon-calendar',
-  label: '活动报名',
-  link: '/pages/sub/my/signUp' },
-
-// {
-// 	icon: 'cuIcon-people',
-// 	label: '个人主页',
-// 	link: '/pages/sub/my/home'
-// }, 
-{
-  icon: 'cuIcon-service',
-  label: '意见反馈',
-  link: '/pages/sub/my/suggestion' },
-{
-  icon: 'cuIcon-newshot',
-  label: '浏览记录',
-  link: '/pages/sub/my/record' },
-{
-  icon: 'cuIcon-settings',
-  label: '设置',
-  link: '/pages/sub/my/settings' }];
-
-// 我的页面-工具
-var myTools = [
-// {
-// 	icon: 'cuIcon-group',
-// 	label: '成为站长',
-// 	link: '/pages/subpackages/site/apply'
-// }, 
-{
-  icon: 'cuIcon-shop',
-  label: '我的橱窗',
-  link: '/pages/subpackages/site/myShop?menu=1' }
-
-// , {
-// 	icon: 'cuIcon-recharge',
-// 	label: '我的收益',
-// 	link: '/pages/sub/my/goodsCollection'
-// },
-];
-module.exports = {
-  myPageMenu: myPageMenu,
-  myTools: myTools };
-
-/***/ }),
-
-/***/ 169:
-/*!*****************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/ajaxUpload.js ***!
-  \*****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _api = __webpack_require__(/*! @/api/api */ 170);
-function ajax(_ref)
-
-
-
-
-
-
-
-{var url = _ref.url,filePath = _ref.filePath,_ref$name = _ref.name,name = _ref$name === void 0 ? 'file' : _ref$name,_ref$formData = _ref.formData,formData = _ref$formData === void 0 ? {} : _ref$formData,_success = _ref.success,_fail = _ref.fail,_complete = _ref.complete;
-  uni.showLoading({
-    title: '加载中',
-    mask: true });
-
-  // const baseUrl = 'https://api.kiiho.com/';
-  // const baseUrl = 'http://62.234.77.116/';
-  var token = uni.getStorageSync('token') || '';
-  var header = {};
-
-  if (token) {
-    Object.assign(header, {
-      'Authorization': 'Bearer  ' + token });
-
-  }
-  uni.uploadFile({
-    url: _api.uploadFileUrl, //仅为示例，并非真实的接口地址
-    filePath: filePath,
-    name: name,
-    formData: formData,
-    header: header,
-    success: function success(res) {
-      _success && _success(res);
-    },
-    fail: function fail(err) {
-      _fail && _fail(err);
-    },
-    complete: function complete() {
-      _complete && _complete();
-      uni.hideLoading();
-    } });
-
-}var _default =
-ajax;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 170:
-/*!**********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/api.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.uploadFileUrl = void 0;var _config = __webpack_require__(/*! @/api/config */ 24);
-var uploadFileUrl = _config.baseUrl + 'api/zuul/user/file/uploadFile';exports.uploadFileUrl = uploadFileUrl;
-exports.uploadFileUrl = uploadFileUrl = uploadFileUrl.replace('api/', '');
-
-/***/ }),
-
-/***/ 18:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 19);
-
-/***/ }),
-
-/***/ 19:
+/***/ 10:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -2406,7 +2122,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 20);
+module.exports = __webpack_require__(/*! ./runtime */ 11);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -2423,38 +2139,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 2:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 20:
+/***/ 11:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -3186,10 +2871,315 @@ module.exports = g;
 
 /***/ }),
 
+/***/ 14:
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    if (!options.components) {
+      options.components = {}
+    }
+    var hasOwn = Object.prototype.hasOwnProperty
+    for (var name in components) {
+      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
+        options.components[name] = components[name]
+      }
+    }
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 140:
+/*!*************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/config/config.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// 我的页面
+var myPageMenu = [{
+  icon: 'cuIcon-cart',
+  label: '我买到的',
+  link: '/pages/sub/order/my' },
+{
+  icon: 'cuIcon-form',
+  label: '我卖出的',
+  link: '/pages/sub/order/sel' },
+{
+  icon: 'cuIcon-goods',
+  label: '商品收藏',
+  link: '/pages/sub/my/goodsCollection' },
+{
+  icon: 'cuIcon-favor',
+  label: '帖子收藏',
+  link: '/pages/sub/my/cardCollection' },
+{
+  icon: 'cuIcon-file',
+  label: '草稿箱',
+  link: '/pages/sub/my/draft' },
+{
+  icon: 'cuIcon-calendar',
+  label: '活动报名',
+  link: '/pages/sub/my/signUp' },
+
+// {
+// 	icon: 'cuIcon-people',
+// 	label: '个人主页',
+// 	link: '/pages/sub/my/home'
+// }, 
+{
+  icon: 'cuIcon-service',
+  label: '意见反馈',
+  link: '/pages/sub/my/suggestion' },
+{
+  icon: 'cuIcon-newshot',
+  label: '浏览记录',
+  link: '/pages/sub/my/record' },
+{
+  icon: 'cuIcon-settings',
+  label: '设置',
+  link: '/pages/sub/my/settings' }];
+
+// 我的页面-工具
+var myTools = [
+// {
+// 	icon: 'cuIcon-group',
+// 	label: '成为站长',
+// 	link: '/pages/subpackages/site/apply'
+// }, 
+{
+  icon: 'cuIcon-shop',
+  label: '我的橱窗',
+  link: '/pages/subpackages/site/myShop?menu=1' }
+
+// , {
+// 	icon: 'cuIcon-recharge',
+// 	label: '我的收益',
+// 	link: '/pages/sub/my/goodsCollection'
+// },
+];
+module.exports = {
+  myPageMenu: myPageMenu,
+  myTools: myTools };
+
+/***/ }),
+
+/***/ 169:
+/*!**************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/ajaxUpload.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _api = __webpack_require__(/*! @/api/api */ 170);
+function ajax(_ref)
+
+
+
+
+
+
+
+{var url = _ref.url,filePath = _ref.filePath,_ref$name = _ref.name,name = _ref$name === void 0 ? 'file' : _ref$name,_ref$formData = _ref.formData,formData = _ref$formData === void 0 ? {} : _ref$formData,_success = _ref.success,_fail = _ref.fail,_complete = _ref.complete;
+  uni.showLoading({
+    title: '加载中',
+    mask: true });
+
+  // const baseUrl = 'https://api.kiiho.com/';
+  // const baseUrl = 'http://62.234.77.116/';
+  var token = uni.getStorageSync('token') || '';
+  var header = {};
+
+  if (token) {
+    Object.assign(header, {
+      'Authorization': 'Bearer  ' + token });
+
+  }
+  uni.uploadFile({
+    url: _api.uploadFileUrl, //仅为示例，并非真实的接口地址
+    filePath: filePath,
+    name: name,
+    formData: formData,
+    header: header,
+    success: function success(res) {
+      _success && _success(res);
+    },
+    fail: function fail(err) {
+      _fail && _fail(err);
+    },
+    complete: function complete() {
+      _complete && _complete();
+      uni.hideLoading();
+    } });
+
+}var _default =
+ajax;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 170:
+/*!*******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/api.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.uploadFileUrl = void 0;var _config = __webpack_require__(/*! @/api/config */ 24);
+var uploadFileUrl = _config.baseUrl + 'api/zuul/user/file/uploadFile';
+// uploadFileUrl = uploadFileUrl.replace('api/', '');
+exports.uploadFileUrl = uploadFileUrl;
+
+/***/ }),
+
+/***/ 2:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
 /***/ 21:
-/*!************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/index.js ***!
-  \************************************************************************************/
+/*!*********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/index.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3209,9 +3199,9 @@ _site.default);
 /***/ }),
 
 /***/ 22:
-/*!*********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/my.js ***!
-  \*********************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/my.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3384,14 +3374,14 @@ function onFetchGoodsBySelf(data) {
 /***/ }),
 
 /***/ 23:
-/*!**************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/request.js ***!
-  \**************************************************************************************/
+/*!***********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/request.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 18));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 9));
 var _config = __webpack_require__(/*! @/api/config */ 24);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function
 request(_x) {return _request.apply(this, arguments);}function _request() {_request = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {var url, _ref$data, data, _ref$header, header, _ref$method, method, dataType, newUrl, token, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
             url = _ref.url, _ref$data = _ref.
@@ -3401,20 +3391,20 @@ request(_x) {return _request.apply(this, arguments);}function _request() {_reque
             dataType = _ref.dataType;
 
             newUrl = url;
-            newUrl = newUrl.replace('api/', '');
+            // newUrl = newUrl.replace('api/', '');
             token = uni.getStorageSync('token');
             if (token) {
               header['Authorization'] = 'Bearer ' + token;
             }
             header['Content-Type'] = 'application/json; charset=utf-8'; //自定义请求头信息
-            _context.next = 8;return uni.request({
+            _context.next = 7;return uni.request({
               url: _config.baseUrl + newUrl,
               data: data,
               header: header,
               method: method,
-              dataType: dataType });case 8:res = _context.sent;return _context.abrupt("return",
+              dataType: dataType });case 7:res = _context.sent;return _context.abrupt("return",
 
-            res[1].data);case 10:case "end":return _context.stop();}}}, _callee);}));return _request.apply(this, arguments);}var _default =
+            res[1].data);case 9:case "end":return _context.stop();}}}, _callee);}));return _request.apply(this, arguments);}var _default =
 
 request;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
@@ -3422,23 +3412,24 @@ request;exports.default = _default;
 /***/ }),
 
 /***/ 24:
-/*!*************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/config.js ***!
-  \*************************************************************************************/
+/*!**********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/config.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.baseUrl = void 0;var baseUrl = 'https://wapi.kiiho.com/';exports.baseUrl = baseUrl;
-exports.baseUrl = baseUrl = 'http://b2y1841010.iask.in/';
+Object.defineProperty(exports, "__esModule", { value: true });exports.baseUrl = void 0;var baseUrl = 'https://wapi.kiiho.com/';
+// baseUrl = 'http://b2y1841010.iask.in/';
 // const baseUrl = 'http://192.168.165.111:8866/'
+exports.baseUrl = baseUrl;
 
 /***/ }),
 
 /***/ 25:
-/*!************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/goods.js ***!
-  \************************************************************************************/
+/*!*********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/goods.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3624,9 +3615,9 @@ function onSelectOrderCountByMemberId(data) {
 /***/ }),
 
 /***/ 26:
-/*!*************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/ground.js ***!
-  \*************************************************************************************/
+/*!**********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/ground.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3786,9 +3777,9 @@ function onSignUpActivity(data) {
 /***/ }),
 
 /***/ 27:
-/*!***************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/location.js ***!
-  \***************************************************************************************/
+/*!************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/location.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3845,9 +3836,9 @@ function selectHotCity(data) {
 /***/ }),
 
 /***/ 28:
-/*!***********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/api/site.js ***!
-  \***********************************************************************************/
+/*!********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/api/site.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3878,9 +3869,9 @@ function onFetchShowcaseInfo(data) {
 /***/ }),
 
 /***/ 29:
-/*!**************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/utils/index.js ***!
-  \**************************************************************************************/
+/*!***********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/utils/index.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9463,7 +9454,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9484,14 +9475,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9577,7 +9568,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"物二","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10453,9 +10444,9 @@ function resolveLocaleChain(locale) {
 /***/ }),
 
 /***/ 465:
-/*!***************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/static/logo.png ***!
-  \***************************************************************************************/
+/*!************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/static/logo.png ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10464,9 +10455,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAD/CAMAAAC3
 /***/ }),
 
 /***/ 5:
-/*!**********************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/pages.json ***!
-  \**********************************************************************************/
+/*!*******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/pages.json ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10475,9 +10466,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAD/CAMAAAC3
 /***/ }),
 
 /***/ 514:
-/*!****************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/util.js ***!
-  \****************************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/util.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10833,9 +10824,9 @@ function getHeightFixModelInfo(oWidth, oHeight, x, y, width, height) {
 /***/ }),
 
 /***/ 515:
-/*!***********************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/image-tools.js ***!
-  \***********************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/image-tools.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10991,14 +10982,14 @@ function base64ToPath(base64) {
 /***/ }),
 
 /***/ 516:
-/*!****************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/draw.js ***!
-  \****************************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/draw.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 18));var _util = __webpack_require__(/*! ./util */ 514);
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 9));var _util = __webpack_require__(/*! ./util */ 514);
 
 
 var _qrcode = _interopRequireDefault(__webpack_require__(/*! ./qrcode */ 517));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _objectWithoutProperties(source, excluded) {if (source == null) return {};var target = _objectWithoutPropertiesLoose(source, excluded);var key, i;if (Object.getOwnPropertySymbols) {var sourceSymbolKeys = Object.getOwnPropertySymbols(source);for (i = 0; i < sourceSymbolKeys.length; i++) {key = sourceSymbolKeys[i];if (excluded.indexOf(key) >= 0) continue;if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;target[key] = source[key];}}return target;}function _objectWithoutPropertiesLoose(source, excluded) {if (source == null) return {};var target = {};var sourceKeys = Object.keys(source);var key, i;for (i = 0; i < sourceKeys.length; i++) {key = sourceKeys[i];if (excluded.indexOf(key) >= 0) continue;target[key] = source[key];}return target;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}
@@ -12454,9 +12445,9 @@ Draw = /*#__PURE__*/function () {
 /***/ }),
 
 /***/ 517:
-/*!******************************************************************************************************************!*\
-  !*** D:/sunguowei/Documents/HBuilderProjects/ykq-uniapp-b2c/colorApp/uni_modules/sakura-canvas/js_sdk/qrcode.js ***!
-  \******************************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/colorApp/colorApp/uni_modules/sakura-canvas/js_sdk/qrcode.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13549,6 +13540,17 @@ QRBitBuffer.prototype = {
 //         ctx.fillRect(Math.round(col * tileW), Math.round(row * tileH), w, h)
 //     }
 // }
+
+/***/ }),
+
+/***/ 9:
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 10);
 
 /***/ })
 

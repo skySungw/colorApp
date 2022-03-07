@@ -160,7 +160,11 @@
 				if (item.articleInfo) {
 					url = `/pages/sub/my/home?id=${item.articleInfo.userId}`;
 				} else {
-					url = `/pages/subpackages/site/myShop?showcaseId=${item.goodsInfo.showcaseId}&menu=1`;
+					if (item.goodsInfo.showcaseId) {
+						url = `/pages/subpackages/site/myShop?showcaseId=${item.goodsInfo.showcaseId}&menu=1`;
+					} else {
+							url = `/pages/sub/my/home?id=${item.userId}`;
+					}
 				}
 				uni.navigateTo({
 					url

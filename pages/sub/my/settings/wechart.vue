@@ -10,7 +10,7 @@
 				<view class="grid col-1 grid-square flex-sub">
 					<view class="bg-img" v-for="(item, index) in imgList" :key="index" :data-url="imgList[index]">
 						<image :src='imgList[index]' mode='aspectFill' @click="onViewImage"></image>
-						<view class="cu-tag bg-red" @click="onDelImg" :data-index="index">
+						<view class="cu-tag bg-red" @tap.stop="onDelImg" :data-index="index">
 							<text class="cuIcon-close"></text>
 						</view>
 					</view>

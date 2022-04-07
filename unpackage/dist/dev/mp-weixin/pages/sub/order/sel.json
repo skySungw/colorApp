@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "我卖出的",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "order": "/components/order",
-    "empty": "/components/empty"
-  }
-}

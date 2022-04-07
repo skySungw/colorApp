@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "草稿箱",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "card": "/components/card",
-    "empty": "/components/empty"
-  }
-}

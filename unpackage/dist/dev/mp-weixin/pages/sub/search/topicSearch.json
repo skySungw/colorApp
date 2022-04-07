@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "话题搜索",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "empty": "/components/empty"
-  }
-}

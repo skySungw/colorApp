@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "隐私协议",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "yinsi": "/pages/subpackages/files/components/yinsi"
-  }
-}

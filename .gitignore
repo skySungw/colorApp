@@ -2,6 +2,7 @@
 node_modules
 /dist
 /unpackage
+unpackage
 
 # Log files
 npm-debug.log*

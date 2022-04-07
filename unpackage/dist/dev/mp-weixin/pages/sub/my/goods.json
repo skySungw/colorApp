@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "我的商品",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "goods": "/components/goods",
-    "empty": "/components/empty"
-  }
-}

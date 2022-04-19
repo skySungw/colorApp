@@ -100,7 +100,6 @@
         <canvas class="f__canvas" style="width:300px;height:300px;" canvas-id="qrcode" id="qrcode"></canvas>
 	</view>
 </template>
-
 <script>
 	import _canvas from '@/utils/canvas';// 加载万能绘制方法
 	import { saveImg,qrcodeCanvas } from '@/utils/plugins/utils';// 需要保存图片和生成二维码可以引用此文件
@@ -241,7 +240,7 @@
 			        ctx.fillText('所有方法融合一起实战', logo_w+margin+10, goodsH+margin+235)
 					console.log('that.qrcode', that.qrcodeImg)
 			        // 绘制二维码
-			        // ctx.drawImage(that.qrcodeImg, cvsW-margin-150, goodsH+margin+80+50, 150, 150);
+			        ctx.drawImage(that.qrcodeImg, cvsW-margin-150, goodsH+margin+80+50, 150, 150);
 					
 			        // 绘制图片
 					ctx.draw(false, function() {

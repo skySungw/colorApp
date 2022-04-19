@@ -27,10 +27,10 @@ export const saveImg = function(url,callback) {
 										},
                                         fail(e) {
                                             uni.hideLoading();
-                                            tip({
-                                                title: '下载失败，错误原因：' + e.errMsg,
-                                                icon: "none"
-                                            });
+											uni.showToast({
+												title: '下载失败',
+											    icon: "none"
+											});
                                         }
 									});
 								} else {
@@ -87,10 +87,10 @@ export const saveImg = function(url,callback) {
 									},
                                     fail(e) {
                                         uni.hideLoading();
-                                        tip({
-                                            title: '下载失败，错误原因：' + e.errMsg,
-                                            icon: "none"
-                                        });
+										uni.showToast({
+											title: '下载失败',
+										    icon: "none"
+										});
                                     }
 								});
 							} else {

@@ -310,6 +310,7 @@
 				let headerLogo = await _canvas.getImageInfo(this.goodsDetail.sellerUserHeadImg);
 			    // 同步加载图片
 				var logo = await _canvas.getImageInfo(this.goodsDetail.goodsImgArray[0]);
+				let qrcode = await _canvas.getImageInfo(this.qrcodeImg);
 				if(logo.path && headerLogo.path){
 			        // save+clip+restore:防止图片超出边框显示--相当于overflow: hidden;
 			        ctx.save();
@@ -355,10 +356,11 @@
 			        // 简介
 			        ctx.setFillStyle('#999999')
 			        ctx.font = "normal 22px" + family
-			        ctx.fillText('长按查看详情', logo_w+margin+10, goodsH+margin+235)
+			        ctx.fillText('长按查看商品详情', logo_w+margin+10, goodsH+margin+235)
 					console.log('that.qrcode', that.qrcodeImg)
 			        // 绘制二维码
 			        // ctx.drawImage(that.qrcodeImg, cvsW-margin-150, goodsH+margin+80+50, 150, 150);
+			        _canvas.drawImgCover(ctx, qrcode, cvsW-margin-150, goodsH+margin+80+50, 150, 150);
 					
 			        // 绘制图片
 					ctx.draw(false, function() {
@@ -404,11 +406,38 @@
 			// 生成分享图片
 			async onHandleShare() {
 				try {
-					const res = await createWxQRCode();
-					this.createGoodsPoster()
+					const scene = decodeURIComponent(`id=${this.params.goodsCode}`);
+					const res = await createWxQRCode({
+						scene,
+						page: 'pages/sub/goods/detail'
+					});
+					if (res.code === 200) {
+						// this.createQrcode(res.data);
+						this.qrcodeImg = res.data;
+						this.createGoodsPoster();
+					}
 				} catch(err) {
 					console.log('err', err);
 				}
+			},
+			// 创建二维码
+			createQrcode(url){
+			    var that = this
+			    qrcodeCanvas('qrcode', url, 600, 600);
+			    const ctx = uni.createCanvasContext('qrcode');
+			    ctx.draw(true, function() {
+			        uni.canvasToTempFilePath({
+			            width: 600,
+			            height: 600,
+			            canvasId: 'qrcode',
+			            success(res) {
+			                // 二维码本地图
+			                that.qrcodeImg = res.tempFilePath
+			                console.log(res,'createQrcode')
+							that.createGoodsPoster();
+			            }
+			        },that)
+			    })
 			},
 			// 分享朋友圈
 			onShareAppMessage() {

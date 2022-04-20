@@ -215,6 +215,7 @@
 						Object.assign(this, data);
 						// this.info = [{type:'text',value: data.goodsContent,f:false}];
 						const imgList = res.data.goodsImgArray;
+						this.goodsDesc = res.data.goodsContent;
 						console.log('imgList', imgList);
 						this.imgList = imgList;
 						this.goodsImg = imgList;

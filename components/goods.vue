@@ -131,7 +131,7 @@
 			</view>
 			<view class="text-right">
 				<!-- 暂时下架编辑功能 -->
-				<text v-if="status == 0" @tap="onEdit" class="cu-tag line-green radius margin-right-sm text-green">编辑</text>
+				<text v-if="status == 0 || status == 1" @tap="onEdit" class="cu-tag line-green radius margin-right-sm text-green">编辑</text>
 				<text v-if="status == 0" @tap="onAdd(1)" class="cu-tag line-cu-tag white radius margin-right-sm text-cu-tag white">上架</text>
 				
 				<text v-if="status == 1" @tap="onAdd(0)" class="cu-tag line-cu-tag white radius margin-right-sm text-cu-tag white">下架</text>

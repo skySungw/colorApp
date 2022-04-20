@@ -20,14 +20,13 @@
 					})"></input>
 				</view>
 			</view>
-			
-			<view class="titleBtn" @click="createGoodsPoster">绘制海报</view>
+		<!-- 	<view class="titleBtn" @click="createGoodsPoster">绘制海报</view>
 			<view class="canvasBox" v-if="canvasImg">
 			    <view class="canvasItem">
 			        <image mode="widthFix" style="width:500rpx;height:500rpx" :src="canvasImg"></image>
 			    </view>
 			    <view class="button" @click="onSaveImg">保存海报</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- 帖子列表 -->
 		<block v-if="list.length > 0">
@@ -155,7 +154,7 @@
 			this.init();
 		},
 		onReady() {
-			this.createQrcode()
+			// this.createQrcode()
 		},
 		onShow() {
 			this.userId = uni.getStorageSync('userId');

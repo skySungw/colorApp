@@ -26,13 +26,16 @@
 					</view>
 				</view>
 			</view>
+			<view>
+				<!-- followState 0 本人， 1 - 展示关注 ， 2 - 取消关注 -->
+				<!-- <view v-if="articleDetail.followState" class="cu-tag" :class="[{'line-green': articleDetail.followState == 1}, {'line-gray': articleDetail.followState != 1}]" @tap="onHandleFollow">{{ articleDetail.followState === 1 ? '+ 关注' : '取消关注'}}</view> -->
+			</view>
 			<!-- 分享、收藏 -->
-			<view class="share flex">
+			<!-- <view class="share flex">
 				<text class="cuIcon-favorfill" :class="[{'text-orange': favor === 1}, {'text-gray': favor === 0}]" @click="onHandleFavor"></text>
 				<view class="cuIcon-share text-gray margin-lr-sm" @tap="onshareModel">
-					<!-- <button class="pop-box-btn" open-type="share"></button> -->
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- 内容介绍 -->
 		<view class="padding solid-bottom">
@@ -50,15 +53,63 @@
 			</view>
 		</view>
 		<!-- 商品图 -->
-		<view class="padding-top padding-bottom text-center flex flex-align-column">
+		<view class="padding-top text-center flex flex-align-column">
 			<view class="flex-1" v-for="(item, index) in goodsDetail.goodsImgArray" :key="index">
 				<image class="goods-detail-image margin-bottom-sm" @click="onViewImage" :data-index="index" :src="item" mode="widthFix"></image>
 			</view>
 		</view>
+		<!-- 此处是评论区 -->
+		<view class="padding-sm comment-container">
+			<view class="text-sm text-bold comment-title">留言 <text class="padding-left-sm">30</text></view>
+			<!-- 评论人，列表 -->
+			<view class="comment-content">
+				<view class="flex padding-tb-sm solid-bottom">
+					<view class="comment-photo">
+						<image class="round" :src="goodsImg" mode="aspectFill" @tap="goHomePageById()"/>
+					</view>
+					<view class="flex-1 margin-left text-sm">
+						<view class="text-bold text-gray flex flex-bettwen-space">
+							<text>张三</text>
+							<view class="text-lg">
+								<!-- <text class="cuIcon-like" @tap="onLike"></text> -->
+							</view>
+						</view>
+						<view class="text-black" @tap="onHandleLeaveComment()">说的内容<text class="margin-left-sm text-sm text-grey">留言时间</text></view>
+						<!-- 评论的评论 -->
+						<view class="flex padding-top-sm">
+							<view class="comment-photo">
+								<image class="round" :src="goodsImg" mode="aspectFill" @tap="goHomePageById()"/>
+							</view>
+							<view class="flex-1 margin-left text-sm">
+								<view class="text-bold text-gray flex flex-bettwen-space">
+									<text>张三 回复了：李四</text>
+									<view class="text-lg">
+										<!-- <text class="cuIcon-like" @tap="onLike"></text> -->
+									</view>
+								</view>
+								<view class="text-black" @tap="onHandleLeaveComment()">说的内容<text class="margin-left-sm text-sm text-grey">{{ childItem.createtime }}</text></view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view v-if="commentParams.current != 1 && !hasNext()" class="text-center padding-sm text-grey text-sm">我已经到底了~</view>
+			</view>
+		</view>
 		<!-- 联系卖家、购买 -->
 		<view v-if="goodsDetail.goodsState == 1 && !goodsDetail.isOwner" class="operate fixed bottom-fixed flex text-center text-bold">
-			<view class="flex-1" @tap="onHandleContract">咨询</view>
-			<view class="flex-1 bg-orange" @click="goPage">购买</view>
+			<view class="flex big-icon">
+				<text class="cuIcon-favorfill" :class="[{'text-orange': favor === 1}, {'text-gray': favor === 0}]" @click="onHandleFavor"></text>
+			</view>
+			<view class="flex big-icon">
+				<text class="cuIcon-share lg text-gray" @tap="onshareModel"></text>
+			</view>
+			<view class="flex big-icon">
+				<text class="cuIcon-comment lg text-gray"></text>
+			</view>
+			<view class="flex-1">
+				<button class="cu-btn round" @tap="onHandleContract">咨询</button>
+				<button class="cu-btn round margin-left bg-yellow" @click="goPage">购买</button>
+			</view>
 		</view>
 		<!-- 联系方式弹窗 -->
 		<view class="cu-modal" :class="[{'show': modalName == 'Image'}]">
@@ -126,7 +177,7 @@
 <script>
 	import _canvas from '@/utils/canvas';// 加载万能绘制方法
 	import { saveImg,qrcodeCanvas } from '@/utils/plugins/utils';// 需要保存图片和生成二维码可以引用此文件
-	import { onFetchGoodsDetail, onCollectionGoods } from '@/api';
+	import { onFetchGoodsDetail, onCollectionGoods, createWxQRCode, onSelectGoodsComment, onCreateGoodsComment, onHandleFollow } from '@/api';
 	export default {
 		data() {
 			return {
@@ -145,7 +196,12 @@
 					lng: '',
 					goodsCode: ''
 				},
-				goodsDetail: null // 商品详情
+				goodsDetail: null ,// 商品详情
+				commentParams: { // 评论列表请求参数
+					goodsCode: '',
+					current: 1,
+					size: 10
+				}
 			}
 		},
 		onLoad(options) {
@@ -174,6 +230,54 @@
 			// #endif        
 		},
 		methods: {
+			
+			async onConfirmOperate(followState) {
+				try {
+					const res = await onHandleFollow({
+						userId: this.articleDetail.userId || '',
+						followState
+					});
+					if (res.code === 200) {
+						uni.showToast({
+							title: '操作成功',
+							icon: 'none',
+							duration: 2000
+						})
+						this.articleDetail.followState = followState === 1 ? 2 : 1;
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
+			// 关注、取消关注
+			async onHandleFollow() {
+				let followState = 0; // 0 - 取关， 1 - 关注
+				if (this.articleDetail.followState === 1) {
+					followState = 1;
+				}
+				if (followState) {
+					this.onConfirmOperate(followState);
+				} else {
+					uni.showModal({
+						title: '取消关注',
+						confirmText: '确认取消',
+						cancelText: '取消',
+						success: res => {
+							if (res.confirm) {
+								this.onConfirmOperate(followState);
+							}
+						}
+					})
+				}
+			},
+			// 评论列表
+			async onSelectComment() {
+				try {
+					const res = await onSelectGoodsComment(this.commentParams);
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
 			onshareModel() {
 				this.modalName = 'ChooseModal';
 			},
@@ -185,7 +289,7 @@
 			        saveImg(imgUrl)
 				}
 			},
-			// 生成分享图片
+			// 生成海报图
 			async createGoodsPoster() {
 			    if(this.canvasImg){
 			    	return
@@ -258,7 +362,6 @@
 					
 			        // 绘制图片
 					ctx.draw(false, function() {
-						console.log('lll')
 						uni.canvasToTempFilePath({
 							width: cvsW,
 							height: cvsH,
@@ -266,13 +369,10 @@
 							success(res) {
 								uni.hideLoading();
 								that.canvasImg = res.tempFilePath
-								console.log('that.canvasimg', that.canvasImg)
 							}
 						},that)
 					}, 500)
-					console.log('ssssss')
 				}else{
-					console.log('kkk')
 					uni.hideLoading();
 					uni.showToast({
 						title: '海报制作失败',
@@ -302,9 +402,13 @@
 				})
 			},
 			// 生成分享图片
-			onHandleShare() {
-				// this.canvasVisible = true;
-				this.createGoodsPoster()
+			async onHandleShare() {
+				try {
+					const res = await createWxQRCode();
+					this.createGoodsPoster()
+				} catch(err) {
+					console.log('err', err);
+				}
 			},
 			// 分享朋友圈
 			onShareAppMessage() {
@@ -333,6 +437,9 @@
 						goodsCode: this.params.goodsCode,
 						goodsCount: 1
 					}]);
+					// 查看评论列表
+					// this.onSelectComment();
+					
 					uni.hideLoading();
 				} catch(err) {
 					uni.hideLoading();
@@ -422,6 +529,18 @@
 	.goods-detail_container {
 		background: #fff;
 		padding-bottom: 100upx;
+		.comment-container {
+			.comment-title {
+				font-size: 30upx;
+			}
+			.comment-content {
+				image {
+					width: 50upx;
+					height: 50upx;
+				}
+			}
+			
+		}
 		.screen-swiper {
 			width: 100%;
 			height: 450upx;
@@ -436,6 +555,14 @@
 			box-shadow: 0 0 10upx rgba(0, 0, 0, .5);
 			&>view {
 				line-height: 90upx;
+			}
+			.big-icon {
+				font-size: 40upx;
+				margin: 0 40upx;
+			}
+			.cu-btn {
+				padding-left: 50upx;
+				padding-right: 50upx;
 			}
 		}
 		.goods-detail-image {

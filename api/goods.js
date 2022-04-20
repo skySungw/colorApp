@@ -8,6 +8,22 @@ function onFetchGoodsCategory(data) {
 		method: 'GET'
 	})
 }
+// 查询商品评论接口
+function onSelectGoodsComment(data) {
+	return request({
+		url: 'api/goods/comment/selectGoodsComment',
+		data,
+		method: 'GET'
+	})
+}
+// 评论商品接口
+function onCreateGoodsComment(data) {
+	return request({
+		url: 'api/goods/comment/createComment',
+		data,
+		method: 'GET'
+	})
+}
 // 查询商品橱窗用户身份接口
 function onFetchOwnerStateShowcase(data) {
 	return request({
@@ -156,6 +172,8 @@ function onSelectOrderCountByMemberId(data) {
 
 export default {
 	onFetchGoodsCategory,
+	onCreateGoodsComment,
+	onSelectGoodsComment,
 	onFetchOwnerStateShowcase,
 	onAddGoodsToShowCase,
 	onRemoveGoodsToShowCase,

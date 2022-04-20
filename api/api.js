@@ -1,6 +1,9 @@
 import { baseUrl } from '@/api/config';
+import { ENV } from '@/utils/index';
 let uploadFileUrl = baseUrl + 'api/zuul/user/file/uploadFile'
-// uploadFileUrl = uploadFileUrl.replace('api/', '');
+if (ENV === 'test') {
+	uploadFileUrl = uploadFileUrl.replace('api/', '');
+}
 export {
 	uploadFileUrl
 }

@@ -1,5 +1,6 @@
 
 import { baseUrl } from '@/api/config';
+import { ENV } from '@/utils/index';
 async function request ({
 	url,
 	data = {},
@@ -8,7 +9,9 @@ async function request ({
 	dataType
 }) {
 	let newUrl = url;
-	// newUrl = newUrl.replace('api/', '');
+	if (ENV === 'test') {
+		newUrl = newUrl.replace('api/', '');
+	}
 	let token = uni.getStorageSync('token');
 	if (token) {
 		header['Authorization'] = 'Bearer ' + token;

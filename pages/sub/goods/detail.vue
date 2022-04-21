@@ -104,7 +104,7 @@
 				<text class="cuIcon-share lg text-gray" @tap="onshareModel"></text>
 			</view>
 			<view class="flex big-icon">
-				<text class="cuIcon-comment lg text-gray"></text>
+				<text class="cuIcon-comment lg text-gray" @tap="onLeaveMsg"></text>
 			</view>
 			<view class="flex-1">
 				<button class="cu-btn round" @tap="onHandleContract">咨询</button>
@@ -167,6 +167,23 @@
 			</view>
 		  </view>
 		</view>
+		<!-- 留言弹窗 -->
+		<view class="cu-modal bottom-modal" :class="[{'show': modalName=='messageModal'}]" @tap="hideModal">
+		  <view class="cu-dialog bg-white" catchtap>
+			  <view class="cu-bar bg-white">
+				<view class="action text-grey" @tap="hideModal">取消</view>
+				<view class="action text-green" @tap="hideModal">确定</view>
+			  </view>
+			  <view class="cu-bar search padding-top padding-bottom-xl">
+				  <view class="search-form round padding-left-sm">
+					<input type="text" placeholder="看对眼就留言,问问更多细节~" confirm-type="search" v-model="leaveMsgVal"></input>
+				  </view>
+				  <view class="action">
+					<button class="cu-btn bg-green shadow-blur round" @tap="sendMsg">发送</button>
+				  </view>
+			  </view>
+		  </view>
+		</view>
 		<!-- 海报 -->
 		<canvas class="f__canvas" style="width:600px;height:730px"  canvas-id="goodsDetail" id="goodsDetail"></canvas>
 		<!-- 二维码 -->
@@ -181,6 +198,7 @@
 	export default {
 		data() {
 			return {
+				leaveMsgVal: '', // 留言
 				canvasImg: '',
 				qrcodeImg:'',    //二维码本地图片
 				content:'canvas万能制作方法，新手简单入手，易学，一天掌握canvas制作。绘制矩形方法、加载图片方法、绘制圆形头像方法、绘制图片cover不变形、文本自定义换行超出省略、绘制圆角按钮等方法。组合起来用，基本海报都能绘制。',   //内容
@@ -230,45 +248,20 @@
 			// #endif        
 		},
 		methods: {
-			
-			async onConfirmOperate(followState) {
-				try {
-					const res = await onHandleFollow({
-						userId: this.articleDetail.userId || '',
-						followState
-					});
-					if (res.code === 200) {
-						uni.showToast({
-							title: '操作成功',
-							icon: 'none',
-							duration: 2000
-						})
-						this.articleDetail.followState = followState === 1 ? 2 : 1;
-					}
-				} catch(err) {
-					console.log('err', err);
-				}
+			// 显示留言弹窗
+			onLeaveMsg() {
+				this.modalName = 'messageModal';
 			},
-			// 关注、取消关注
-			async onHandleFollow() {
-				let followState = 0; // 0 - 取关， 1 - 关注
-				if (this.articleDetail.followState === 1) {
-					followState = 1;
-				}
-				if (followState) {
-					this.onConfirmOperate(followState);
-				} else {
-					uni.showModal({
-						title: '取消关注',
-						confirmText: '确认取消',
-						cancelText: '取消',
-						success: res => {
-							if (res.confirm) {
-								this.onConfirmOperate(followState);
-							}
-						}
+			// 发送留言
+			sendMsg() {
+				if (!this.leaveMsgVal) {
+					uni.showToast({
+						title: '说点什么吧',
+						icon: 'none'
 					})
+					return false;
 				}
+				this.hideModal();
 			},
 			// 评论列表
 			async onSelectComment() {
@@ -495,7 +488,8 @@
 			hideModal(e) {
 				this.modalName = null;
 				setTimeout(() => {
-					this.canvasImg = '';	
+					this.canvasImg = '';
+					this.leaveMsgVal = '';
 				}, 500)
 			},
 			// 收藏
@@ -558,6 +552,9 @@
 	.goods-detail_container {
 		background: #fff;
 		padding-bottom: 100upx;
+		.search-form {
+			text-align: left;
+		}
 		.comment-container {
 			.comment-title {
 				font-size: 30upx;

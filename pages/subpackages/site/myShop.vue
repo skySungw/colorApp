@@ -14,13 +14,12 @@
 			</view>
 			<!-- 分享-->
 			<view class="share flex align-center">
-				<view class="cu-tag line-green share-button flex align-center">
+				<view class="cu-tag line-green share-button flex align-center" @tap="onshareModel">
 					<view class="text-green">
 						分享橱窗
 					</view>
-					<view class="cuIcon-forwardfill lg text-green text-center">
-					</view>
-					<button class="pop-box-btn" open-type="share"></button>
+					<text class="cuIcon-forwardfill lg text-green text-center"></text>
+					<!-- <button class="pop-box-btn" open-type="share"></button> -->
 				</view>
 			</view>
 		</view>
@@ -67,14 +66,50 @@
 		<!-- <view class="shop-footer">
 			<text @tap="onAdd" class="cuIcon-add round text-bold bg-green shadow"></text>
 		</view> -->
+		<!-- 分享弹窗 -->
+		<view class="cu-modal" :class="[{'show': modalName=='ChooseModal'}]" @tap="hideModal">
+		  <view class="cu-dialog" catchtap>
+			<view class="canvasBox padding" v-if="canvasImg">
+			  <view class="canvasItem">
+				  <image mode="widthFix" :src="canvasImg"></image>
+			  </view>
+			  <view class="button padding-top-sm" @click="onSaveImg">
+				  <button class="cu-btn block line-orange lg">
+				    <text class="cuIcon-down"></text> 保存海报
+				  </button>
+			  </view>
+			</view>
+		    <view v-else class="padding flex share_icon">
+				<view class="flex-1" @tap="onHandleShare">
+					<view>
+						<image src="@/static/share/icon_pengyouquan.png"></image>
+					</view>
+					<view>朋友圈</view>
+				</view>
+				<view class="flex-1">
+					<view>
+						<image src="@/static/share/icon_weixin.png"></image>
+					</view>
+					<view>微信</view>
+					<button class="pop-box-btn" open-type="share"></button>
+				</view>
+			</view>
+		  </view>
+		</view>
 		<!-- 其它区域 -->
 		<NavBar :index="4" :onAdd="onAdd" :showCaseId="params.showcaseId" :idStatus="idStatus"></NavBar>
+		<!-- 海报 -->
+		<canvas class="f__canvas" style="width:600px;height:730px"  canvas-id="goodsDetail" id="goodsDetail"></canvas>
+		<!-- 二维码 -->
+		<canvas class="f__canvas" style="width:300px;height:300px;" canvas-id="qrcode" id="qrcode"></canvas>
 	</view>
 </template>
 
 <script>
-	import { onFetchShowcasePage, onFetchShowcaseInfo } from '@/api';
-	import { onFetchOwnerStateShowcase } from '@/api';
+	import _canvas from '@/utils/canvas';// 加载万能绘制方法
+	import { saveImg,qrcodeCanvas } from '@/utils/plugins/utils';// 需要保存图片和生成二维码可以引用此文件
+	
+	import { onFetchShowcasePage, onFetchShowcaseInfo, onFetchOwnerStateShowcase, createWxQRCode } from '@/api';
 	
 	import NavBar from '@/components/navBar';
 	import Goods from '@/components/goods';
@@ -87,6 +122,11 @@
 		},
 		data() {
 			return {
+				canvasImg: '',
+				qrcodeImg:'',    //二维码本地图片
+				content:'canvas万能制作方法，新手简单入手，易学，一天掌握canvas制作。绘制矩形方法、加载图片方法、绘制圆形头像方法、绘制图片cover不变形、文本自定义换行超出省略、绘制圆角按钮等方法。组合起来用，基本海报都能绘制。',   //内容
+				goodsImg: 'https://mashang-quan.oss-cn-beijing.aliyuncs.com/image/97989fc9-e122-4579-9f3b-59904d428483.jpg',
+				modalName: null,
 				shopInfo: null, // 橱窗详情
 				isShow: true, // 是否显示菜单， false - 不显示， true - 显示
 				title: '',
@@ -175,6 +215,123 @@
 		// 	}
 		// },
 		methods: {
+			// 显示分享
+			onshareModel() {
+				this.modalName = 'ChooseModal';
+			},
+			// 隐藏弹窗
+			hideModal(e) {
+				this.modalName = null;
+				setTimeout(() => {
+					this.canvasImg = '';
+				}, 500)
+			},
+			// 保存图片
+			async onSaveImg() {
+				let imgUrl = "";
+				if(this.canvasImg){
+					imgUrl = await this.canvasImg;
+			        saveImg(imgUrl)
+				}
+			},
+			// 生成分享图片
+			async onHandleShare() {
+				try {
+					const scene = decodeURIComponent(`showcaseId=${this.params.showcaseId}`);
+					const res = await createWxQRCode({
+						scene,
+						page: 'pages/subpackages/site/myShop'
+					});
+					if (res.code === 200) {
+						this.qrcodeImg = res.data;
+						this.createGoodsPoster();
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
+			// 生成海报图
+			async createGoodsPoster() {
+			    if(this.canvasImg){
+			    	return
+			    }
+				var that = this;
+				uni.showLoading({
+					title: '海报生成中'
+				});
+				const cvsW = 600;
+				const cvsH = 500;
+				const logo_w = 100;
+			    const margin = 30;
+				let height = 20;
+				let family = " 'PingFang SC',tahoma,arial,'helvetica neue','hiragino sans gb','microsoft yahei',sans-serif";
+				let ctx = uni.createCanvasContext('goodsDetail');
+			    // 绘制矩形
+				_canvas.fillRoundRect(ctx,0,0,cvsW,cvsH,20,"#ffffff");
+			    // 同步加载图片
+				let headerLogo = await _canvas.getImageInfo(this.shopInfo.wxHeadImg);
+				let qrcode = await _canvas.getImageInfo(this.qrcodeImg);
+				if(qrcode.path && headerLogo.path){
+					height += 40;
+					ctx.setFillStyle('#000000')
+					ctx.font = "bold 40px" + family
+					ctx.fillText('商品橱窗分享', 180, height)
+					height += 60;
+			        // // 橱窗名
+			        // ctx.setFillStyle('#000000')
+			        // ctx.font = "bold 26px" + family
+			        // ctx.fillText(this.shopInfo.showcaseName, margin-5, height)
+			        // height += 20;
+			        // 橱窗介绍-多行文字
+					ctx.setFillStyle('#666666')
+			        ctx.textAlign = 'left';
+					var options = {
+						font:"normal 26px"+family,     //设置字体
+						ctx:ctx,
+						word: `${that.shopInfo.showcaseName}`,      //文本
+						maxWidth:540,           //最大宽度
+						maxLine:2,              //最大行数--超出省略
+						x:margin,               //x坐标
+						y:height,                  //y坐标
+						l_h:40                  //行高
+					}
+			        // 文本自定义换行
+					_canvas.dealWords(options)
+			        // 绘制圆形头像
+			        _canvas.drawCircular(ctx, headerLogo.path, margin, height+margin+160, logo_w, logo_w);
+			        // 名称
+			        ctx.setFillStyle('#000000')
+			        ctx.font = "26px" + family
+			        ctx.fillText(this.siteName, logo_w+margin+10, height+margin+195)
+			        // 简介
+			        ctx.setFillStyle('#999999')
+			        ctx.font = "normal 22px" + family
+			        ctx.fillText('长按进入橱窗', logo_w+margin+10, height+margin+235)
+					console.log('that.qrcode', that.qrcodeImg)
+			        // 绘制二维码
+			        // ctx.drawImage(that.qrcodeImg, cvsW-margin-150, height+margin+80+50, 150, 150);
+			        _canvas.drawImgCover(ctx, qrcode, cvsW-margin-150, height+margin+80+50, 150, 150);
+					
+			        // 绘制图片
+					ctx.draw(false, function() {
+						uni.canvasToTempFilePath({
+							width: cvsW,
+							height: cvsH,
+							canvasId: 'goodsDetail',
+							success(res) {
+								uni.hideLoading();
+								that.canvasImg = res.tempFilePath
+							}
+						},that)
+					}, 500)
+				}else{
+					uni.hideLoading();
+					uni.showToast({
+						title: '海报制作失败',
+						icon: 'none'
+					});
+				}
+			},
 			// 获取橱窗信息
 			async onGetShowCaseInfo(showcaseId) {
 				try {
@@ -462,6 +619,37 @@
 			bottom: 0;
 			opacity: 0;
 		}
+	}
+	.canvasBox {
+		image {
+			width: 100%;
+		}
+	}
+	.share_icon {
+		padding-top: 120upx;
+		padding-bottom: 120upx;
+		image {
+			width: 60upx;
+			height: 60upx;
+		}
+		.flex-1 {
+			position: relative;
+			.pop-box-btn {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				opacity: 0;
+			}
+		}
+	}
+	.f__canvas {
+		width: 300rpx;
+		height: 300rpx;
+		position: fixed;
+		top: -10000rpx;
+		left: 0rpx;
 	}
 </style>
 

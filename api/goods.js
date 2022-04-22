@@ -168,6 +168,14 @@ function onSelectOrderCountByMemberId(data) {
 		method: 'GET'
 	})
 }
+// 查询京东联盟商品详情接口
+function onSelectGoodsJDDetail(data) {
+	return request({
+		url: 'api/goods/goods/selectGoodsJDDetail',
+		data,
+		method: 'GET'
+	})
+}
 
 
 export default {
@@ -192,5 +200,6 @@ export default {
 	onFetchOrderList,
 	onUpdateGoodsState,
 	onSelectGoodsCountByMemberId,
-	onSelectOrderCountByMemberId
+	onSelectOrderCountByMemberId,
+	onSelectGoodsJDDetail
 }

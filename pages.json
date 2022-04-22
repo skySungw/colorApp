@@ -65,6 +65,14 @@
 					"navigationBarBackgroundColor": "#39B54A",
 					"navigationBarTextStyle": "white"
 				}
+		},{
+				"path": "jd/goodsDetail",
+				"style": {
+					"navigationBarTitleText": "京东商城",
+					"enablePullDownRefresh": false,
+					"navigationBarBackgroundColor": "#39B54A",
+					"navigationBarTextStyle": "white"
+				}
 		}, {
 				"path": "subject/index",
 				"style": {

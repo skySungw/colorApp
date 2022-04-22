@@ -331,7 +331,7 @@
 				let url;
 				if (this.item.isUrlGoods) {
 					uni.navigateTo({
-						url: `/pages/subpackages/jd/goodsDetail?goodsId=${this.item.goodsCode}&showcaseId=${this.showcaseId}`
+						url: `/pages/subpackages/jd/detail?goodsId=${this.item.goodsCode}&showcaseId=${this.showcaseId}`
 					});
 					// return false;
 					// // url = `/pages/subpackages/webview/webview`;

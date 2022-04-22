@@ -1,6 +1,6 @@
 <template>
 	<view class="page_goods_detail">
-		<cu-custom bgColor="bg-gradual-green" :isBack="!showMenu" :isCustom="true">
+		<cu-custom bgColor="bg-gradual-green" :isBack="!m" :isCustom="true">
 			<view slot="content">商品详情</view>
 		</cu-custom>
 		<view class="page_goods_content">
@@ -93,13 +93,13 @@
 				goodsId: '', // 京东商品id
 				showcaseId: '' ,// 橱窗id
 				goodsInfo: null,
-				showMenu: null // 是否显示返回菜单
+				m: null // 是否显示返回菜单
 			}
 		},
 		onLoad(options) {
 			this.goodsId = options.goodsId;
 			this.showcaseId = options.showcaseId;
-			this.showMenu = options.showMenu;
+			this.m = options.m;
 			this.onFetchGoodsDetail();
 		},
 		onShareAppMessage() {
@@ -107,14 +107,13 @@
 				setTimeout(() => {
 					resolve({
 						title: `${this.goodsInfo.goodsName} ￥${this.goodsInfo.goodsPrice}`,
-						path: `/pages/subpackages/jd/goodsDetail?showcaseId=${this.showcaseId}&goodsId=${this.goodsId}&showMenu=1`,
-						imageUrl: goodsInfo.goodsImgArray[0],
+						path: `/pages/subpackages/jd/detail?cid=${this.showcaseId}&gid=${this.goodsId}&m=1`,
 					})
 				}, 2000)
 			})
 			return {
-				title: '商品橱窗',
-				path: `/pages/subpackages/jd/goodsDetail?showcaseId=${this.showcaseId}&goodsId=${this.goodsId}&showMenu=1`,
+				title: '商品详情',
+				path: `/pages/subpackages/jd/detail?cid=${this.showcaseId}&gid=${this.goodsId}&m=1`,
 				promise 
 			}
 		},
@@ -171,10 +170,13 @@
 			// 生成分享图片
 			async onHandleShare() {
 				try {
-					const scene = decodeURIComponent(`showcaseId=${this.showcaseId}&goodsId=${this.goodsId}&showMenu=1`);
+					const scene = decodeURIComponent(`cid=${this.showcaseId}&gid=${this.goodsId}&m=1`);
+					// const scene = decodeURIComponent(`showcaseId=${this.showcaseId}`);
+					console.log('this.showcaseId', this.showcaseId)
 					const res = await createWxQRCode({
 						scene,
-						page: '/pages/subpackages/jd/goodsDetail'
+						page: 'pages/subpackages/jd/detail'
+						// page: 'pages/subpackages/site/myShop'
 					});
 					if (res.code === 200) {
 						this.qrcodeImg = res.data;
@@ -204,10 +206,14 @@
 				let ctx = uni.createCanvasContext('goodsDetail');
 			    // 绘制矩形
 				_canvas.fillRoundRect(ctx,0,0,cvsW,cvsH,20,"#ffffff");
+				console.log('this.goodsInfo.goodsImgArray[0]', this.goodsInfo.goodsImgArray[0])
 				let headerLogo = await _canvas.getImageInfo(this.goodsInfo.goodsImgArray[0]);
+				console.log('headerLogo', headerLogo)
 			    // 同步加载图片
 				var logo = await _canvas.getImageInfo(this.goodsInfo.goodsImgArray[0]);
+				console.log('logo', logo)
 				let qrcode = await _canvas.getImageInfo(this.qrcodeImg);
+				console.log('qrcode', qrcode)
 				if(logo.path && headerLogo.path){
 			        // save+clip+restore:防止图片超出边框显示--相当于overflow: hidden;
 			        ctx.save();
@@ -249,7 +255,7 @@
 			        // 名称
 			        ctx.setFillStyle('#000000')
 			        ctx.font = "bold 26px" + family
-			        ctx.fillText(this.goodsDetail.sellerUserName, logo_w+margin+10, goodsH+margin+195)
+			        ctx.fillText(this.goodsInfo.goodsName, logo_w+margin+10, goodsH+margin+195)
 			        // 简介
 			        ctx.setFillStyle('#999999')
 			        ctx.font = "normal 22px" + family

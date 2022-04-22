@@ -66,7 +66,7 @@
 					"navigationBarTextStyle": "white"
 				}
 		},{
-				"path": "jd/goodsDetail",
+				"path": "jd/detail",
 				"style": {
 					"navigationBarTitleText": "京东商城",
 					"enablePullDownRefresh": false,

@@ -11,6 +11,7 @@
 			<view class="flex-1 padding-left-sm">
 				<view class="text-bold margin-bottom-sm">{{ shopInfo.showcaseName }}</view>
 				<view class="text-grey text-sm">{{ shopInfo.showcaseDesc }}</view>
+				<view class="text-gray text-sm">浏览 {{shopInfo.lookCount}} 次</view>
 			</view>
 			<!-- 分享-->
 			<view class="share flex align-center">

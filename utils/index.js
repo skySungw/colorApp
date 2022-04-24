@@ -47,7 +47,7 @@ const handlePublishTimeDesc = function(post_modified) {
 	}
 }
 let ENV = 'prod';
-ENV = 'test';
+// ENV = 'test';
 export {
 	ENV,
 	onPadNum,

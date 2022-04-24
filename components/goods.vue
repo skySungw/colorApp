@@ -63,7 +63,7 @@
 					<text class="flex-1 text-bold goods-item_title margin-none">{{ item.goodsName }}</text>
 				</view>
 				<view class="goods-item_price text-red text-bold">￥ {{ item.goodsPrice }}</view>
-				<!-- <view class="text-grey text-bold">已售 {{ item.salesCount }} 件</view> -->
+				<view class="text-grey text-bold text-sm padding-top-sm">浏览 {{ item.lookCount }} 次</view>
 			</view>
 			<view v-if="operate" class="delete-absolute delete">
 				<text class="cuIcon-roundclosefill lg text-gray add-goods-icon" @tap="deleteGoods(false)"></text>
@@ -85,6 +85,7 @@
 					<text class="text-xl text-red text-bold padding-right-sm">￥{{ item.goodsPrice }}</text>
 					<text class="text-sm text-grey text-through" v-if="item.goodsCostPrice">￥{{ item.goodsCostPrice }}</text>
 				</view>
+				<view class="text-grey text-bold text-sm padding-top-sm">浏览 {{ item.lookCount }} 次</view>
 				<!-- <view class="text-grey text-bold">已售 {{ 3 }} 件</view> -->
 			</view>
 		<!-- 	<view v-if="operate" class="delete-absolute delete">

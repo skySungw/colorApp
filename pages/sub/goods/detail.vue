@@ -60,34 +60,34 @@
 		</view>
 		<!-- 此处是评论区 -->
 		<view class="padding-sm comment-container">
-			<view class="text-sm text-bold comment-title">留言 <text class="padding-left-sm">30</text></view>
+			<view class="text-sm text-bold comment-title">留言 <text class="padding-left-sm">{{ commentParams.total }}</text></view>
 			<!-- 评论人，列表 -->
 			<view class="comment-content">
-				<view class="flex padding-tb-sm solid-bottom">
+				<view class="flex padding-tb-sm solid-bottom" v-for="(item, index) in records" :key="index">
 					<view class="comment-photo">
-						<image class="round" :src="goodsImg" mode="aspectFill" @tap="goHomePageById()"/>
+						<image class="round" :src="item.wxHeadImg" mode="aspectFill" @tap="goHomePageById(item.userId)"/>
 					</view>
 					<view class="flex-1 margin-left text-sm">
 						<view class="text-bold text-gray flex flex-bettwen-space">
-							<text>张三</text>
+							<text>{{ item.userName }}</text>
 							<view class="text-lg">
 								<!-- <text class="cuIcon-like" @tap="onLike"></text> -->
 							</view>
 						</view>
-						<view class="text-black" @tap="onHandleLeaveComment()">说的内容<text class="margin-left-sm text-sm text-grey">留言时间</text></view>
+						<view class="text-black" @tap="onHandleLeaveComment(item)">{{ item.commentContent }}<text class="margin-left-sm text-sm text-grey">{{ item.createtime }}</text></view>
 						<!-- 评论的评论 -->
-						<view class="flex padding-top-sm">
+						<view class="flex padding-top-sm" v-for="(childItem, childIndex) in item.commentChild" :key="childIndex">
 							<view class="comment-photo">
-								<image class="round" :src="goodsImg" mode="aspectFill" @tap="goHomePageById()"/>
+								<image class="round" :src="childItem.fromUserWxHeadImg" mode="aspectFill" @tap="goHomePageById(childItem.fromUserId)"/>
 							</view>
 							<view class="flex-1 margin-left text-sm">
 								<view class="text-bold text-gray flex flex-bettwen-space">
-									<text>张三 回复了：李四</text>
+									<text>{{ childItem.fromUserName }} 回复了：{{ childItem.toUserName }}</text>
 									<view class="text-lg">
 										<!-- <text class="cuIcon-like" @tap="onLike"></text> -->
 									</view>
 								</view>
-								<view class="text-black" @tap="onHandleLeaveComment()">说的内容<text class="margin-left-sm text-sm text-grey">{{ childItem.createtime }}</text></view>
+								<view class="text-black" @tap="onHandleLeaveComment(item, childItem, 2)">{{ childItem.commentContent }}<text class="margin-left-sm text-sm text-grey">{{ childItem.createtime }}</text></view>
 							</view>
 						</view>
 					</view>
@@ -96,7 +96,7 @@
 			</view>
 		</view>
 		<!-- 联系卖家、购买 -->
-		<view v-if="goodsDetail.goodsState == 1 && !goodsDetail.isOwner" class="operate fixed bottom-fixed flex text-center text-bold">
+		<view class="operate fixed bottom-fixed flex text-center text-bold" :class="[{'owner': !(goodsDetail.goodsState == 1 && !goodsDetail.isOwner)}]">
 			<view class="flex big-icon">
 				<text class="cuIcon-favorfill" :class="[{'text-orange': favor === 1}, {'text-gray': favor === 0}]" @click="onHandleFavor"></text>
 			</view>
@@ -106,7 +106,7 @@
 			<view class="flex big-icon">
 				<text class="cuIcon-comment lg text-gray" @tap="onLeaveMsg"></text>
 			</view>
-			<view class="flex-1">
+			<view class="flex-1" v-if="goodsDetail.goodsState == 1 && !goodsDetail.isOwner">
 				<button class="cu-btn round" @tap="onHandleContract">咨询</button>
 				<button class="cu-btn round margin-left bg-yellow" @click="goPage">购买</button>
 			</view>
@@ -176,7 +176,7 @@
 			  </view>
 			  <view class="cu-bar search padding-top padding-bottom-xl">
 				  <view class="search-form round padding-left-sm">
-					<input type="text" placeholder="看对眼就留言,问问更多细节~" confirm-type="search" v-model="leaveMsgVal"></input>
+					<input type="text" placeholder="看对眼就留言,问问更多细节~" confirm-type="search" v-model="commitValue"></input>
 				  </view>
 				  <view class="action">
 					<button class="cu-btn bg-green shadow-blur round" @tap="sendMsg">发送</button>
@@ -198,7 +198,7 @@
 	export default {
 		data() {
 			return {
-				leaveMsgVal: '', // 留言
+				commitValue: '', // 留言
 				canvasImg: '',
 				qrcodeImg:'',    //二维码本地图片
 				content:'canvas万能制作方法，新手简单入手，易学，一天掌握canvas制作。绘制矩形方法、加载图片方法、绘制圆形头像方法、绘制图片cover不变形、文本自定义换行超出省略、绘制圆角按钮等方法。组合起来用，基本海报都能绘制。',   //内容
@@ -219,7 +219,11 @@
 					goodsCode: '',
 					current: 1,
 					size: 10
-				}
+				},
+				records: [] ,// 评论列表
+				commentType: 0, // 0 - 文章， 1 - 留言
+				fromMemberId: '',
+				commentId: ''
 			}
 		},
 		onLoad(options) {
@@ -247,29 +251,88 @@
 			this.isWechat = true;
 			// #endif        
 		},
+		onReachBottom() {
+			if (this.hasNext()) {
+				this.commentParams.current++;
+				this.onGetAllComments();
+			}
+		},
 		methods: {
 			// 显示留言弹窗
 			onLeaveMsg() {
 				this.modalName = 'messageModal';
 			},
 			// 发送留言
-			sendMsg() {
-				if (!this.leaveMsgVal) {
+			async sendMsg() {
+				if (!this.commitValue) {
 					uni.showToast({
 						title: '说点什么吧',
 						icon: 'none'
 					})
 					return false;
 				}
-				this.hideModal();
+				let params = {
+					goodsCode: this.params.goodsCode,
+					commentContent: this.commitValue,
+					commentType: this.commentType, // 0 - 商品，1 - 评论
+				}
+				if (this.commentType) {
+					params = Object.assign({}, params, {
+						fromMemberId: this.fromMemberId,
+						commentId: this.commentId
+					})
+				}
+				try {
+					const res = await onCreateGoodsComment(params);
+					if (res.code === 200) {
+						this.hideModal();
+						uni.showToast({
+							title: '评论成功',
+							icon: 'none',
+							success: () => {
+								this.commitFlag = false;
+								this.commitValue = '';
+								this.onSelectComment();
+							}
+						})
+					}
+				} catch(err) {
+					console.log('err', err);
+				}
+			},
+			// 评论留言
+			onHandleLeaveComment(parentItem, item, type) {
+				this.onLeaveMsg();
+				
+				this.commentType = 1;
+				this.commentId = parentItem.commentId;
+				console.log('type', parentItem, item, type);
+				// 二级、多级回复
+				if (type == 2) {
+					this.fromMemberId = item.fromUserId;
+				} else {
+					this.fromMemberId = parentItem.userId;
+				}
 			},
 			// 评论列表
 			async onSelectComment() {
 				try {
 					const res = await onSelectGoodsComment(this.commentParams);
+					if (res.code === 200) {
+						this.commentParams.total = res.data.total;
+						if (this.commentParams.current == 1) {
+							this.records = res.data.records;
+						} else {
+							this.records = this.records.concat(res.data.records);
+						}
+					}
 				} catch(err) {
 					console.log('err', err);
 				}
+			},
+			// 是否有下一页
+			hasNext() {
+				return this.commentParams.current < Math.ceil(this.commentParams.total / this.commentParams.size);
 			},
 			onshareModel() {
 				this.modalName = 'ChooseModal';
@@ -459,8 +522,9 @@
 						goodsCode: this.params.goodsCode,
 						goodsCount: 1
 					}]);
+					this.commentParams.goodsCode = this.params.goodsCode;
 					// 查看评论列表
-					// this.onSelectComment();
+					this.onSelectComment();
 					
 					uni.hideLoading();
 				} catch(err) {
@@ -489,7 +553,7 @@
 				this.modalName = null;
 				setTimeout(() => {
 					this.canvasImg = '';
-					this.leaveMsgVal = '';
+					this.commitValue = '';
 				}, 500)
 			},
 			// 收藏
@@ -579,6 +643,12 @@
 		.operate {
 			background-color: #fff;
 			box-shadow: 0 0 10upx rgba(0, 0, 0, .5);
+			&.owner {
+				.flex {
+					flex: 1;
+					justify-content: center;
+				}
+			}
 			&>view {
 				line-height: 90upx;
 			}

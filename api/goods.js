@@ -21,7 +21,7 @@ function onCreateGoodsComment(data) {
 	return request({
 		url: 'api/goods/comment/createComment',
 		data,
-		method: 'GET'
+		method: 'POST'
 	})
 }
 // 查询商品橱窗用户身份接口

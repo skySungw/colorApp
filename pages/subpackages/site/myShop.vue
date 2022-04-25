@@ -231,7 +231,23 @@
 				let imgUrl = "";
 				if(this.canvasImg){
 					imgUrl = await this.canvasImg;
-			        saveImg(imgUrl)
+			        // saveImg(imgUrl)
+					uni.saveImageToPhotosAlbum({
+						filePath: imgUrl,
+						success: () => {
+					        uni.hideLoading();
+							uni.showToast({
+								title: '保存成功'
+							});
+						},
+					    fail(e) {
+					        uni.hideLoading();
+							uni.showToast({
+								title: '下载失败',
+							    icon: "none"
+							});
+					    }
+					});
 				}
 			},
 			// 生成分享图片

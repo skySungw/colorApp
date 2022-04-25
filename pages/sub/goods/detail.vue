@@ -340,9 +340,27 @@
 			// 保存图片
 			async onSaveImg() {
 				let imgUrl = "";
+				console.log('this.canvasImg', this.canvasImg)
 				if(this.canvasImg){
 					imgUrl = await this.canvasImg;
-			        saveImg(imgUrl)
+					console.log('imgUrl', imgUrl)
+			        // saveImg(imgUrl)
+					uni.saveImageToPhotosAlbum({
+						filePath: imgUrl,
+						success: () => {
+					        uni.hideLoading();
+							uni.showToast({
+								title: '保存成功'
+							});
+						},
+					    fail(e) {
+					        uni.hideLoading();
+							uni.showToast({
+								title: '下载失败',
+							    icon: "none"
+							});
+					    }
+					});
 				}
 			},
 			// 生成海报图

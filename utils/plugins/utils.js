@@ -3,6 +3,7 @@ import qrcode from './qrcode';//用于绘制二维码
 // 保存图片
 let settingWritePhotosAlbum = false;
 export const saveImg = function(url,callback) {
+	console.log('url', url)
 	if (url) {
 		// #ifdef MP-WEIXIN
 		if (settingWritePhotosAlbum) {

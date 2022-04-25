@@ -234,8 +234,20 @@
 				})
 				return false;
 			}
-			this.params.goodsCode = options.id;
-			this.isBack = options.isBack == 1 ? false : true;
+			
+			let param = {};
+			const scene = decodeURIComponent(options.scene);
+			if (options.scene) {
+				let arr = scene.split('&');
+				arr.forEach(v => {
+					const list = v.split('=');
+					param[list[0]] = list[1];
+				})
+			} else {
+				param = options;
+			}
+			this.params.goodsCode = param.id;
+			this.isBack = param.isBack == 1 ? false : true;
 			this.getSystemLocation((res) => {
 				this.params.lat = res.latitude;
 				this.params.lng = res.longitude;
@@ -480,7 +492,7 @@
 			// 生成分享图片
 			async onHandleShare() {
 				try {
-					const scene = decodeURIComponent(`id=${this.params.goodsCode}`);
+					const scene = `id=${this.params.goodsCode}`;
 					const res = await createWxQRCode({
 						scene,
 						page: 'pages/sub/goods/detail'

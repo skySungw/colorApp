@@ -169,9 +169,20 @@
 			}
 		},
 		onLoad(options) {
-			this.isShow = options.menu == 1 ? true : false;
-			let showcaseId = options.showcaseId || uni.getStorageSync('showcaseId');
-			console.log('options.showcaseId', options.showcaseId)
+			const scene = decodeURIComponent(options.scene);
+			let param = {};
+			if (options.scene) {
+				let arr = scene.split('&');
+				arr.forEach(v => {
+					const list = v.split('=');
+					console.log('list', list)
+					param[list[0]] = list[1];
+				})
+			} else {
+				param = options;
+			}
+			this.isShow = param.menu == 1 ? true : false;
+			let showcaseId = param.showcaseId || uni.getStorageSync('showcaseId');
 			this.params.showcaseId = showcaseId;
 			this.onGetShowCaseInfo(this.params.showcaseId);
 		},
@@ -253,7 +264,7 @@
 			// 生成分享图片
 			async onHandleShare() {
 				try {
-					const scene = decodeURIComponent(`showcaseId=${this.params.showcaseId}`);
+					const scene = `showcaseId=${this.params.showcaseId}`;
 					const res = await createWxQRCode({
 						scene,
 						page: 'pages/subpackages/site/myShop'
